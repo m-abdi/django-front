@@ -1,12 +1,25 @@
 import { Button, Container, Divider, Typography } from "@mui/material";
 
+import BarLoader from "./BarLoader";
 import BasicSelect from "./Select";
 import { Box } from "@mui/system";
 import React from "react";
 import TextField from "@mui/material/TextField";
+import { useState } from "react";
 
 export default function BotSelection() {
-  return (
+  const [loading, setLoading] = useState(false);
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setLoading(true);
+    const resp = await fetch("/api/newExchange", {
+      method: "post",
+    });
+  };
+  return loading ? (
+    <BarLoader />
+  ) : (
     <Container
       maxWidth="lg"
       sx={{
@@ -17,7 +30,7 @@ export default function BotSelection() {
         padding: 5,
       }}
     >
-      <form>
+      <form onSubmit={handleSubmit}>
         {" "}
         <Box
           sx={{

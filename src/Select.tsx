@@ -20,9 +20,9 @@ export default function BasicSelect(props) {
         <Select
           labelId={`${props.name}-label`}
           id={`${props.name}`}
-          value={age}
+          value={props.value}
           label={`${props.name}`}
-          onChange={handleChange}
+          onChange={props.onChange}
         >
           {props.values.map((v: any) => (
             <MenuItem value={v.title}>{v.title}</MenuItem>
