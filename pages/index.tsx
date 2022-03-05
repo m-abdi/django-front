@@ -29,7 +29,7 @@ const Home: NextPage = () => {
             inlineSize: "150px",
           }}
         >
-          <img src={"/logo.png"} width="100%" title="logo" />
+          <img src={"/logo.svg"} width="100%" title="logo" />
         </Box>
         <FlexRowStacked
           maxWidth="xl"

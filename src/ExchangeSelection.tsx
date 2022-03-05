@@ -5,18 +5,19 @@ import BasicSelect from "./Select";
 import { Box } from "@mui/system";
 import React from "react";
 import TextField from "@mui/material/TextField";
+import { useRouter } from "next/router";
 import { useState } from "react";
 
-export default function ExchangeSelection() {
+export default function ExchangeSelection(props: any) {
   const [loading, setLoading] = useState(false);
   const [exchange, setExchange] = useState("");
   const [name, setName] = useState("");
   const [apiKey, setApiKey] = useState("");
   const [apiSecret, setApiSecret] = useState("");
   const [passphrase, setPassphrase] = useState("");
-
+  const router = useRouter();
   const handleSubmit = async () => {
-    setLoading(true);
+    props.setLoading(true);
     const data = {
       exchange: exchange,
       name: name,
@@ -31,8 +32,9 @@ export default function ExchangeSelection() {
     const status = await resp.status;
     if (status == 200) {
       console.log(await resp.json());
+      router.push(`/users/bots?account=${name}`);
     }
-    setLoading(false)
+    setLoading(false);
   };
   return loading ? (
     <BarLoader />
@@ -45,9 +47,10 @@ export default function ExchangeSelection() {
         borderRadius: 5,
         boxShadow: 5,
         padding: 5,
+        display: props.display
       }}
     >
-      <form onSubmit={(e) => handleSubmit(e)}>
+      <form onSubmit={(e) => handleSubmit()}>
         {" "}
         <Box
           sx={{
@@ -63,7 +66,7 @@ export default function ExchangeSelection() {
           <BasicSelect
             name="Exchange"
             value={exchange}
-            onChange={(e) => setExchange(e.target.value)}
+            onChange={(e: any) => setExchange(e.target.value)}
             values={[{ title: "Kucoin" }]}
             sx={{ marginBlockEnd: 5 }}
           />

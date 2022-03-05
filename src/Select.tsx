@@ -7,7 +7,7 @@ import FormControl from "@mui/material/FormControl";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 
-export default function BasicSelect(props) {
+export default function BasicSelect(props:any) {
   const [age, setAge] = React.useState("");
 
   const handleChange = (event: SelectChangeEvent) => {
@@ -15,7 +15,7 @@ export default function BasicSelect(props) {
   };
 
   return (
-      <FormControl fullWidth>
+      <FormControl fullWidth sx={{marginBlockEnd: props.mb}}>
         <InputLabel id={`${props.name}-label`}>{`${props.name}`}</InputLabel>
         <Select
           labelId={`${props.name}-label`}
@@ -25,7 +25,7 @@ export default function BasicSelect(props) {
           onChange={props.onChange}
         >
           {props.values.map((v: any) => (
-            <MenuItem value={v.title}>{v.title}</MenuItem>
+            <MenuItem key={v.title} value={v.title}>{v.title}</MenuItem>
           ))}
         </Select>
       </FormControl>

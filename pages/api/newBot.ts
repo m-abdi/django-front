@@ -10,23 +10,21 @@ export default async function handler(
   const session = await getSession({ req });
   if (session) {
     const params = JSON.parse(req.body);
-    params.connectionDate =  Date.now()
     const { db } = await connectToDatabase();
     const usersCollection = db.collection("users");
-    const user = await usersCollection.findOne({ email: session.user?.email });
     // check repeateation !!!!
-    for (let e of user.exchanges) {
-      if (e.apiKey === params.apiKey) {
-        res.status(400).send({
-          error: "there is already an exchange account with this key",
-        });
+    // for (let b of user.exchanges) {
+    //   if (b.bot === params.bot && b.account === params.account) {
+    //     res.status(400).send({
+    //       error: "there is already an active bot with this name for this account",
+    //     });
 
-        return;
-      }
-    }
+    //     return;
+    //   }
+    // }
     const newUser = await usersCollection.updateOne(
       { email: session.user?.email },
-      { $push: { exchanges: params } }
+      { $push: { bots: params } }
     );
     res.status(200).send(JSON.stringify(newUser));
   } else {

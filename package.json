@@ -3,7 +3,7 @@
   "version": "5.0.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev -p 5000",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
@@ -19,8 +19,12 @@
     "mongodb": "^4.4.1",
     "next": "latest",
     "next-auth": "^4.2.1",
+    "nodemailer": "^6.7.2",
     "react": "latest",
-    "react-dom": "latest"
+    "react-dom": "latest",
+    "swr": "^1.2.2",
+    "uuid": "^8.3.2",
+    "uuid4": "^2.0.2"
   },
   "devDependencies": {
     "@iconify/react": "^3.1.4",

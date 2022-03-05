@@ -19,15 +19,17 @@ import { useRouter } from "next/router";
 import { useState } from "react";
 
 export default function SignUp() {
-  const router = useRouter()
+  const router = useRouter();
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
-
+  const [emailError, setEmailError] = useState(false);
+  const [passwordError, setPasswordError] = useState(false);
+  const emailPattern = new RegExp(".+@.+[.].+");
+  const passwordPattern = new RegExp("[0-9a-zA-Z!@#$]{6,}");
   const handleSubmit = async () => {
-    
     const resp = await fetch(process.env.NEXT_PUBLIC_URL + "/api/signUp", {
       method: "post",
       body: JSON.stringify({
@@ -37,11 +39,25 @@ export default function SignUp() {
         lastName: lastName,
       }),
     });
-    const status = resp.status
+    const status = resp.status;
     if (status == 200) {
-      router.push("/users/login")
+      router.push("/users/login");
     }
-    
+  };
+  const handleValidation = () => {
+    let valid = true;
+    if (!emailPattern.test(email)) {
+      setEmailError(true);
+      valid = false;
+    }
+    if (!passwordPattern.test(password)) {
+      setPasswordError(true);
+      valid = false;
+    }
+    if (!valid) {
+      return false;
+    }
+    return true;
   };
 
   return loading ? (
@@ -62,27 +78,25 @@ export default function SignUp() {
         <Typography component="h1" variant="h5">
           Sign up
         </Typography>
-        <Box component="form" sx={{ mt: 3 }}>
+        <Box component="form" action="" method="post" sx={{ mt: 3 }}>
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
               <TextField
                 autoComplete="given-name"
                 name="firstName"
-                required
                 fullWidth
                 value={firstName}
                 onChange={(e) => setFirstName(e.target.value)}
                 id="firstName"
-                label="First Name"
+                label="First Name (Optional)"
                 autoFocus
               />
             </Grid>
             <Grid item xs={12} sm={6}>
               <TextField
-                required
                 fullWidth
                 id="lastName"
-                label="Last Name"
+                label="Last Name (Optional)"
                 value={lastName}
                 onChange={(e) => setLastName(e.target.value)}
                 name="lastName"
@@ -91,18 +105,31 @@ export default function SignUp() {
             </Grid>
             <Grid item xs={12}>
               <TextField
+                error={emailError}
+                helperText={emailError ? "Enter a valid email address !" : null}
                 required
                 fullWidth
                 id="email"
                 label="Email Address"
                 name="email"
                 value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                onChange={(e) => {
+                  if (emailPattern.test(email)) {
+                    setEmailError(false);
+                  }
+                  setEmail(e.target.value);
+                }}
                 autoComplete="email"
               />
             </Grid>
             <Grid item xs={12}>
               <TextField
+                error={passwordError}
+                helperText={
+                  passwordError
+                    ? "The password must contain at least 6 character"
+                    : null
+                }
                 required
                 fullWidth
                 name="password"
@@ -110,17 +137,26 @@ export default function SignUp() {
                 type="password"
                 id="password"
                 value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                onChange={(e) => {
+                  if (passwordPattern.test(password)) {
+                    setPasswordError(false);
+                  }
+                  setPassword(e.target.value);
+                }}
                 autoComplete="new-password"
               />
             </Grid>
           </Grid>
           <Button
+            type="submit"
             fullWidth
             variant="contained"
-            onClick={() => {
-              setLoading(true);
-              handleSubmit();
+            onClick={(e) => {
+              e.preventDefault();
+              if (handleValidation()) {
+                setLoading(true);
+                handleSubmit();
+              }
             }}
             sx={{ mt: 3, mb: 2 }}
           >

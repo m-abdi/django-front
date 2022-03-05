@@ -26,8 +26,10 @@ import Toolbar from "@mui/material/Toolbar";
 import Tooltip from "@mui/material/Tooltip";
 import Typography from "@mui/material/Typography";
 import UserPanel from "./PanelAppbar";
+import { signOut } from "next-auth/react";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { useRouter } from "next/router";
+import { useSession } from "next-auth/react";
 import { useState } from "react";
 
 const drawerWidth = 240;
@@ -85,6 +87,7 @@ const pages = [
 ];
 
 const ResponsiveAppBar: NextPage = (props) => {
+  const { data: session } = useSession();
   const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(
     null
   );
@@ -98,14 +101,16 @@ const ResponsiveAppBar: NextPage = (props) => {
     "/users/bots",
     "/users/settings",
   ].includes(router.pathname);
-  const signInUpRoutes = ["/users/register", "/users/login"].includes(router.pathname);
+  const signInUpRoutes = ["/users/register", "/users/login"].includes(
+    router.pathname
+  );
   const mediumScreenMatch = useMediaQuery((theme) =>
     theme.breakpoints.up("md")
   );
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+  const handlePopoverClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
   };
-  const handleClose = () => {
+  const handlePopoverClose = () => {
     setAnchorEl(null);
   };
   return (
@@ -138,7 +143,7 @@ const ResponsiveAppBar: NextPage = (props) => {
               {routerMatch ? undefined : (
                 <Box sx={{ padding: 0, display: { xs: "none", md: "block" } }}>
                   <Link href="/" underline="none">
-                    <Image src={"/logo.png"} width={140} height={30} />
+                    <Image src={"/logo.svg"} width={140} height={30} />
                   </Link>
                 </Box>
               )}
@@ -180,25 +185,70 @@ const ResponsiveAppBar: NextPage = (props) => {
                       }}
                     ></Box>
 
-                    <Button aria-describedby={popoverId} onClick={handleClick}>
+                    <Button aria-describedby={popoverId} onClick={handlePopoverClick}>
                       <AccountCircleRoundedIcon fontSize="large" />
                     </Button>
                     <Popover
                       id={popoverId}
                       open={popoverOpen}
                       anchorEl={anchorEl}
-                      onClose={handleClose}
+                      onClose={handlePopoverClose}
                       anchorOrigin={{
                         vertical: "bottom",
                         horizontal: "left",
                       }}
                     >
-                      <Typography sx={{ p: 2 }} component={"p"}>
-                        login
-                      </Typography>
-                      <Typography sx={{ p: 2 }} component={"p"}>
-                        register
-                      </Typography>
+                      {session ? (
+                        <>
+                          <Link
+                            href={"/users/dashboard"}
+                            underline="none"
+                            sx={{ color: "black", textTransform: "capitalize" }}
+                          >
+                            <Typography sx={{ p: 1 }} component={"p"}>
+                              dashboard
+                            </Typography>
+                          </Link>
+                          <Link
+                            href={"/users/settings"}
+                            underline="none"
+                            sx={{ color: "black", textTransform: "capitalize" }}
+                          >
+                            <Typography sx={{ p: 1 }} component={"p"}>
+                              settings
+                            </Typography>
+                          </Link>
+                          <Button
+                            sx={{
+                              textTransform: "capitalize",
+                              color: "black",
+                              p: 0,
+                            }}
+                            onClick={() =>
+                              signOut({
+                                callbackUrl: process.env.NEXT_PUBLIC_URL + "/",
+                              })
+                            }
+                          >
+                            <Typography sx={{ p: 1 }} component={"p"}>
+                              logout
+                            </Typography>
+                          </Button>
+                        </>
+                      ) : (
+                        <>
+                          <Link href={"/users/login"} underline="none" sx={{color: "black", textTransform: "capitalize"}}>
+                            <Typography sx={{ p: 2 }} component={"p"}>
+                              login
+                            </Typography>
+                          </Link>
+                          <Link href={"/users/register"} underline="none" sx={{color: "black", textTransform: "capitalize"}}>
+                            <Typography sx={{ p: 2 }} component={"p"}>
+                              register
+                            </Typography>
+                          </Link>
+                        </>
+                      )}
                     </Popover>
                   </>
                 )

@@ -19,7 +19,25 @@ export default function SignIn() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
-
+  const [emailError, setEmailError] = useState(false);
+  const [passwordError, setPasswordError] = useState(false);
+  const emailPattern = new RegExp(".+@.+[.].+");
+  const passwordPattern = new RegExp("[0-9a-zA-Z!@#$]{6,}");
+  const handleValidation = () => {
+    let valid = true;
+    if (!emailPattern.test(email)) {
+      setEmailError(true);
+      valid = false;
+    }
+    if (!passwordPattern.test(password)) {
+      setPasswordError(true);
+      valid = false;
+    }
+    if (!valid) {
+      return false;
+    }
+    return true;
+  };
   return loading ? (
     <BarLoader />
   ) : (
@@ -46,8 +64,15 @@ export default function SignIn() {
             id="email"
             label="Email Address"
             name="email"
+            error={emailError}
+            helperText={emailError ? "Enter a valid email address !" : null}
             value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={(e) => {
+              if (emailPattern.test(email)) {
+                setEmailError(false);
+              }
+              setEmail(e.target.value);
+            }}
             autoComplete="email"
             autoFocus
           />
@@ -58,7 +83,18 @@ export default function SignIn() {
             name="password"
             label="Password"
             type="password"
-            onChange={(e) => setPassword(e.target.value)}
+            error={passwordError}
+            helperText={
+              passwordError
+                ? "The password must contain at least 6 character"
+                : null
+            }
+            onChange={(e) => {
+              if (passwordPattern.test(password)) {
+                setPasswordError(false);
+              }
+              setPassword(e.target.value);
+            }}
             value={password}
             id="password"
             autoComplete="current-password"
@@ -72,12 +108,14 @@ export default function SignIn() {
             variant="contained"
             sx={{ mt: 3, mb: 2 }}
             onClick={() => {
-              setLoading(true);
-              nextSignIn("credentials", {
-                email: email,
-                password: password,
-                callbackUrl: process.env.NEXT_PUBLIC_URL + "/users/dashboard",
-              });
+              if (handleValidation()) {
+                setLoading(true);
+                nextSignIn("credentials", {
+                  email: email,
+                  password: password,
+                  callbackUrl: process.env.NEXT_PUBLIC_URL + "/users/dashboard",
+                });
+              }
             }}
           >
             Sign In

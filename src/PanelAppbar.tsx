@@ -3,8 +3,10 @@ import * as React from "react";
 import { CSSObject, Theme, styled, useTheme } from "@mui/material/styles";
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from "@mui/material/AppBar";
 
+import AccountCircleRoundedIcon from "@mui/icons-material/AccountCircleRounded";
 import AlternateEmailIcon from "@mui/icons-material/AlternateEmail";
 import Box from "@mui/material/Box";
+import { Button } from "@mui/material";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -24,11 +26,13 @@ import ListItemText from "@mui/material/ListItemText";
 import MailIcon from "@mui/icons-material/Mail";
 import MenuIcon from "@mui/icons-material/Menu";
 import MuiDrawer from "@mui/material/Drawer";
+import { Popover } from "@mui/material";
 import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
 import SupportRoundedIcon from "@mui/icons-material/SupportRounded";
 import TelegramIcon from "@mui/icons-material/Telegram";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
+import { signOut } from "next-auth/react";
 
 const drawerWidth = 170;
 
@@ -106,11 +110,20 @@ const Drawer = styled(MuiDrawer, {
 export default function MiniDrawer(props: any) {
   const theme = useTheme();
   const [open, setOpen] = React.useState(true);
-
+  const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(
+    null
+  );
+  const popoverOpen = Boolean(anchorEl);
+  const popoverId = popoverOpen ? "account-popover" : undefined;
   const handleDrawerOpen = () => {
     setOpen(true);
   };
-
+  const handlePopoverClose = () => {
+    setAnchorEl(null);
+  };
+  const handlePopoverClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
   const handleDrawerClose = () => {
     setOpen(false);
   };
@@ -118,6 +131,7 @@ export default function MiniDrawer(props: any) {
   return (
     <Box sx={{ display: "flex" }}>
       <AppBar position="fixed" open={open} color="default">
+        
         <Toolbar>
           <IconButton
             color="inherit"
@@ -134,6 +148,52 @@ export default function MiniDrawer(props: any) {
           <Typography variant="h6" noWrap component="div">
             Mini variant drawer
           </Typography>
+          <Button
+            aria-describedby={popoverId}
+            onClick={handlePopoverClick}
+            sx={{ marginInlineStart: "auto" }}
+          >
+            <AccountCircleRoundedIcon fontSize="large" />
+          </Button>
+          <Popover
+            id={popoverId}
+            open={popoverOpen}
+            anchorEl={anchorEl}
+            onClose={handlePopoverClose}
+            anchorOrigin={{
+              vertical: "bottom",
+              horizontal: "left",
+            }}
+          >
+            <Link
+              href={"/users/dashboard"}
+              underline="none"
+              sx={{ color: "black", textTransform: "capitalize" }}
+            >
+              <Typography sx={{ p: 1 }} component={"p"}>
+                dashboard
+              </Typography>
+            </Link>
+            <Link
+              href={"/users/settings"}
+              underline="none"
+              sx={{ color: "black", textTransform: "capitalize" }}
+            >
+              <Typography sx={{ p: 1 }} component={"p"}>
+                settings
+              </Typography>
+            </Link>
+            <Button
+              sx={{ textTransform: "capitalize", color: "black", p:0 }}
+              onClick={() =>
+                signOut({ callbackUrl: process.env.NEXT_PUBLIC_URL + "/" })
+              }
+            >
+              <Typography sx={{ p: 1 }} component={"p"}>
+                logout
+              </Typography>
+            </Button>
+          </Popover>
         </Toolbar>
       </AppBar>
       <Drawer

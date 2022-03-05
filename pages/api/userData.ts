@@ -9,26 +9,11 @@ export default async function handler(
 ) {
   const session = await getSession({ req });
   if (session) {
-    const params = JSON.parse(req.body);
-    params.connectionDate =  Date.now()
     const { db } = await connectToDatabase();
     const usersCollection = db.collection("users");
     const user = await usersCollection.findOne({ email: session.user?.email });
-    // check repeateation !!!!
-    for (let e of user.exchanges) {
-      if (e.apiKey === params.apiKey) {
-        res.status(400).send({
-          error: "there is already an exchange account with this key",
-        });
-
-        return;
-      }
-    }
-    const newUser = await usersCollection.updateOne(
-      { email: session.user?.email },
-      { $push: { exchanges: params } }
-    );
-    res.status(200).send(JSON.stringify(newUser));
+    delete user.password
+    res.status(200).json(user);
   } else {
     res.status(401).send({ error: "not signed in!" });
   }
