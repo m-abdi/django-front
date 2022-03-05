@@ -1,6 +1,7 @@
 import * as React from "react";
 
 import { ThemeProvider, createTheme } from "@mui/material/styles";
+import { useEffect, useState } from "react";
 
 import Avatar from "@mui/material/Avatar";
 import BarLoader from "./BarLoader";
@@ -11,12 +12,13 @@ import Container from "@mui/material/Container";
 import CssBaseline from "@mui/material/CssBaseline";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Grid from "@mui/material/Grid";
+import Head from "next/head";
 import Link from "../src/Link";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
+import enableSubmitButton from "./recaptcha";
 import { useRouter } from "next/router";
-import { useState } from "react";
 
 export default function SignUp() {
   const router = useRouter();
@@ -27,8 +29,10 @@ export default function SignUp() {
   const [loading, setLoading] = useState(false);
   const [emailError, setEmailError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState(true);
   const emailPattern = new RegExp(".+@.+[.].+");
   const passwordPattern = new RegExp("[0-9a-zA-Z!@#$]{6,}");
+
   const handleSubmit = async () => {
     const resp = await fetch(process.env.NEXT_PUBLIC_URL + "/api/signUp", {
       method: "post",
@@ -44,6 +48,12 @@ export default function SignUp() {
       router.push("/users/login");
     }
   };
+  useEffect(() => {
+    window.enableSubmitButton = (token: string) => {
+      setSubmitStatus(false)
+    };
+  }, []);
+
   const handleValidation = () => {
     let valid = true;
     if (!emailPattern.test(email)) {
@@ -64,6 +74,14 @@ export default function SignUp() {
     <BarLoader />
   ) : (
     <Container maxWidth="xs">
+      <Head>
+        <title>Register | Botland</title>
+        <script
+          src="https://www.google.com/recaptcha/api.js"
+          async
+          defer
+        ></script>
+      </Head>
       <Box
         sx={{
           marginTop: 8,
@@ -147,9 +165,28 @@ export default function SignUp() {
               />
             </Grid>
           </Grid>
+          <Grid
+            item
+            xs={12}
+            sx={{
+              mt: 2,
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <div
+              className="g-recaptcha"
+              data-sitekey="6LeHZKYeAAAAAI7T4evc07qE-3x864y9baYCgqAa"
+              data-callback="enableSubmitButton"
+            ></div>
+          </Grid>
+
           <Button
             type="submit"
             fullWidth
+            disabled={submitStatus}
             variant="contained"
             onClick={(e) => {
               e.preventDefault();
