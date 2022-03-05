@@ -17,7 +17,7 @@ export default NextAuth({
           password: credentials.password,
         };
         const user = await users.findOne(query);
-        return user;
+        return user.status === 'inactive' ? null : user;
       },
     }),
   ],

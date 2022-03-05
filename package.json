@@ -16,6 +16,7 @@
     "@emotion/styled": "latest",
     "@mui/icons-material": "latest",
     "@mui/material": "latest",
+    "ftx-api": "^1.1.7",
     "mongodb": "^4.4.1",
     "next": "latest",
     "next-auth": "^4.2.1",
