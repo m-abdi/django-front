@@ -69,9 +69,8 @@ const Home: NextPage = () => {
               this link or from pages section . if you have any question dont
               hesitate to contact us
             </Typography>
-            <Link
+            <a
               href="/users/register"
-              noLinkStyle
               style={{ textDecoration: "none" }}
             >
               <Button
@@ -81,7 +80,7 @@ const Home: NextPage = () => {
               >
                 Start Trading
               </Button>
-            </Link>
+            </a>
           </Box>
         </FlexRowStacked>
       </Box>

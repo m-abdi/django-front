@@ -17,7 +17,13 @@ export default NextAuth({
           password: credentials.password,
         };
         const user = await users.findOne(query);
-        return user.status === 'inactive' ? null : user;
+        if (user.status === "inactive") {
+          return Promise.reject(
+            new Error("Please verify your email first")
+          );
+        } else {
+          return user;
+        }
       },
     }),
   ],

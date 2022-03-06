@@ -3,6 +3,7 @@ import * as React from "react";
 import { CSSObject, Theme, styled, useTheme } from "@mui/material/styles";
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from "@mui/material/AppBar";
 
+import AccountBalanceWalletOutlinedIcon from '@mui/icons-material/AccountBalanceWalletOutlined';
 import AccountCircleRoundedIcon from "@mui/icons-material/AccountCircleRounded";
 import AlternateEmailIcon from "@mui/icons-material/AlternateEmail";
 import Box from "@mui/material/Box";
@@ -223,14 +224,19 @@ export default function MiniDrawer(props: any) {
               href: "/users/dashboard",
             },
             {
-              title: "Exhchanges",
+              title: "Accounts",
               icon: <CurrencyExchangeRoundedIcon />,
-              href: "/users/exchanges",
+              href: "/users/accounts",
             },
             {
               title: "Bots",
               icon: <Icon icon="mdi:robot" />,
               href: "/users/bots",
+            },
+            {
+              title: "Wallet",
+              icon: <AccountBalanceWalletOutlinedIcon/>,
+              href: "/users/wallet",
             },
             {
               title: "Settings",

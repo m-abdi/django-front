@@ -65,9 +65,9 @@ const pages = [
   //   icon: <ArticleRoundedIcon fontSize="large" />,
   // },
   {
-    title: "Exhchanges",
+    title: "Accounts",
     icon: <CurrencyExchangeRoundedIcon />,
-    href: "/users/exchanges",
+    href: "/users/accounts",
   },
   {
     title: "Bots",
@@ -97,8 +97,10 @@ const ResponsiveAppBar: NextPage = (props) => {
   const router = useRouter();
   const routerMatch = [
     "/users/dashboard",
-    "/users/exchanges",
+    "/users/accounts",
     "/users/bots",
+    "/users/wallet",
+
     "/users/settings",
   ].includes(router.pathname);
   const signInUpRoutes = ["/users/register", "/users/login"].includes(
@@ -185,7 +187,10 @@ const ResponsiveAppBar: NextPage = (props) => {
                       }}
                     ></Box>
 
-                    <Button aria-describedby={popoverId} onClick={handlePopoverClick}>
+                    <Button
+                      aria-describedby={popoverId}
+                      onClick={handlePopoverClick}
+                    >
                       <AccountCircleRoundedIcon fontSize="large" />
                     </Button>
                     <Popover
@@ -237,12 +242,20 @@ const ResponsiveAppBar: NextPage = (props) => {
                         </>
                       ) : (
                         <>
-                          <Link href={"/users/login"} underline="none" sx={{color: "black", textTransform: "capitalize"}}>
+                          <Link
+                            href={"/users/login"}
+                            underline="none"
+                            sx={{ color: "black", textTransform: "capitalize" }}
+                          >
                             <Typography sx={{ p: 2 }} component={"p"}>
                               login
                             </Typography>
                           </Link>
-                          <Link href={"/users/register"} underline="none" sx={{color: "black", textTransform: "capitalize"}}>
+                          <Link
+                            href={"/users/register"}
+                            underline="none"
+                            sx={{ color: "black", textTransform: "capitalize" }}
+                          >
                             <Typography sx={{ p: 2 }} component={"p"}>
                               register
                             </Typography>
@@ -258,6 +271,7 @@ const ResponsiveAppBar: NextPage = (props) => {
                     href={page.href}
                     underline="none"
                     color="black"
+                    key={page.title}
                     sx={{ fontSize: "1.5rem" }}
                   >
                     {page.icon}

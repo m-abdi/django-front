@@ -22,10 +22,7 @@ export default function Dashboard() {
   const currentUser = useContext(CurrentUser);
   return (
     <Box>
-      {(async () => {
-        const r = await FTXClient.getSubaccounts();
-        return JSON.stringify(r);
-      })()}
+      dd
     </Box>
   );
 }

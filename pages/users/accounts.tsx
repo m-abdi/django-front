@@ -34,7 +34,7 @@ export default function Exchanges() {
   const handleNoExchange = () => {
     setExchangeDisplay("none");
   };
-  return isLoading || loading ? (
+  return true ? (
     <BarLoader />
   ) : isError ? (
     <NetworkError/>
@@ -42,7 +42,7 @@ export default function Exchanges() {
     user && (
       <div>
         {exchangeDisplay === "none" ? (
-          <FabAdd handleClick={handleNewExchange} text="Add new exchange" />
+          <FabAdd handleClick={handleNewExchange} text="Connect new account" />
         ) : (
           <FabClose handleClick={handleNoExchange} />
         )}
@@ -50,7 +50,7 @@ export default function Exchanges() {
         <Divider sx={{ my: 6, display: { xs: "none", md: "block" } }} />
         <Box sx={{ padding: 2 }}>
           <Typography component={"h2"} sx={{ fontSize: "25px !important" }}>
-            Connected Exchanges
+            Connected Accounts
           </Typography>
           <ExchangesTable rows={user.exchanges} />
         </Box>

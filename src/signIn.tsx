@@ -19,6 +19,7 @@ export default function SignIn() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
   const [emailError, setEmailError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
   const emailPattern = new RegExp(".+@.+[.].+");
@@ -56,6 +57,7 @@ export default function SignIn() {
         <Typography component="h1" variant="h5">
           Sign in
         </Typography>
+        <Typography component={"h2"} variant="body1" color={"error.main"} sx={{mt: 1, fontWeight: "bold"}}>{errorMessage}</Typography>
         <Box component="form" noValidate sx={{ mt: 1 }}>
           <TextField
             margin="normal"
@@ -113,7 +115,13 @@ export default function SignIn() {
                 nextSignIn("credentials", {
                   email: email,
                   password: password,
+                  redirect: false,
                   callbackUrl: process.env.NEXT_PUBLIC_URL + "/users/dashboard",
+                }).then((resp) => {
+                  if (resp) {
+                    setErrorMessage(resp.error)
+                  }
+                  setLoading(false)
                 });
               }
             }}
@@ -127,9 +135,7 @@ export default function SignIn() {
               </Link>
             </Grid>
             <Grid item>
-              <Link href="/users/register" variant="body2">
-                {"Don't have an account? Sign Up"}
-              </Link>
+              <a href="/users/register">{"Don't have an account? Sign Up"}</a>
             </Grid>
           </Grid>
         </Box>

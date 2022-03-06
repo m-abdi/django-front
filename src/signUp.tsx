@@ -76,11 +76,7 @@ export default function SignUp() {
     <Container maxWidth="xs">
       <Head>
         <title>Register | Botland</title>
-        <script
-          src="https://www.google.com/recaptcha/api.js"
-          async
-          defer
-        ></script>
+
       </Head>
       <Box
         sx={{
@@ -208,6 +204,11 @@ export default function SignUp() {
           </Grid>
         </Box>
       </Box>
+      <script
+          src="https://www.google.com/recaptcha/api.js"
+          async
+          defer
+        ></script>
     </Container>
   );
 }

@@ -30,7 +30,7 @@ export default function Bots() {
     user && (
       <>
         {botDisplay === "none" ? (
-          <FabAdd handleClick={handleNewBot} text="Add new bot" />
+          <FabAdd handleClick={handleNewBot} text="Activate new bot" />
         ) : (
           <FabClose handleClick={handleNoBot} />
         )}

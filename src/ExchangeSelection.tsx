@@ -60,7 +60,7 @@ export default function ExchangeSelection(props: any) {
           }}
         >
           <Typography component={"h3"} fontSize={30}>
-            Connect an exchange using ap API key:
+            Connect an exchange account using an API key:
           </Typography>
           <Divider sx={{ marginBlockEnd: "30px" }} />
           <BasicSelect
