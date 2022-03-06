@@ -48,8 +48,8 @@ export async function getServerSideProps(context: any) {
     const user = await usersCollection.findOne({ _id: params.id });
     
     if (user.status === "inactive") {
+      await ftxMainClient.deleteSubaccount(user.email)
       const cresp = await ftxMainClient.createSubaccount(user.email);
-      console.log(cresp);
       
       if (cresp.success) {
         const depositList = await giveMeFTXSubaccount(
@@ -59,7 +59,6 @@ export async function getServerSideProps(context: any) {
           coin: "USDT",
           method: "trx"
         });
-        console.log(depositList);
         const address = depositList.result.address
         const method = depositList.result.method
         const currency = "USDT"

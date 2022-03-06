@@ -13,7 +13,7 @@ const Wallet: NextPage = () => {
   ) : isError ? (
     <NetworkError />
   ) : (
-    wallet && wallet.map((a) => <Box>{a.total}</Box>)
+    wallet && wallet.map((a:any) => <Box key={a.total}>{a.total}</Box>)
   );
 };
 

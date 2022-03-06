@@ -106,7 +106,7 @@ const ResponsiveAppBar: NextPage = (props) => {
   const signInUpRoutes = ["/users/register", "/users/login"].includes(
     router.pathname
   );
-  const mediumScreenMatch = useMediaQuery((theme) =>
+  const mediumScreenMatch = useMediaQuery((theme:any) =>
     theme.breakpoints.up("md")
   );
   const handlePopoverClick = (event: React.MouseEvent<HTMLButtonElement>) => {

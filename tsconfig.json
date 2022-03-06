@@ -29,9 +29,9 @@
   "include": [
     "next-env.d.ts",
     "**/*.ts",
-    "**/*.tsx"
-, "lib/FTX.ts"  ],
+    "**/*.tsx",
+     "lib/FTX.ts"  ],
   "exclude": [
-    "node_modules"
+    "node_modules",
   ]
 }

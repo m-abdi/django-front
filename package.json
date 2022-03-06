@@ -32,6 +32,7 @@
     "@svgr/webpack": "^6.2.1",
     "@types/node": "latest",
     "@types/react": "latest",
+    "@types/uuid": "^8.3.4",
     "eslint": "latest",
     "eslint-config-next": "latest",
     "typescript": "latest"

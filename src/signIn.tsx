@@ -13,9 +13,11 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import { signIn as nextSignIn } from "next-auth/react";
+import { useRouter } from "next/router";
 import { useState } from "react";
 
 export default function SignIn() {
+  const router = useRouter()
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
@@ -118,10 +120,13 @@ export default function SignIn() {
                   redirect: false,
                   callbackUrl: process.env.NEXT_PUBLIC_URL + "/users/dashboard",
                 }).then((resp) => {
-                  if (resp) {
+                  if (resp && resp.error) {
+                    
                     setErrorMessage(resp.error)
+                    setLoading(false)
+                  } else {
+                    router.push(process.env.NEXT_PUBLIC_URL + "/users/dashboard")
                   }
-                  setLoading(false)
                 });
               }
             }}

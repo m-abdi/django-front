@@ -26,6 +26,7 @@ export default function Exchanges() {
     },
   });
   if (status === "loading") {
+    
     return <BarLoader />;
   }
   const handleNewExchange = () => {
@@ -34,7 +35,7 @@ export default function Exchanges() {
   const handleNoExchange = () => {
     setExchangeDisplay("none");
   };
-  return true ? (
+  return loading || isLoading ? (
     <BarLoader />
   ) : isError ? (
     <NetworkError/>
