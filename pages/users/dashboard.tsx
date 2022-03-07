@@ -1,15 +1,18 @@
-import { Box, Container } from "@mui/material";
+import { Box, Container, Divider, Typography } from "@mui/material";
 import React, { useContext } from "react";
 
 import BarLoader from "../../src/BarLoader";
+import ConnectedExchange from "../../src/partials/dashboard/ConnectedExchange";
 import CurrentUser from "~/src/CurrentUserContext";
 import FTXClient from "lib/FTX";
 import NetworkError from "~/src/NetworkError";
 import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
+import useUser from "~/src/logic/userHook";
 
 export default function Dashboard() {
   const router = useRouter();
+  const { user, isLoading, isError } = useUser();
   const { status } = useSession({
     required: true,
     onUnauthenticated() {
@@ -20,9 +23,17 @@ export default function Dashboard() {
     return <BarLoader />;
   }
   const currentUser = useContext(CurrentUser);
-  return (
+  return isLoading ? (
+    <BarLoader />
+  ) : isError ? (
+    <NetworkError />
+  ) : (
     <Box>
-      dd
+      <Typography component={"h1"} variant="h4">Connected Exchanges</Typography>
+      <Divider variant="fullWidth" flexItem sx={{mb: 3}}/>
+      {user.exchanges.map((e) => (
+        <ConnectedExchange name={e.name} exchange={e.exchange} assets={e.balance} />
+      ))}
     </Box>
   );
 }

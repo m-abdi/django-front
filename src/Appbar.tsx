@@ -65,9 +65,9 @@ const pages = [
   //   icon: <ArticleRoundedIcon fontSize="large" />,
   // },
   {
-    title: "Accounts",
+    title: "MyExchanges",
     icon: <CurrencyExchangeRoundedIcon />,
-    href: "/users/accounts",
+    href: "/users/myExchanges",
   },
   {
     title: "Bots",
@@ -97,7 +97,7 @@ const ResponsiveAppBar: NextPage = (props) => {
   const router = useRouter();
   const routerMatch = [
     "/users/dashboard",
-    "/users/accounts",
+    "/users/myExchanges",
     "/users/bots",
     "/users/wallet",
 

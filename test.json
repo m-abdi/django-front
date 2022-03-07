@@ -1,0 +1,54 @@
+{
+  "_id": "359171a1-c283-418b-9750-6d18fcc71ab4",
+  "email": "m.abdi.public@gmail.com",
+  "firstName": "",
+  "lastName": "",
+  "exchanges": [
+    {
+      "exchange": "Kucoin",
+      "name": "Kucoin",
+      "apiKey": "61ebbd88e923ba00015942e2",
+      "apiSecret": "c9e0e927-4b53-49b9-87a2-6aecdee247de",
+      "passphrase": "Parsaapi_1",
+      "connectionDate": 1646600689130,
+      "balance": [
+        {
+          "id": "61fe94f1ec92580001a18b2e",
+          "currency": "ETH",
+          "type": "trade",
+          "balance": "0.0059346",
+          "available": "0",
+          "holds": "0.0059346"
+        },
+        {
+          "id": "61fe51c292da1500010c98ee",
+          "currency": "USDT",
+          "type": "main",
+          "balance": "2",
+          "available": "2",
+          "holds": "0"
+        },
+        {
+          "id": "61fe5946ca360b0001c80a7b",
+          "currency": "USDT",
+          "type": "trade",
+          "balance": "1.94478387",
+          "available": "1.94478387",
+          "holds": "0"
+        },
+        {
+          "id": "6201201f7d597e00016607ba",
+          "currency": "BNB",
+          "type": "trade",
+          "balance": "0",
+          "available": "0",
+          "holds": "0"
+        }
+      ]
+    }
+  ],
+  "bots": [],
+  "status": "active",
+  "ftxSubaccount": "m.abdi.public@gmail.com",
+  "wallet": { "USDT": { "trx": "TMwZeCVfhHzq2EMKoCfVRpfAirqmViSB3r" } }
+}

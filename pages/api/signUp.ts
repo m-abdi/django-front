@@ -2,7 +2,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 
 import { connectToDatabase } from "../../lib/mongodb";
 import emailSender from "lib/nodemailer";
-import { v4 as uuidv4 } from 'uuid';
+import { v4 as uuidv4 } from "uuid";
 
 export default async function handler(
   req: NextApiRequest,
@@ -12,15 +12,25 @@ export default async function handler(
     const params = JSON.parse(req.body);
     const { db } = await connectToDatabase();
     const usersCollection = db.collection("users");
+    const potentialUser = await  usersCollection.findOne({ email: params.email });
+    if (potentialUser) {
+      res.status(400).send("You are already registered !");
+      return
+    }
     // set some initial parameters
     params.exchanges = [];
     params.bots = [];
-    params._id = uuidv4()
-    params.status = "inactive"
+    params._id = uuidv4();
+    params.status = "inactive";
     const r = await usersCollection.insertOne(params);
-    const emailResop = await emailSender(`${params.email}`, 'Verification Link', params.firstName, `/users/activateUser?id=${params._id}`)
+    const emailResop = await emailSender(
+      `${params.email}`,
+      "Verification Link",
+      params.firstName,
+      `/users/activateUser?id=${params._id}`
+    );
     res.status(200).send(JSON.stringify(r));
-  } catch(e) {
+  } catch (e) {
     res.status(500).send("");
   }
 }

@@ -9,7 +9,7 @@ import ExchangesTable from "~/src/ExchangesTable";
 import FabAdd from "~/src/FabAdd";
 import FabClose from "~/src/FabClose";
 import NetworkError from "~/src/NetworkError";
-import useUser from "~/src/userHook";
+import useUser from "~/src/logic/userHook";
 
 export default function Bots() {
   const { user, isLoading, isError } = useUser();

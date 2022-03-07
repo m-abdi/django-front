@@ -27,6 +27,7 @@ export default function SignUp() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("")
   const [emailError, setEmailError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
   const [submitStatus, setSubmitStatus] = useState(true);
@@ -46,11 +47,15 @@ export default function SignUp() {
     const status = resp.status;
     if (status == 200) {
       router.push("/users/login");
+    } else if (status == 400) {
+      setErrorMessage(await resp.text())
+      setLoading(false)
     }
   };
   useEffect(() => {
     window.enableSubmitButton = (token: string) => {
       setSubmitStatus(false)
+      
     };
   }, []);
 
@@ -92,6 +97,7 @@ export default function SignUp() {
         <Typography component="h1" variant="h5">
           Sign up
         </Typography>
+        <Typography component={"h2"} variant="body1" color={"error.main"} sx={{mt: 1, fontWeight: "bold"}}>{errorMessage}</Typography>
         <Box component="form" action="" method="post" sx={{ mt: 3 }}>
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>

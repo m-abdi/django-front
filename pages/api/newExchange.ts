@@ -10,7 +10,7 @@ export default async function handler(
   const session = await getSession({ req });
   if (session) {
     const params = JSON.parse(req.body);
-    params.connectionDate =  Date.now()
+    params.connectedAt =  Date.now()
     const { db } = await connectToDatabase();
     const usersCollection = db.collection("users");
     const user = await usersCollection.findOne({ email: session.user?.email });

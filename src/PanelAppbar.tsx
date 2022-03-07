@@ -224,9 +224,9 @@ export default function MiniDrawer(props: any) {
               href: "/users/dashboard",
             },
             {
-              title: "Accounts",
+              title: "MyExchanges",
               icon: <CurrencyExchangeRoundedIcon />,
-              href: "/users/accounts",
+              href: "/users/myExchanges",
             },
             {
               title: "Bots",
