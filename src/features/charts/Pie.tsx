@@ -6,7 +6,7 @@ import React from "react";
 import { match } from "assert";
 import usePrices from "src/logic/prices";
 
-const colors = ["#8884d8", "#82ca9d", "#82ca9d", "#82ca9d"];
+const colors = ["#3c69c2", "#c92230", "#82ca9d", "#79c922"];
 
 function kucoinData(assets: KucoinAsset[], prices: DatabasePrices[]) {
   let noneZeroAssets: KucoinAsset[] = assets.filter(
@@ -24,14 +24,16 @@ function kucoinData(assets: KucoinAsset[], prices: DatabasePrices[]) {
   let assetsArray = [];
   let i = 0;
   console.log(prices);
-  
+
   for (const [key, value] of Object.entries(accumulatedAssets)) {
     for (let p of prices) {
       if (p.symbol === key + "USDT" || key === "USDT") {
         assetsArray.push({
           title: key,
           value:
-            p.symbol === key + "USDT" ? value.balance * parseFloat(p.price) : 1 * value.balance,
+            p.symbol === key + "USDT"
+              ? value.balance * parseFloat(p.price)
+              : 1 * value.balance,
           color: colors[i],
         });
         i++;
@@ -56,5 +58,13 @@ export default function Pie({
 
   console.log(data);
 
-  return <PieChart key={exchange} data={data} animate={true}  label={({ dataEntry }) => dataEntry.title} style={{fontSize: "5pt"}} />;
+  return (
+    <PieChart
+      key={exchange}
+      data={data}
+      animate={true}
+      label={({ dataEntry }) => dataEntry.title}
+      style={{ fontSize: "5pt" }}
+    />
+  );
 }

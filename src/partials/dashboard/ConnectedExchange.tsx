@@ -2,6 +2,7 @@ import { Asset as AssetType, Exchanges as ExchangesType } from "../../Types";
 import { Grid, Paper, Typography } from "@mui/material";
 
 import BarLoader from "../../BarLoader";
+import {Bots as BotsType} from "src/Types"
 import { Box } from "@mui/system";
 import DenseTable from "../../features/charts/tables/BotsSummary";
 import Image from "next/image";
@@ -14,10 +15,12 @@ export default function ConnectedExchange({
   name,
   exchange,
   assets,
+  bots
 }: {
   name: string;
   exchange: ExchangesType;
   assets: AssetType;
+  bots: BotsType
 }) {
   const { prices, isLoading, isError } = usePrices(exchange);
 
@@ -65,7 +68,7 @@ export default function ConnectedExchange({
           <Typography component={"h3"} variant="h6">
             Active Bots
           </Typography>
-          <DenseTable />
+          <DenseTable bots={bots} />
         </Grid>
       </Grid>
     </Paper>

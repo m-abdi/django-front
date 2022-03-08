@@ -3,7 +3,6 @@ import React, { useContext } from "react";
 
 import BarLoader from "../../src/BarLoader";
 import ConnectedExchange from "../../src/partials/dashboard/ConnectedExchange";
-import CurrentUser from "~/src/CurrentUserContext";
 import FTXClient from "lib/FTX";
 import NetworkError from "~/src/NetworkError";
 import { useRouter } from "next/router";
@@ -22,7 +21,6 @@ export default function Dashboard() {
   if (status === "loading") {
     return <BarLoader />;
   }
-  const currentUser = useContext(CurrentUser);
   return isLoading ? (
     <BarLoader />
   ) : isError ? (
@@ -32,7 +30,7 @@ export default function Dashboard() {
       <Typography component={"h1"} variant="h4">Connected Exchanges</Typography>
       <Divider variant="fullWidth" flexItem sx={{mb: 3}}/>
       {user.exchanges.map((e) => (
-        <ConnectedExchange name={e.name} exchange={e.exchange} assets={e.balance} />
+        <ConnectedExchange name={e.name} exchange={e.exchange} assets={e.balance} bots={user.bots.filter((b)=> b.account === e.name)} />
       ))}
     </Box>
   );

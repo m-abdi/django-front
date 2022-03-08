@@ -3,7 +3,7 @@ import { Box } from "@mui/system";
 import NetworkError from "~/src/NetworkError";
 import type { NextPage } from "next";
 import React from "react";
-import useWallet from "~/src/walletHook";
+import useWallet from "~/src/logic/walletHook";
 
 const Wallet: NextPage = () => {
   const { wallet, isLoading, isError } = useWallet();

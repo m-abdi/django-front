@@ -1,5 +1,7 @@
 import "../src/style.css";
 import "../src/BarLoader.css"
+import "../public/css/Home.css"
+import "../public/css/nicepage.css"
 
 import * as React from "react";
 

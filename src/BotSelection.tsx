@@ -17,10 +17,12 @@ export default function BotSelection(props: any) {
     router.query.account ? router.query.account : ""
   );
   const [bot, setBot] = useState("DCA");
-  const [pair, setPair] = useState("");
-  const [baseOrderSize, setBaseOrderSize] = useState("");
-  const [tp, setTP] = useState("");
-  const [priceDeviation, setPriceDeviation] = useState("");
+  const [pairs, setPairs] = useState([]);
+  const [baseOrderSize, setBaseOrderSize] = useState(undefined);
+  const [tp, setTP] = useState(undefined);
+  const [priceDeviation, setPriceDeviation] = useState(undefined);
+  const [coinMaximum, setCoinMaximum] = useState(undefined);
+
   const [loading, setLoading] = useState(false);
   useEffect(() => {
     router.query.account && setAccount(router.query.account);
@@ -32,7 +34,8 @@ export default function BotSelection(props: any) {
       bot: bot,
       tp: tp,
       baseOrderSize: baseOrderSize,
-      pair: pair,
+      coinMaximum: coinMaximum,
+      pairs: pairs,
       priceDeviation: priceDeviation,
     };
     props.setLoading(true);
@@ -43,7 +46,7 @@ export default function BotSelection(props: any) {
     const status = await resp.status;
     if (status == 200) {
       console.log(await resp.json());
-      router.push(`/users/bots?account=${name}`);
+      router.push(`/users/dashboard`);
     }
     setLoading(false);
   };
@@ -58,7 +61,7 @@ export default function BotSelection(props: any) {
         borderRadius: 5,
         boxShadow: 5,
         padding: 5,
-        display: props.display
+        display: props.display,
       }}
     >
       <form onSubmit={handleSubmit}>
@@ -76,7 +79,13 @@ export default function BotSelection(props: any) {
           <Divider sx={{ marginBlockEnd: "30px" }} />
           <BasicSelect
             name="Account"
-            values={[{ title: "Kucoin" }]}
+            values={
+              props.user.exchanges
+                ? props.user.exchanges.map((e) => ({
+                    title: e.name,
+                  }))
+                : []
+            }
             mb={4}
             value={account}
             onChange={(e: any) => setAccount(e.target.value)}
@@ -96,10 +105,11 @@ export default function BotSelection(props: any) {
               </Typography>
               <Divider sx={{ marginBlock: "10px" }} />
               <BasicSelect
-                name="Pair"
+                name="Pairs"
                 margin="normal"
-                value={pair}
-                onChange={(e: any) => setPair(e.target.value)}
+                multiple={true}
+                value={pairs}
+                onChange={(e: any) => setPairs(e.target.value)}
                 sx={{ marginBlockEnd: 4 }}
                 values={[
                   { title: "BTCUSDT" },
@@ -114,7 +124,7 @@ export default function BotSelection(props: any) {
                 variant="outlined"
                 margin="normal"
                 value={baseOrderSize}
-                onChange={(e) => setBaseOrderSize(e.target.value)}
+                onChange={(e) => setBaseOrderSize(parseFloat(e.target.value))}
                 sx={{
                   inlineSize: { xs: "100%", md: "45%" },
                   marginInlineEnd: 3,
@@ -126,7 +136,7 @@ export default function BotSelection(props: any) {
                 variant="outlined"
                 margin="normal"
                 value={tp}
-                onChange={(e) => setTP(e.target.value)}
+                onChange={(e) => setTP(parseFloat(e.target.value))}
                 sx={{
                   inlineSize: { xs: "100%", md: "45%" },
                   marginInlineEnd: 3,
@@ -138,7 +148,19 @@ export default function BotSelection(props: any) {
                 variant="outlined"
                 margin="normal"
                 value={priceDeviation}
-                onChange={(e) => setPriceDeviation(e.target.value)}
+                onChange={(e) => setPriceDeviation(parseFloat(e.target.value))}
+                sx={{
+                  inlineSize: { xs: "100%", md: "45%" },
+                  marginInlineEnd: 3,
+                }}
+              />
+              <TextField
+                id="coinMaximum"
+                label="Coin Maximum (USDT)"
+                variant="outlined"
+                margin="normal"
+                value={coinMaximum}
+                onChange={(e) => setCoinMaximum(parseFloat(e.target.value))}
                 sx={{
                   inlineSize: { xs: "100%", md: "45%" },
                   marginInlineEnd: 3,
@@ -155,6 +177,7 @@ export default function BotSelection(props: any) {
             alignItems: "center",
             justifyContent: "space-around",
             inlineSize: "220px",
+            mt: 3,
           }}
         >
           <Link href="/users/dashboard">

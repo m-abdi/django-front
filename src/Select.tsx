@@ -20,6 +20,7 @@ export default function BasicSelect(props:any) {
         <Select
           labelId={`${props.name}-label`}
           id={`${props.name}`}
+          multiple={props.multiple}
           value={props.value}
           label={`${props.name}`}
           onChange={props.onChange}

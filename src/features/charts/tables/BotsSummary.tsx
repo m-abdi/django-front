@@ -1,31 +1,31 @@
-import * as React from 'react';
+import * as React from "react";
 
-import Paper from '@mui/material/Paper';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
+import {Bots as BotsType} from "src/Types"
+import Paper from "@mui/material/Paper";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
 
-function createData(
-  name: string,
-  calories: number,
-  fat: number,
-  carbs: number,
-  protein: number,
-) {
-  return { name, calories, fat, carbs, protein };
+function createData(name: string, pairs: string) {
+  return { name, pairs };
 }
 
-const rows = [
-  createData('DCA', "ETHUSDT"),
-];
 
-export default function DenseTable() {
+export default function DenseTable({bots}: {bots: BotsType}) {
+const rows = bots.map((b)=>createData(b.bot, b.pairs))
+
+console.log(rows);
+
   return (
     <TableContainer>
-      <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table" sx={{inlineSize: "90%"}}>
+      <Table
+        size="small"
+        aria-label="a dense table"
+        sx={{ inlineSize: "90%" }}
+      >
         {/* <TableHead>
           <TableRow>
             <TableCell>Name</TableCell>
@@ -36,12 +36,12 @@ export default function DenseTable() {
           {rows.map((row) => (
             <TableRow
               key={row.name}
-              sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+              sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
             >
               <TableCell component="th" scope="row">
                 {row.name}
               </TableCell>
-              <TableCell align="right">{row.calories}</TableCell>
+              <TableCell align="right">{row.pairs.toString()}</TableCell>
             </TableRow>
           ))}
         </TableBody>

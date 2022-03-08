@@ -16,4 +16,16 @@ export interface DatabaseTypes {
   symbol: string;
 }
 
+export interface DCABot {
+  account: string;
+  bot: string;
+  pairs: string[];
+  coinMaximum: number;
+  baseOrderSize: number;
+  priceDeviation: number;
+  tp: number;
+}
+
+export type Bots = DCABot[];
+
 export type Asset = KucoinAsset[];

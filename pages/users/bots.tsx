@@ -34,7 +34,7 @@ export default function Bots() {
         ) : (
           <FabClose handleClick={handleNoBot} />
         )}
-        <BotSelection display={botDisplay} setLoading={setLoading} />
+        <BotSelection display={botDisplay} setLoading={setLoading} user={user} />
         <Divider sx={{ my: 6, display: { xs: "none", md: "block" } }} />
         <Box sx={{ padding: 2 }}>
           <Typography component={"h2"} sx={{ fontSize: "25px !important" }}>

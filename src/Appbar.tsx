@@ -100,13 +100,14 @@ const ResponsiveAppBar: NextPage = (props) => {
     "/users/myExchanges",
     "/users/bots",
     "/users/wallet",
-
     "/users/settings",
   ].includes(router.pathname);
+
+  const homeMatch = ["/"].includes(router.pathname);
   const signInUpRoutes = ["/users/register", "/users/login"].includes(
     router.pathname
   );
-  const mediumScreenMatch = useMediaQuery((theme:any) =>
+  const mediumScreenMatch = useMediaQuery((theme: any) =>
     theme.breakpoints.up("md")
   );
   const handlePopoverClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -122,15 +123,20 @@ const ResponsiveAppBar: NextPage = (props) => {
       ) : (
         <AppBar
           position="fixed"
-          color="default"
+          color={mediumScreenMatch ? "transparent": "default"}
           sx={{
             top: { xs: "auto", md: 0 },
             bottom: { xs: 0, md: "auto" },
             left: 0,
             right: 0,
+            borderRadius: {md: "5px 5px 75px 75px"},
+            backgroundColor: {md: "rgba(0, 0, 0, 0.5)"},
+            inlineSize : {md: "60%"},
+            mx: {md: "auto"},
+            minInlineSize: {md: "800px"}
           }}
         >
-          <Container maxWidth="xl">
+          <Container maxWidth="lg">
             <Toolbar
               sx={{
                 display: { xs: "flex" },
@@ -167,7 +173,7 @@ const ResponsiveAppBar: NextPage = (props) => {
                           <Link
                             key={page.title}
                             href={page.href}
-                            sx={{ my: 1, color: "black", display: "block" }}
+                            sx={{ my: 1, color: "white", display: "block", ":hover": {color: "wheat"} }}
                             underline="none"
                           >
                             {page.title}
@@ -287,7 +293,11 @@ const ResponsiveAppBar: NextPage = (props) => {
         <UserPanel>{props.children}</UserPanel>
       ) : (
         <>
-          <Toolbar sx={{ display: { xs: "none", md: "block" } }} />
+          {homeMatch ? (
+            false
+          ) : (
+            <Toolbar sx={{ display: { xs: "none", md: "block" } }} />
+          )}
           <main>{props.children}</main>
           {!routerMatch && !signInUpRoutes && <Footer />}
 

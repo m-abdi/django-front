@@ -19,7 +19,7 @@ export default async function handler(
     }
     // set some initial parameters
     params.exchanges = [];
-    params.bots = [];
+    params.bots = []
     params._id = uuidv4();
     params.status = "inactive";
     const r = await usersCollection.insertOne(params);

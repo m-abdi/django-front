@@ -4,7 +4,7 @@ import { responsiveFontSizes } from "@mui/material/styles";
 // Create a theme instance.
 const theme = createTheme({
   typography: {
-    fontFamily: "'Slabo 27px', serif;",
+    fontFamily: "'Dosis', serif",
   },
   palette: {
     primary: {
