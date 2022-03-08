@@ -27,7 +27,7 @@ export default function Dashboard() {
     <NetworkError />
   ) : (
     <Box>
-      <Typography component={"h1"} variant="h4">Connected Exchanges</Typography>
+      <Typography component={"h2"} variant="h6">Connected Exchanges</Typography>
       <Divider variant="fullWidth" flexItem sx={{mb: 3}}/>
       {user.exchanges.map((e) => (
         <ConnectedExchange name={e.name} exchange={e.exchange} assets={e.balance} bots={user.bots.filter((b)=> b.account === e.name)} />

@@ -42,7 +42,7 @@ export default function ConnectedExchange({
       <Grid container justifyContent="center" spacing={2} height="330px">
         <Grid item xs={5}>
           <Box>
-            <Typography component={"h2"} variant="h5">
+            <Typography component={"h3"} variant="h5">
               {name}
             </Typography>
             <Box
