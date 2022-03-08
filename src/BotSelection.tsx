@@ -1,4 +1,4 @@
-import { Button, Container, Divider, Typography } from "@mui/material";
+import { Button, Container, Dialog, DialogTitle, Divider, Typography } from "@mui/material";
 
 import BarLoader from "./BarLoader";
 import BasicSelect from "./Select";
@@ -22,7 +22,7 @@ export default function BotSelection(props: any) {
   const [tp, setTP] = useState(undefined);
   const [priceDeviation, setPriceDeviation] = useState(undefined);
   const [coinMaximum, setCoinMaximum] = useState(undefined);
-
+  const [botPrice, setBotPrice] = useState(false);
   const [loading, setLoading] = useState(false);
   useEffect(() => {
     router.query.account && setAccount(router.query.account);
@@ -38,7 +38,8 @@ export default function BotSelection(props: any) {
       pairs: pairs,
       priceDeviation: priceDeviation,
     };
-    props.setLoading(true);
+    if (parseFloat(props.wallet[0]["free"]) > 1) {
+      props.setLoading(true);
     const resp = await fetch("/api/newBot", {
       method: "post",
       body: JSON.stringify(data),
@@ -49,6 +50,9 @@ export default function BotSelection(props: any) {
       router.push(`/users/dashboard`);
     }
     setLoading(false);
+    } else {
+      setBotPrice(true)
+    }
   };
   return loading ? (
     <BarLoader />
@@ -76,6 +80,11 @@ export default function BotSelection(props: any) {
           <Typography component={"h3"} fontSize={30}>
             Connect your account to one of our bots:
           </Typography>
+          <Dialog open={botPrice} onClose={()=>setBotPrice(false)} >
+            <DialogTitle sx={{testAlign: "center"}}>
+              Increase your balance first !
+            </DialogTitle>
+            </Dialog>
           <Divider sx={{ marginBlockEnd: "30px" }} />
           <BasicSelect
             name="Account"
@@ -93,13 +102,14 @@ export default function BotSelection(props: any) {
           <BasicSelect
             name="Bot"
             values={[{ title: "DCA" }]}
-            sx={{ marginBlock: 5 }}
+            sx={{ mt: 5, mb: 1 }}
             mb={4}
             value={bot}
             onChange={(e: any) => setBot(e.target.value)}
           />
           {bot === "DCA" && (
             <Box>
+              <Typography component={"p"} variant="body2" color={"red"}>  0.5  (USDT) / day</Typography>
               <Typography component={"h4"} fontSize={25}>
                 Parameters
               </Typography>

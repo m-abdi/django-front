@@ -2,6 +2,7 @@ import * as React from "react";
 
 import { styled, useTheme } from "@mui/material/styles";
 
+import AccountBalanceWalletRoundedIcon from "@mui/icons-material/AccountBalanceWalletRounded";
 import AccountCircleRoundedIcon from "@mui/icons-material/AccountCircleRounded";
 import AppBar from "@mui/material/AppBar";
 import ArticleRoundedIcon from "@mui/icons-material/ArticleRounded";
@@ -10,6 +11,7 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Container from "@mui/material/Container";
 import CurrencyExchangeRoundedIcon from "@mui/icons-material/CurrencyExchangeRounded";
+import DashboardOutlinedIcon from "@mui/icons-material/DashboardOutlined";
 import Footer from "../src/Footer";
 import HelpRoundedIcon from "@mui/icons-material/HelpRounded";
 import HomeRoundedIcon from "@mui/icons-material/HomeRounded";
@@ -22,6 +24,8 @@ import MenuIcon from "@mui/icons-material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import type { NextPage } from "next";
 import { Popover } from "@mui/material";
+import PowerSettingsNewIcon from '@mui/icons-material/PowerSettingsNew';
+import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
 import Toolbar from "@mui/material/Toolbar";
 import Tooltip from "@mui/material/Tooltip";
 import Typography from "@mui/material/Typography";
@@ -75,9 +79,9 @@ const pages = [
     href: "/users/bots",
   },
   {
-    title: "Support",
-    href: "/support",
-    icon: <HelpRoundedIcon fontSize="large" />,
+    title: "Wallet",
+    href: "/users/wallet",
+    icon: <AccountBalanceWalletRoundedIcon fontSize="large" />,
   },
   {
     title: "Account",
@@ -123,17 +127,17 @@ const ResponsiveAppBar: NextPage = (props) => {
       ) : (
         <AppBar
           position="fixed"
-          color={mediumScreenMatch ? "transparent": "default"}
+          color={mediumScreenMatch ? "transparent" : "default"}
           sx={{
             top: { xs: "auto", md: 0 },
             bottom: { xs: 0, md: "auto" },
             left: 0,
             right: 0,
-            borderRadius: {md: "5px 5px 75px 75px"},
-            backgroundColor: {md: "rgba(0, 0, 0, 0.5)"},
-            inlineSize : {md: "60%"},
-            mx: {md: "auto"},
-            minInlineSize: {md: "800px"}
+            borderRadius: { md: "5px 5px 75px 75px" },
+            backgroundColor: { md: "rgba(0, 0, 0, 0.5)" },
+            inlineSize: { md: "60%" },
+            mx: { md: "auto" },
+            minInlineSize: { md: "800px" },
           }}
         >
           <Container maxWidth="lg">
@@ -173,7 +177,12 @@ const ResponsiveAppBar: NextPage = (props) => {
                           <Link
                             key={page.title}
                             href={page.href}
-                            sx={{ my: 1, color: "white", display: "block", ":hover": {color: "wheat"} }}
+                            sx={{
+                              my: 1,
+                              color: "white",
+                              display: "block",
+                              ":hover": { color: "wheat" },
+                            }}
                             underline="none"
                           >
                             {page.title}
@@ -214,9 +223,19 @@ const ResponsiveAppBar: NextPage = (props) => {
                           <Link
                             href={"/users/dashboard"}
                             underline="none"
-                            sx={{ color: "black", textTransform: "capitalize" }}
+                            sx={{
+                              color: "black",
+                              m: 0,
+                              textTransform: "capitalize",
+                            }}
                           >
-                            <Typography sx={{ p: 1 }} component={"p"}>
+                            <Typography
+                              sx={{ p: 1, my: "0px !important", textAlign: "center" }}
+                              component={"p"}
+                            >
+                              <span style={{marginRight: "5px"}}>
+                                <DashboardOutlinedIcon />{" "}
+                              </span>
                               dashboard
                             </Typography>
                           </Link>
@@ -225,7 +244,12 @@ const ResponsiveAppBar: NextPage = (props) => {
                             underline="none"
                             sx={{ color: "black", textTransform: "capitalize" }}
                           >
-                            <Typography sx={{ p: 1 }} component={"p"}>
+                            <Typography
+                              sx={{ p: 1, my: "0px !important" }}
+                              component={"p"}
+                            ><span style={{marginRight: "5px"}}>
+                            <SettingsOutlinedIcon />{" "}
+                          </span>
                               settings
                             </Typography>
                           </Link>
@@ -233,7 +257,6 @@ const ResponsiveAppBar: NextPage = (props) => {
                             sx={{
                               textTransform: "capitalize",
                               color: "black",
-                              p: 0,
                             }}
                             onClick={() =>
                               signOut({
@@ -241,7 +264,12 @@ const ResponsiveAppBar: NextPage = (props) => {
                               })
                             }
                           >
-                            <Typography sx={{ p: 1 }} component={"p"}>
+                            <Typography
+                              component={"p"}
+                              sx={{ my: "0px !important" }}
+                            ><span style={{marginRight: "5px"}}>
+                            <PowerSettingsNewIcon />{" "}
+                          </span>
                               logout
                             </Typography>
                           </Button>
@@ -298,7 +326,9 @@ const ResponsiveAppBar: NextPage = (props) => {
           ) : (
             <Toolbar sx={{ display: { xs: "none", md: "block" } }} />
           )}
-          <main>{props.children}</main>
+          <Box component={"main"} sx={{ p: routerMatch ? 2 : 0 }}>
+            {props.children}
+          </Box>
           {!routerMatch && !signInUpRoutes && <Footer />}
 
           <Toolbar sx={{ display: { xs: "block", md: "none" } }} />

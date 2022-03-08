@@ -12,6 +12,7 @@ import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import CssBaseline from "@mui/material/CssBaseline";
 import CurrencyExchangeRoundedIcon from "@mui/icons-material/CurrencyExchangeRounded";
+import DashboardOutlinedIcon from '@mui/icons-material/DashboardOutlined';
 import DashboardRoundedIcon from "@mui/icons-material/DashboardRounded";
 import Divider from "@mui/material/Divider";
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
@@ -28,12 +29,14 @@ import MailIcon from "@mui/icons-material/Mail";
 import MenuIcon from "@mui/icons-material/Menu";
 import MuiDrawer from "@mui/material/Drawer";
 import { Popover } from "@mui/material";
+import PowerSettingsNewIcon from '@mui/icons-material/PowerSettingsNew';
 import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
 import SupportRoundedIcon from "@mui/icons-material/SupportRounded";
 import TelegramIcon from "@mui/icons-material/Telegram";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import { signOut } from "next-auth/react";
+import { useRouter } from "next/router";
 
 const drawerWidth = 170;
 
@@ -110,6 +113,7 @@ const Drawer = styled(MuiDrawer, {
 
 export default function MiniDrawer(props: any) {
   const theme = useTheme();
+  const router = useRouter()
   const [open, setOpen] = React.useState(true);
   const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(
     null
@@ -147,7 +151,7 @@ export default function MiniDrawer(props: any) {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap component="div">
-            Mini variant drawer
+            {new RegExp("users/(.*)$").exec(router.pathname)[1].toUpperCase()}
           </Typography>
           <Button
             aria-describedby={popoverId}
@@ -171,7 +175,10 @@ export default function MiniDrawer(props: any) {
               underline="none"
               sx={{ color: "black", textTransform: "capitalize" }}
             >
-              <Typography sx={{ p: 1 }} component={"p"}>
+              <Typography sx={{ p: 1, my: "0px !important" }} component={"p"}>
+              <span style={{marginRight: "5px"}}>
+            <DashboardOutlinedIcon />{" "}
+          </span>
                 dashboard
               </Typography>
             </Link>
@@ -180,7 +187,10 @@ export default function MiniDrawer(props: any) {
               underline="none"
               sx={{ color: "black", textTransform: "capitalize" }}
             >
-              <Typography sx={{ p: 1 }} component={"p"}>
+              <Typography sx={{ p: 1, my: "0px !important" }} component={"p"}>
+              <span style={{marginRight: "5px"}}>
+            <SettingsOutlinedIcon />{" "}
+          </span>
                 settings
               </Typography>
             </Link>
@@ -190,7 +200,10 @@ export default function MiniDrawer(props: any) {
                 signOut({ callbackUrl: process.env.NEXT_PUBLIC_URL + "/" })
               }
             >
-              <Typography sx={{ p: 1 }} component={"p"}>
+              <Typography sx={{ p: 1, my: "0px !important" }} component={"p"}>
+              <span style={{marginRight: "5px"}}>
+            <PowerSettingsNewIcon />{" "}
+          </span>
                 logout
               </Typography>
             </Button>

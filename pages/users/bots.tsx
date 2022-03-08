@@ -10,12 +10,13 @@ import FabAdd from "~/src/FabAdd";
 import FabClose from "~/src/FabClose";
 import NetworkError from "~/src/NetworkError";
 import useUser from "~/src/logic/userHook";
+import useWallet from "src/logic/walletHook"
 
 export default function Bots() {
   const { user, isLoading, isError } = useUser();
   const [botDisplay, setBotDisplay] = useState("none");
   const [loading, setLoading] = useState(false);
-
+  const {wallet, isWalletLoading, isWalletError} = useWallet()
   const handleNewBot = () => {
     setBotDisplay("block");
   };
@@ -34,7 +35,7 @@ export default function Bots() {
         ) : (
           <FabClose handleClick={handleNoBot} />
         )}
-        <BotSelection display={botDisplay} setLoading={setLoading} user={user} />
+        <BotSelection wallet={wallet} display={botDisplay} setLoading={setLoading} user={user} />
         <Divider sx={{ my: 6, display: { xs: "none", md: "block" } }} />
         <Box sx={{ padding: 2 }}>
           <Typography component={"h2"} sx={{ fontSize: "25px !important" }}>

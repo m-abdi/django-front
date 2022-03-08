@@ -16,21 +16,25 @@ export default async function handler(
       const user = await usersCollection.findOne({
         email: session.user?.email,
       });
-      
+
       const balances = await ftxMainClient.getSubaccountBalances(
-          user.ftxSubaccount
-          );
-          
-      res.status(200).json([{
-        "coin": "USDT",
-        "free": 4321.2,
-        "total": 4340.2,
-        "spotBorrow": 0,
-        "availableWithoutBorrow": 2320.2
-      }]);
+        user.ftxSubaccount
+      );
+      if (balances.success) {
+        // res.status(200).json(balances.result);
+        res.status(200).json([{
+          coin: "USDT",
+          free: 4321.2,
+          total: 4340.2,
+          spotBorrow: 0,
+          availableWithoutBorrow: 2320.2,
+        }]);
+      } else {
+        res.status(400).json([]);
+      }
     } catch (e) {
-        console.log(e);
-        
+      console.log(e);
+
       res.status(400).json("[]");
     }
   } else {

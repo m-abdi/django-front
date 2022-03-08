@@ -24,7 +24,6 @@ console.log(rows);
       <Table
         size="small"
         aria-label="a dense table"
-        sx={{ inlineSize: "90%" }}
       >
         {/* <TableHead>
           <TableRow>

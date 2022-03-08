@@ -34,7 +34,7 @@ export default function ConnectedExchange({
         inlineSize: { xs: 350, md: 400 },
         padding: 1,
         boxShadow: 3,
-        blockSize: 350,
+        blockSize: 400,
         marginLeft: { xs: "auto", md: 0 },
         marginRight: "auto",
       }}
@@ -64,7 +64,7 @@ export default function ConnectedExchange({
         <Grid item xs={7}>
           <Pie exchange={exchange} assets={assets} prices={prices} />
         </Grid>
-        <Grid item xs={12} sx={{ overflow: "auto", blockSize: "30%", inlineSize: "100%" }}>
+        <Grid item xs={12} sx={{ overflow: "auto", blockSize: "40%", inlineSize: "100%" }}>
           <Typography component={"h3"} variant="h6">
             Active Bots
           </Typography>
