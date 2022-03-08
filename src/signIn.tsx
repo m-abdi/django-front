@@ -118,7 +118,6 @@ export default function SignIn() {
                   email: email,
                   password: password,
                   redirect: false,
-                  callbackUrl: process.env.NEXT_PUBLIC_URL + "/users/dashboard",
                 }).then((resp) => {
                   if (resp && resp.error) {
                     
