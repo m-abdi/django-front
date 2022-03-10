@@ -8,17 +8,20 @@ const theme = createTheme({
   },
   palette: {
     primary: {
-      main: "#9fa8da",
+      main: "#2b8ad2",
     },
     secondary: {
-      main: "#fdd835",
+      main: "#faaa4b",
     },
     error: {
-      main: "#b50934",
+      main: "#f50057",
     },
     info: {
-      main: "#098ab5",
+      main: "#732bd2",
     },
+    success: {
+      main: "#2bd2c7"
+    }
   },
 });
 

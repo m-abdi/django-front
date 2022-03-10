@@ -1,5 +1,5 @@
 {
-  "name": "nextjs-with-typescript",
+  "name": "kakoota",
   "version": "5.0.0",
   "private": true,
   "scripts": {
@@ -16,6 +16,7 @@
     "@emotion/styled": "latest",
     "@mui/icons-material": "latest",
     "@mui/material": "latest",
+    "flickity": "^3.0.0",
     "ftx-api": "^1.1.7",
     "kucoin-node-api": "^2.1.4",
     "mongodb": "^4.4.1",
@@ -24,7 +25,9 @@
     "nodemailer": "^6.7.2",
     "react": "latest",
     "react-dom": "latest",
+    "react-flickity-component": "^3.6.2",
     "react-minimal-pie-chart": "^8.2.0",
+    "react-slick": "^0.28.1",
     "swr": "^1.2.2",
     "uuid": "^8.3.2",
     "uuid4": "^2.0.2"
