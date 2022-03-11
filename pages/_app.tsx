@@ -2,6 +2,7 @@ import "../src/style.css";
 import "../src/BarLoader.css"
 import "../public/css/Home.css"
 import "../public/css/nicepage.css"
+import "../public/css/contactUs.css"
 
 import * as React from "react";
 
@@ -11,7 +12,7 @@ import { AppProps } from "next/app";
 import CssBaseline from "@mui/material/CssBaseline";
 import CurrentUser from "../src/CurrentUserContext";
 import Head from "next/head";
-import ResponsiveAppBar from "../src/Appbar";
+import ResponsiveNavBar from "../src/partials/Navbar";
 import { SessionProvider } from "next-auth/react";
 import { ThemeProvider } from "@mui/material/styles";
 import { createContext } from "react";
@@ -39,9 +40,7 @@ export default function MyApp(props: MyAppProps) {
           value={{ username: "mehdi", email: "m.abdi.public@gmail.com" }}
         >
           <SessionProvider session={pageProps.sessoin}>
-            <ResponsiveAppBar>
               <Component {...pageProps} />
-            </ResponsiveAppBar>
           </SessionProvider>
         </CurrentUser.Provider>
       </ThemeProvider>

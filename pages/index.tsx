@@ -1,39 +1,17 @@
-import {
-  AppBar,
-  Button,
-  Container,
-  Paper,
-  Toolbar,
-  Typography,
-} from "@mui/material";
+import { Button, Container, Paper, Typography } from "@mui/material";
 import { Box, borderRadius } from "@mui/system";
-import Slider from "react-slick";
 
-import Barloader from "src/BarLoader";
 import Image from "next/image";
-import Link from "../src/Link";
-import NetworkError from "src/NetworkError";
 import React, { useEffect } from "react";
-import { styled } from "@mui/material/styles";
-import useArticles from "src/logic/articlesHook";
-export default function landigPage() {
-  const { articles, isLoading, isError } = useArticles();
-  useEffect(() => {
-    (async () => {
-      const flickityModule = await import("flickity");
-      var elem = document.querySelector(".carousel");
-      var flkty = new flickityModule.default(elem, {
-        // options
-        cellAlign: "left",
-        contain: true,
-      });
-    })();
-  }, [articles]);
+import ResponsiveNavBar from "../src/partials/Navbar";
+import Footer from "../src/partials/Footer";
+export default function landigPage(props: any) {
+  
 
   return (
     <>
       <meta httpEquiv="Content-Type" content="text/html; charset=utf-8" />
-      <title>Khan Academy | Free Online Courses, Lessons &amp; Practice</title>
+      <title>Kakoota</title>
       <meta
         name="description"
         content="Learn for free about math, art, computer programming, economics, physics, chemistry, biology, medicine, finance, history, and more. Khan Academy is a nonprofit with the mission of providing a free, world-class education for anyone, anywhere."
@@ -110,34 +88,17 @@ export default function landigPage() {
       <link
         rel="stylesheet"
         type="text/css"
-        href="css/webpack-dev.297054d8010bce5fb4e6.css"
+        href="/css/webpack-dev.297054d8010bce5fb4e6.css"
       />
       <link
         rel="stylesheet"
         type="text/css"
-        href="css/student-entry.6ee9aee0953b16d0c9f9.css"
+        href="/css/student-entry.6ee9aee0953b16d0c9f9.css"
       />
       <style type="text/css" dangerouslySetInnerHTML={{ __html: "" }} />
-      <noscript />
-
-      <div
-        id="outer-wrapper"
-        style={{ position: "relative", zIndex: 0 }}
-        className="clearfix bibliotron-header white-outer-wrapper"
-      >
-        <div style={{ marginTop: "-20px" }}>
-          <button
-            id="triggerless-modal-focus-anchor"
-            tabIndex={-1}
-            aria-label="Modal closed. You are at the top of the page."
-            className="_a46150"
-          />
-        </div>
-        <div>
-          <a href="#main-content" data-skip-to-main="true" className="_9tc0rt">
-            Skip to main content
-          </a>
-        </div>
+      {/* navbar header */}
+      <ResponsiveNavBar logo={props.logo} />
+      <main>
         {/* hero view */}
         <Box
           sx={{
@@ -574,7 +535,7 @@ export default function landigPage() {
             />
           </Box>
 
-          <Box sx={{inlineSize: {xs: "94vw", sm: 500}}}>
+          <Box sx={{ inlineSize: { xs: "94vw", sm: 500 } }}>
             <Typography component={"h6"}>TEACHERS</Typography>
             <Typography component={"h2"} variant="h2">
               Differentiate your classroom and engage every student.
@@ -592,7 +553,6 @@ export default function landigPage() {
             >
               Teachers, start here
             </Button>
-            
           </Box>
         </Container>
         <Container
@@ -605,7 +565,7 @@ export default function landigPage() {
             justifyContent: "center",
           }}
         >
-          <Box sx={{inlineSize: {xs: "94vw", sm: 500}}}>
+          <Box sx={{ inlineSize: { xs: "94vw", sm: 500 } }}>
             <Typography component={"h6"} variant="h6">
               LEARNERS AND STUDENTS
             </Typography>
@@ -624,8 +584,6 @@ export default function landigPage() {
             >
               Learners, start here
             </Button>
-
-            
           </Box>
           <Box
             sx={{
@@ -690,60 +648,82 @@ export default function landigPage() {
             </Typography>
             {/* articles flexbox */}
 
-            {isLoading ? (
-              <Barloader />
-            ) : isError ? (
-              <NetworkError />
-            ) : (
-              articles && (
-                <div className="carousel" data-flickity='{ "autoPlay": true }'>
-                  {articles.map((a) => (
-                    <div className="carousel-cell">
-                      <Paper
-                        sx={{
-                          blockSize: 500,
-                          inlineSize: 350,
-                          borderRadius: 3,
-                          display: "flex",
-                          flexDirection: "column",
-                          mx: 4,
-                        }}
+            <div className="carousel" data-flickity='{ "autoPlay": true }'>
+              {props.newArticles.map((a) => (
+                <div className="carousel-cell">
+                  <Paper
+                    sx={{
+                      blockSize: 500,
+                      inlineSize: 350,
+                      borderRadius: 3,
+                      display: "flex",
+                      flexDirection: "column",
+                      mx: 4,
+                    }}
+                  >
+                    <Image
+                      src={process.env.NEXT_PUBLIC_API_URL + a.picture}
+                      width={350}
+                      height={250}
+                    />
+                    {/* title and short text box */}
+                    <Box sx={{ px: 2, pb: 1, flexGrow: 1 }}>
+                      <Typography
+                        component={"h3"}
+                        variant="h3"
+                        fontWeight={"bold"}
                       >
-                        <Image
-                          src={process.env.NEXT_PUBLIC_API_URL + a.picture}
-                          width={350}
-                          height={250}
-                        />
-                        {/* title and short text box */}
-                        <Box sx={{ px: 2, pb: 1, flexGrow: 1 }}>
-                          <Typography
-                            component={"h3"}
-                            variant="h3"
-                            fontWeight={"bold"}
-                          >
-                            {a.title}
-                          </Typography>
-                          <Typography component={"p"} variant="body1">
-                            {a.text}
-                          </Typography>
-                        </Box>
-                        <Button
-                          size="large"
-                          variant="contained"
-                          color="info"
-                          sx={{ display: "block", mx: "auto", mb: 1 }}
-                        >
-                          Read more
-                        </Button>
-                      </Paper>
-                    </div>
-                  ))}
+                        {a.title}
+                      </Typography>
+                      <Typography component={"p"} variant="body1">
+                        {a.text}
+                      </Typography>
+                    </Box>
+                    <Button
+                      size="large"
+                      variant="contained"
+                      color="info"
+                      sx={{ display: "block", mx: "auto", mb: 1 }}
+                    >
+                      Read more
+                    </Button>
+                  </Paper>
                 </div>
-              )
-            )}
+              ))}
+            </div>
           </Container>
         </section>
-      </div>
+      </main>
+      <Footer
+        instagram_page={props.instagram_page}
+        telegram_id={props.telegram_id}
+        about_us={props.about_us}
+        name={props.name}
+      />
     </>
   );
+}
+
+export async function getStaticProps({ locale }: { locale: any }) {
+  const generalInfo = await fetch(
+    process.env.NEXT_PUBLIC_API_URL + `/api/general/?locale=${locale}`
+  );
+  const articles = await fetch(
+    process.env.NEXT_PUBLIC_API_URL + `/api/articles/?locale=${locale}`
+  );
+
+  const generalInfoJSON = await generalInfo.json();
+  const articlesJSON = await articles.json();
+  return {
+    props: {
+      instagram_page: generalInfoJSON.instagram_page,
+      telegram_id: generalInfoJSON.telegram_id,
+      about_us: generalInfoJSON.about_us,
+      logo: process.env.NEXT_PUBLIC_API_URL + generalInfoJSON.logo,
+      email: generalInfoJSON.email,
+      language: generalInfoJSON.language,
+      name: generalInfoJSON.name,
+      newArticles: articlesJSON,
+    },
+  };
 }
