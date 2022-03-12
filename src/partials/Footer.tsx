@@ -1,5 +1,6 @@
-import Box from "@mui/material/Box";
 import { Container, Grid } from "@mui/material";
+
+import Box from "@mui/material/Box";
 import FlexColumnNoWrap from "../FlexColumnNoWrap";
 import FlexRowStacked from "../FlexRowStacked";
 import Image from "next/image";
@@ -15,7 +16,6 @@ function Footer(props: any) {
       sx={{
         backgroundColor: "#363636",
         color: "white",
-        borderRadius: " 20% 20% 0% 0%",
       }}
     >
       <Container maxWidth="xl">

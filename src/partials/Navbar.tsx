@@ -1,10 +1,11 @@
 import * as React from "react";
 
 import { Divider, Grid, Popover, Select } from "@mui/material";
-import { styled, useTheme, alpha } from "@mui/material/styles";
-import LanguageIcon from "@mui/icons-material/Language";
+import { alpha, styled, useTheme } from "@mui/material/styles";
+
 import AccountBalanceWalletRoundedIcon from "@mui/icons-material/AccountBalanceWalletRounded";
 import AccountCircleRoundedIcon from "@mui/icons-material/AccountCircleRounded";
+import { AnyRecord } from "dns";
 import AppBar from "@mui/material/AppBar";
 import ArticleRoundedIcon from "@mui/icons-material/ArticleRounded";
 import Avatar from "@mui/material/Avatar";
@@ -13,35 +14,36 @@ import Button from "@mui/material/Button";
 import Container from "@mui/material/Container";
 import CurrencyExchangeRoundedIcon from "@mui/icons-material/CurrencyExchangeRounded";
 import DashboardOutlinedIcon from "@mui/icons-material/DashboardOutlined";
+import Fab from "@mui/material/Fab";
 import Footer from "./Footer";
 import HelpRoundedIcon from "@mui/icons-material/HelpRounded";
 import HomeRoundedIcon from "@mui/icons-material/HomeRounded";
 import { Icon } from "@iconify/react";
 import IconButton from "@mui/material/IconButton";
 import Image from "next/image";
+import InputBase from "@mui/material/InputBase";
+import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
+import LanguageIcon from "@mui/icons-material/Language";
 import Link from "../Link";
 import Menu from "@mui/material/Menu";
 import MenuIcon from "@mui/icons-material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import type { NextPage } from "next";
 import PowerSettingsNewIcon from "@mui/icons-material/PowerSettingsNew";
+import SearchIcon from "@mui/icons-material/Search";
 import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
 import Toolbar from "@mui/material/Toolbar";
 import Tooltip from "@mui/material/Tooltip";
 import Typography from "@mui/material/Typography";
 import UserPanel from "../PanelAppbar";
+import Zoom from "@mui/material/Zoom";
 import { signOut } from "next-auth/react";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { useRouter } from "next/router";
+import useScrollTrigger from "@mui/material/useScrollTrigger";
 import { useSession } from "next-auth/react";
 import { useState } from "react";
-import { AnyRecord } from "dns";
-import useScrollTrigger from "@mui/material/useScrollTrigger";
-import Fab from "@mui/material/Fab";
-import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
-import Zoom from "@mui/material/Zoom";
-import SearchIcon from "@mui/icons-material/Search";
-import InputBase from "@mui/material/InputBase";
+
 const localesImages = { en: "/images/usa.png", fr: "/images/france.png" };
 const drawerWidth = 240;
 const Search = styled("div")(({ theme }) => ({
@@ -163,25 +165,25 @@ const pages = [
     href: "/",
     icon: <HomeRoundedIcon fontSize="large" />,
   },
+  {
+    title: "Articles",
+    href: "/articles",
+    icon: <ArticleRoundedIcon fontSize="large" />,
+  },
   // {
-  //   title: "Articles",
-  //   href: "/articles",
-  //   icon: <ArticleRoundedIcon fontSize="large" />,
+  //   title: "MyExchanges",
+  //   icon: <CurrencyExchangeRoundedIcon />,
+  //   href: "/users/myExchanges",
+  // },
+  // {
+  //   title: "Bots",
+  //   icon: <Icon icon="mdi:robot" />,
+  //   href: "/users/bots",
   // },
   {
-    title: "MyExchanges",
-    icon: <CurrencyExchangeRoundedIcon />,
-    href: "/users/myExchanges",
-  },
-  {
-    title: "Bots",
-    icon: <Icon icon="mdi:robot" />,
-    href: "/users/bots",
-  },
-  {
-    title: "Wallet",
-    href: "/users/wallet",
-    icon: <AccountBalanceWalletRoundedIcon fontSize="large" />,
+    title: "Support",
+    href: "/contactUs",
+    icon: <HelpRoundedIcon fontSize="large" />,
   },
   {
     title: "Account",
@@ -221,163 +223,217 @@ const ResponsiveNavBar = (props: any) => {
   const handlePopoverClose = () => {
     setAnchorEl(null);
   };
-  return (
-    <>
-      {mediumScreenMatch && (
-        <AppBar
-          position="fixed"
-          color={mediumScreenMatch ? "transparent" : "default"}
-          sx={{
-            top: { xs: "auto", md: 0 },
-            bottom: { xs: 0, md: "auto" },
-            left: 0,
-            right: 0,
-            borderRadius: { md: "5px 5px 75px 75px" },
-            mx: { md: "auto" },
-            minInlineSize: { md: "800px" },
-          }}
+  return mediumScreenMatch ? (
+    <AppBar
+      position="fixed"
+      color={props.color ? props.color : "transparent"}
+      sx={{
+        top: { xs: "auto", md: 0 },
+        bottom: { xs: 0, md: "auto" },
+        left: 0,
+        right: 0,
+        borderRadius: { md: "5px 5px 75px 75px" },
+        mx: { md: "auto" },
+        minInlineSize: { md: "800px" },
+      }}
+    >
+      <Container maxWidth="xl">
+        <Toolbar
+          component={"nav"}
+          sx={{ justifyContent: "space-between" }}
+          aria-label="page header"
+          role="navigation"
         >
-          <Container maxWidth="xl">
-            <Toolbar
-              component={"nav"}
-              sx={{ justifyContent: "space-between" }}
-              aria-label="page header"
-              role="navigation"
+          <Grid item md={5}>
+            <Search>
+              <SearchIconWrapper>
+                <SearchIcon />
+              </SearchIconWrapper>
+              <StyledInputBase
+                placeholder="Search…"
+                inputProps={{ "aria-label": "search" }}
+              />
+            </Search>
+          </Grid>
+          <Grid
+            item
+            md={2}
+            sx={{
+              display: "flex",
+              flexFlow: "row nowrap",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <a title="home" href={"/"}>
+              <Image src={`${props.logo}`} width={110} height={50} />
+            </a>
+          </Grid>
+          <Grid
+            item
+            md={5}
+            sx={{
+              display: "flex",
+              flexFlow: "row nowrap",
+              alignItems: "center",
+              justifyContent: "flex-end",
+            }}
+          >
+            <Link
+              href={"/donate"}
+              underline="none"
+              color={"inherit"}
+              sx={{ mr: 1 }}
             >
-              <Grid item md={4}>
-                <Search>
-                  <SearchIconWrapper>
-                    <SearchIcon />
-                  </SearchIconWrapper>
-                  <StyledInputBase
-                    placeholder="Search…"
-                    inputProps={{ "aria-label": "search" }}
-                  />
-                </Search>
-              </Grid>
-              <Grid
-                item
-                md={4}
-                sx={{
-                  display: "flex",
-                  flexFlow: "row nowrap",
-                  alignItems: "center",
-                  justifyContent: "center",
-                }}
-              >
-                <Link href={"/"}>
-                  <Image src={`${props.logo}`} width={110} height={50} />
-                </Link>
-              </Grid>
-              <Grid
-                item
-                md={4}
-                sx={{
-                  display: "flex",
-                  flexFlow: "row nowrap",
-                  alignItems: "center",
-                  justifyContent: "flex-end",
-                }}
-              >
-                <Link
-                  href={"/donate"}
-                  underline="none"
-                  color={"inherit"}
-                  sx={{ mr: 1 }}
-                >
-                  <Typography fontWeight={"bold"}>Donate</Typography>
-                </Link>
-                <Box
-                  sx={{
-                    ":after": { content: '"|"' },
-                    fontWeight: "bold",
-                    mr: 1,
-                  }}
-                ></Box>
-                <Link
-                  href={"/contactUs"}
-                  underline="none"
-                  color={"inherit"}
-                  sx={{ mr: 1 }}
-                >
-                  <Typography fontWeight={"bold"}>Contact us</Typography>
-                </Link>
-                <Box
-                  sx={{
-                    ":after": { content: '"|"' },
-                    fontWeight: "bold",
-                    mr: 1,
-                  }}
-                ></Box>
-                <Link
-                  href={"/login"}
-                  underline="none"
-                  color={"inherit"}
-                  sx={{ mr: 1 }}
-                >
-                  <Typography fontWeight={"bold"}>Login</Typography>
-                </Link>
-                <Box
-                  sx={{
-                    ":after": { content: '"|"' },
-                    fontWeight: "bold",
-                    mr: 1,
-                  }}
-                ></Box>
+              <Typography fontWeight={"bold"}>Donate</Typography>
+            </Link>
+            <Box
+              sx={{
+                ":after": { content: '"|"' },
+                fontWeight: "bold",
+                mr: 1,
+              }}
+            ></Box>
+            <Link
+              href={"/contactUs"}
+              underline="none"
+              color={"inherit"}
+              sx={{ mr: 1 }}
+            >
+              <Typography fontWeight={"bold"}>Contact us</Typography>
+            </Link>
+            <Box
+              sx={{
+                ":after": { content: '"|"' },
+                fontWeight: "bold",
+                mr: 1,
+              }}
+            ></Box>
+            <Link
+              href={"/login"}
+              underline="none"
+              color={"inherit"}
+              sx={{ mr: 1 }}
+            >
+              <Typography fontWeight={"bold"}>Login</Typography>
+            </Link>
+            <Box
+              sx={{
+                ":after": { content: '"|"' },
+                fontWeight: "bold",
+                mr: 1,
+              }}
+            ></Box>
 
-                <Link
-                  href={"/register"}
-                  underline="none"
-                  color={"inherit"}
-                  sx={{ mr: 2 }}
-                >
-                  <Typography fontWeight={"bold"}>Sign up</Typography>
-                </Link>
-                <Select
-                  sx={{ blockSize: 40, p: 0 }}
-                  displayEmpty
-                  value={router.locale}
-                  renderValue={() => {
-                    return (
-                      <img
-                        title={router.locale}
-                        loading="lazy"
-                        src={localesImages[router.locale]}
-                        width="30px"
-                        style={{marginTop: "6px"}}
-                      />
-                    );
-                  }}
-                >
-                  <MenuItem value={"en"} onClick={()=>router.push("/", "/", {locale: "en"})}>
-                    <img
-                      title={router.locale}
-                      loading="lazy"
-                      src={localesImages["en"]}
-                      width="30px"
-                      alt={`Flag of USA`}
-                      style={{ marginRight: "15px" }}
-                    />
-                    <b>English</b>
-                  </MenuItem>
-                  <MenuItem value={"fr"} onClick={()=> router.push("/", "/", {locale: "fr"})}>
-                    <img
-                      title={router.locale}
-                      loading="lazy"
-                      src={localesImages["fr"]}
-                      width="30px"
-                      alt={`Flag of France`}
-                      style={{ marginRight: "15px" }}
-                    />
-                    <b>French</b>
-                  </MenuItem>
-                </Select>
-              </Grid>
-            </Toolbar>
-          </Container>
-        </AppBar>
-      )}
-    </>
+            <Link
+              href={"/register"}
+              underline="none"
+              color={"inherit"}
+              sx={{ mr: 2 }}
+            >
+              <Typography fontWeight={"bold"}>Sign up</Typography>
+            </Link>
+            <Select
+              sx={{ blockSize: 40, p: 0 }}
+              displayEmpty
+              value={router.locale}
+              renderValue={() => {
+                return (
+                  <img
+                    title={router.locale}
+                    loading="lazy"
+                    src={localesImages[router.locale]}
+                    width="30px"
+                    style={{ marginTop: "4px" }}
+                  />
+                );
+              }}
+            >
+              <MenuItem
+                value={"en"}
+                onClick={() => router.push("/", "/", { locale: "en" })}
+              >
+                <img
+                  title={router.locale}
+                  loading="lazy"
+                  src={localesImages["en"]}
+                  width="30px"
+                  alt={`Flag of USA`}
+                  style={{ marginRight: "15px" }}
+                />
+                <b>English</b>
+              </MenuItem>
+              <MenuItem
+                value={"fr"}
+                onClick={() => router.push("/", "/", { locale: "fr" })}
+              >
+                <img
+                  title={router.locale}
+                  loading="lazy"
+                  src={localesImages["fr"]}
+                  width="30px"
+                  alt={`Flag of France`}
+                  style={{ marginRight: "15px" }}
+                />
+                <b>French</b>
+              </MenuItem>
+            </Select>
+          </Grid>
+        </Toolbar>
+      </Container>
+    </AppBar>
+  ) : (
+    <div>
+      <AppBar
+        position="fixed"
+        color={props.color ? props.color : "default"}
+        sx={{
+          boxShadow: 10,
+          top: "auto",
+          bottom: 0,
+          left: 0,
+          right: 0,
+        }}
+      >
+        <Toolbar
+          component={"nav"}
+          sx={{ justifyContent: "space-between" }}
+          role="navigation"
+        >
+          {pages.map((page) => (
+            <Link
+              href={page.href}
+              underline="none"
+              color="black !important"
+              key={page.title}
+              sx={{ fontSize: "1.5rem" }}
+            >
+              {page.icon}
+            </Link>
+          ))}
+        </Toolbar>
+      </AppBar>
+      <a
+        href="/"
+        title="home"
+        style={{
+          padding: 0,
+          position: "fixed",
+          top: 0,
+          left: "calc((100vw - 150px) / 2)",
+          zIndex: 100,
+          inlineSize: 150,
+          backgroundColor: "white",
+          boxShadow: "2px 2px 4px rgba(0, 0, 0, 0.5), 4px 4px 8px rgba(0, 0, 0, 0.3)",
+          border: "1px solid white",
+          borderRadius: "0px 0px 40% 40%",
+          display: "flex",
+          justifyContent: "center",
+        }}
+      >
+        <Image src={props.logo} width={110} height={50} />
+      </a>
+    </div>
   );
 };
 export default ResponsiveNavBar;

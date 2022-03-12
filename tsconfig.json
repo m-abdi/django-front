@@ -28,8 +28,7 @@
   },
   "include": [
     "next-env.d.ts",
-    "**/*.ts",
-     "lib/FTX.ts"  ],
+    "**/*.ts",  ],
   "exclude": [
     "node_modules",
   ]

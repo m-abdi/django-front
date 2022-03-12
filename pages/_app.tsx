@@ -3,6 +3,7 @@ import "../src/BarLoader.css"
 import "../public/css/Home.css"
 import "../public/css/nicepage.css"
 import "../public/css/contactUs.css"
+import "../public/css/flickity.min.css"
 
 import * as React from "react";
 

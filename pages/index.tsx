@@ -1,13 +1,13 @@
-import { Button, Container, Paper, Typography } from "@mui/material";
 import { Box, borderRadius } from "@mui/system";
-
-import Image from "next/image";
+import { Button, Container, Paper, Typography } from "@mui/material";
 import React, { useEffect } from "react";
-import ResponsiveNavBar from "../src/partials/Navbar";
-import Footer from "../src/partials/Footer";
-export default function landigPage(props: any) {
-  
 
+import Flickity from "react-flickity-component";
+import Footer from "../src/partials/Footer";
+import Image from "next/image";
+import ResponsiveNavBar from "../src/partials/Navbar";
+
+export default function landingPage(props: any) {
   return (
     <>
       <meta httpEquiv="Content-Type" content="text/html; charset=utf-8" />
@@ -110,6 +110,7 @@ export default function landigPage(props: any) {
             p: 2,
           }}
         >
+          {/* hero title and hero text */}
           <Container
             maxWidth="xl"
             sx={{
@@ -118,25 +119,23 @@ export default function landigPage(props: any) {
               pt: { xs: 5, sm: 7, md: 15 },
             }}
           >
-            <Typography
-              component="h1"
-              variant="h1"
-              sx={{ fontWeight: "bold !important" }}
-            >
-              main title
-              <br />
-              for landing page
-            </Typography>
-            <Typography
-              component="h3"
-              variant="h6"
-              sx={{ maxInlineSize: { xs: "90vw", sm: 450 } }}
-            >
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-              enim ad minim veniam, quis nostrud exercitation ullamco laboris
-              nisi ut aliquip ex ea commodo consequat
-            </Typography>
+            <Box sx={{ blockSize: 300 }}>
+              <Typography
+                component="h1"
+                variant="h1"
+                sx={{ fontWeight: "bold !important" }}
+              >
+                {props.hero_title}
+              </Typography>
+              <Typography
+                component="h3"
+                variant="h6"
+                sx={{ maxInlineSize: { xs: "90vw", sm: 450 } }}
+              >
+                {props.hero_text}
+              </Typography>
+            </Box>
+
             {/* first_touch options */}
             <Box
               sx={{
@@ -516,7 +515,7 @@ export default function landigPage(props: any) {
           sx={{
             pb: 30,
             display: "flex",
-            flexFlow: "row wrap",
+            flexFlow: { xs: "column wrap", md: "row wrap" },
             alignItems: "center",
             justifyContent: "center",
           }}
@@ -528,28 +527,36 @@ export default function landigPage(props: any) {
             }}
           >
             <Image
-              src="/images/teachers-removebg-preview.png"
+              src="/images/teachers.png"
               width={400}
-              height={300}
+              height={400}
               layout="responsive"
             />
           </Box>
 
-          <Box sx={{ inlineSize: { xs: "94vw", sm: 500 } }}>
+          <Box
+            sx={{
+              inlineSize: { xs: "94vw", sm: 500 },
+              mt: { xs: 12, md: "auto" },
+            }}
+          >
             <Typography component={"h6"}>TEACHERS</Typography>
             <Typography component={"h2"} variant="h2">
-              Differentiate your classroom and engage every student.
+              {props.teachers_title}
             </Typography>
             <Typography component={"p"} variant="h6">
-              We empower teachers to support their entire classroom. 90% of US
-              teachers who have used Khan Academy have found us effective.
+              {props.teachers_text}
             </Typography>
 
             <Button
               className="blink"
               color="secondary"
               variant="contained"
-              sx={{ fontSize: 16, inlineSize: 200 }}
+              sx={{
+                fontSize: 16,
+                inlineSize: 200,
+                ":hover": { animation: "none" },
+              }}
             >
               Teachers, start here
             </Button>
@@ -560,27 +567,36 @@ export default function landigPage(props: any) {
           sx={{
             pb: 30,
             display: "flex",
-            flexFlow: "row wrap",
+            flexFlow: { xs: "column-reverse wrap", md: "row wrap" },
             alignItems: "center",
-            justifyContent: "center",
+            justifyContent: "space-around",
           }}
         >
-          <Box sx={{ inlineSize: { xs: "94vw", sm: 500 } }}>
+          <Box
+            sx={{
+              inlineSize: { xs: "94vw", sm: 500 },
+              mt: { xs: 12, md: "auto" },
+            }}
+          >
             <Typography component={"h6"} variant="h6">
               LEARNERS AND STUDENTS
             </Typography>
             <Typography component={"h2"} variant="h2">
-              You can learn anything.
+              {props.learners_title}
             </Typography>
             <Typography component={"p"} variant="h6">
-              Build a deep, solid understanding in math, science, and more.
+              {props.learners_text}
             </Typography>
 
             <Button
               className="blink"
               color="primary"
               variant="contained"
-              sx={{ fontSize: 16, inlineSize: 200 }}
+              sx={{
+                fontSize: 16,
+                inlineSize: 200,
+                ":hover": { animation: "none" },
+              }}
             >
               Learners, start here
             </Button>
@@ -593,8 +609,8 @@ export default function landigPage(props: any) {
           >
             <Image
               src="/images/students.jpg"
-              width={600}
-              height={450}
+              width={700}
+              height={600}
               layout="responsive"
             />
           </Box>
@@ -626,7 +642,7 @@ export default function landigPage(props: any) {
             />
           </svg>
           <Container
-            maxWidth="md"
+            maxWidth="xl"
             sx={{
               display: "flex",
               flexDirection: "column",
@@ -647,50 +663,51 @@ export default function landigPage(props: any) {
               Articles
             </Typography>
             {/* articles flexbox */}
-
-            <div className="carousel" data-flickity='{ "autoPlay": true }'>
-              {props.newArticles.map((a) => (
-                <div className="carousel-cell">
-                  <Paper
-                    sx={{
-                      blockSize: 500,
-                      inlineSize: 350,
-                      borderRadius: 3,
-                      display: "flex",
-                      flexDirection: "column",
-                      mx: 4,
-                    }}
-                  >
-                    <Image
-                      src={process.env.NEXT_PUBLIC_API_URL + a.picture}
-                      width={350}
-                      height={250}
-                    />
-                    {/* title and short text box */}
-                    <Box sx={{ px: 2, pb: 1, flexGrow: 1 }}>
-                      <Typography
-                        component={"h3"}
-                        variant="h3"
-                        fontWeight={"bold"}
-                      >
-                        {a.title}
-                      </Typography>
-                      <Typography component={"p"} variant="body1">
-                        {a.text}
-                      </Typography>
-                    </Box>
-                    <Button
-                      size="large"
-                      variant="contained"
-                      color="info"
-                      sx={{ display: "block", mx: "auto", mb: 1 }}
+            <Box sx={{ inlineSize: "100%", blockSize: "100%" }}>
+              <Flickity options={{ autoPlay: true, contain: true }}>
+                {props.newArticles.map((a) => (
+                  <div className="carousel-cell" key={a.id}>
+                    <Paper
+                      sx={{
+                        blockSize: 500,
+                        inlineSize: 350,
+                        borderRadius: 3,
+                        display: "flex",
+                        flexDirection: "column",
+                        mx: 4,
+                      }}
                     >
-                      Read more
-                    </Button>
-                  </Paper>
-                </div>
-              ))}
-            </div>
+                      <Image
+                        src={process.env.NEXT_PUBLIC_API_URL + a.picture}
+                        width={350}
+                        height={250}
+                      />
+                      {/* title and short text box */}
+                      <Box sx={{ px: 2, pb: 1, flexGrow: 1 }}>
+                        <Typography
+                          component={"h3"}
+                          variant="h3"
+                          fontWeight={"bold"}
+                        >
+                          {a.title}
+                        </Typography>
+                        <Typography component={"p"} variant="body1">
+                          {a.text}
+                        </Typography>
+                      </Box>
+                      <Button
+                        size="large"
+                        variant="contained"
+                        color="info"
+                        sx={{ display: "block", mx: "auto", mb: 1 }}
+                      >
+                        Read more
+                      </Button>
+                    </Paper>
+                  </div>
+                ))}
+              </Flickity>
+            </Box>
           </Container>
         </section>
       </main>
@@ -715,9 +732,16 @@ export async function getStaticProps({ locale }: { locale: any }) {
   const generalInfoJSON = await generalInfo.json();
   const articlesJSON = await articles.json();
   return {
+
     props: {
       instagram_page: generalInfoJSON.instagram_page,
       telegram_id: generalInfoJSON.telegram_id,
+      hero_title: generalInfoJSON.hero_title,
+      hero_text: generalInfoJSON.hero_text,
+      teachers_title: generalInfoJSON.teachers_title,
+      teachers_text: generalInfoJSON.teachers_text,
+      learners_title: generalInfoJSON.learners_title,
+      learners_text: generalInfoJSON.learners_text,
       about_us: generalInfoJSON.about_us,
       logo: process.env.NEXT_PUBLIC_API_URL + generalInfoJSON.logo,
       email: generalInfoJSON.email,

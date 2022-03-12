@@ -23436,14 +23436,6 @@ li.active > a.u-button-style.u-button-style.u-active-palette-1-light-3[class*="u
 a.u-link.u-hover-palette-1-light-3:hover {
   color: #edeefb !important;
 }
-.u-palette-1-base,
-.u-body.u-palette-1-base,
-.u-container-style.u-palette-1-base:before,
-.u-container-layout.u-palette-1-base:before,
-.u-table-alt-palette-1-base tr:nth-child(even) {
-  color: #ffffff;
-  background-color: #232b79;
-}
 .u-button-style.u-palette-1-base,
 .u-button-style.u-palette-1-base[class*="u-border-"] {
   color: #ffffff !important;

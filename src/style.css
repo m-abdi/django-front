@@ -1,4 +1,5 @@
-#FabClose, #FabAdd {
+#FabClose,
+#FabAdd {
   z-index: 10;
 }
 
@@ -16,4 +17,9 @@
   100% {
     opacity: 1;
   }
+}
+/* articles carousel */
+.flickity-viewport {
+  inline-size: 100%;
+  block-size: 510px !important;
 }
