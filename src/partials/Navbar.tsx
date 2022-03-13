@@ -32,6 +32,8 @@ import type { NextPage } from "next";
 import PowerSettingsNewIcon from "@mui/icons-material/PowerSettingsNew";
 import SearchIcon from "@mui/icons-material/Search";
 import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
+import SignIn from "../signIn";
+import SignUp from "../signUp";
 import Toolbar from "@mui/material/Toolbar";
 import Tooltip from "@mui/material/Tooltip";
 import Typography from "@mui/material/Typography";
@@ -195,6 +197,9 @@ const pages = [
 const ResponsiveNavBar = (props: any) => {
   const { data: session } = useSession();
   const [locale, setLocale] = useState("");
+  const [loginDialog, setLoginDialog] = useState(false);
+  const [registerDialog, setRegisterDialog] = useState(false);
+
   const router = useRouter();
   const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(
     null
@@ -217,6 +222,12 @@ const ResponsiveNavBar = (props: any) => {
   const mediumScreenMatch = useMediaQuery((theme: any) =>
     theme.breakpoints.up("md")
   );
+  const loginDialogHandle = () => {
+    setLoginDialog(false);
+  };
+  const registerDialogHandle = () => {
+    setRegisterDialog(false);
+  };
   const handlePopoverClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
   };
@@ -309,14 +320,21 @@ const ResponsiveNavBar = (props: any) => {
                 mr: 1,
               }}
             ></Box>
-            <Link
-              href={"/login"}
-              underline="none"
-              color={"inherit"}
-              sx={{ mr: 1 }}
+            <a
+              onClick={() => setLoginDialog(true)}
+              style={{
+                marginRight: 6,
+                textTransform: "none",
+                cursor: "pointer",
+              }}
             >
               <Typography fontWeight={"bold"}>Login</Typography>
-            </Link>
+            </a>
+            <SignIn
+              open={loginDialog}
+              selectedValue={"selectedValue"}
+              handleClose={loginDialogHandle}
+            />
             <Box
               sx={{
                 ":after": { content: '"|"' },
@@ -325,14 +343,21 @@ const ResponsiveNavBar = (props: any) => {
               }}
             ></Box>
 
-            <Link
-              href={"/register"}
-              underline="none"
-              color={"inherit"}
-              sx={{ mr: 2 }}
+            <a
+              onClick={() => setRegisterDialog(true)}
+              style={{
+                marginRight: 6,
+                textTransform: "none",
+                cursor: "pointer",
+              }}
             >
               <Typography fontWeight={"bold"}>Sign up</Typography>
-            </Link>
+            </a>
+            <SignUp
+              open={registerDialog}
+              selectedValue={"selectedValue"}
+              handleClose={registerDialogHandle}
+            />
             <Select
               sx={{ blockSize: 40, p: 0 }}
               displayEmpty
@@ -424,7 +449,8 @@ const ResponsiveNavBar = (props: any) => {
           zIndex: 100,
           inlineSize: 150,
           backgroundColor: "white",
-          boxShadow: "2px 2px 4px rgba(0, 0, 0, 0.5), 4px 4px 8px rgba(0, 0, 0, 0.3)",
+          boxShadow:
+            "2px 2px 4px rgba(0, 0, 0, 0.5), 4px 4px 8px rgba(0, 0, 0, 0.3)",
           border: "1px solid white",
           borderRadius: "0px 0px 40% 40%",
           display: "flex",

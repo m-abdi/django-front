@@ -26,6 +26,7 @@
     "react": "latest",
     "react-dom": "latest",
     "react-flickity-component": "^3.6.2",
+    "react-google-button": "^0.7.2",
     "react-minimal-pie-chart": "^8.2.0",
     "react-slick": "^0.28.1",
     "swr": "^1.2.2",
