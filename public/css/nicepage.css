@@ -35257,54 +35257,10 @@ a.u-link.u-text-hover-grey-90:hover {
         margin-top: 20px;
         margin-bottom: 20px;
         }
-        h1:not(.u-title)
-        {
-        font-weight: 400;
-        font-size: 3rem;
-        line-height: 1.1;
-        margin-top: 20px;
-        margin-bottom: 20px;
-        }
-        h2:not(.u-subtitle)
-        {
-        font-weight: 400;
-        font-size: 3rem;
-        line-height: 1.1;
-        margin-top: 20px;
-        margin-bottom: 20px;
-        }
-        h3
-        {
-        font-weight: 400;
-        font-size: 1.875rem;
-        line-height: 1.2;
-        margin-top: 20px;
-        margin-bottom: 20px;
-        }
-        h4
-        {
-        font-weight: 400;
-        font-size: 1.5rem;
-        line-height: 1.2;
-        margin-top: 20px;
-        margin-bottom: 20px;
-        }
-        h5
-        {
-        font-weight: 400;
-        font-size: 1.25rem;
-        line-height: 1.2;
-        margin-top: 20px;
-        margin-bottom: 20px;
-        }
-        h6
-        {
-        font-weight: 400;
-        font-size: 1.125rem;
-        line-height: 1.2;
-        margin-top: 20px;
-        margin-bottom: 20px;
-        }
+
+
+
+
         p.u-large-text
         {
         font-size: 1.25rem;
