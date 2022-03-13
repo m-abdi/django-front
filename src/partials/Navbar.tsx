@@ -334,6 +334,7 @@ const ResponsiveNavBar = (props: any) => {
               open={loginDialog}
               selectedValue={"selectedValue"}
               handleClose={loginDialogHandle}
+              setRegisterDialog={setRegisterDialog}
             />
             <Box
               sx={{
@@ -357,6 +358,7 @@ const ResponsiveNavBar = (props: any) => {
               open={registerDialog}
               selectedValue={"selectedValue"}
               handleClose={registerDialogHandle}
+              setLoginDialog={setLoginDialog}
             />
             <Select
               sx={{ blockSize: 40, p: 0 }}

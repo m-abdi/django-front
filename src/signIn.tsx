@@ -7,17 +7,17 @@ import BarLoader from "./BarLoader";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Checkbox from "@mui/material/Checkbox";
-import CloseIcon from '@mui/icons-material/Close';
+import CloseIcon from "@mui/icons-material/Close";
 import Container from "@mui/material/Container";
 import FormControlLabel from "@mui/material/FormControlLabel";
-import GoogleButton from 'react-google-button'
+import GoogleButton from "react-google-button";
 import Grid from "@mui/material/Grid";
-import IconButton from '@mui/material/IconButton';
+import IconButton from "@mui/material/IconButton";
 import Link from "../src/Link";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import Slide from '@mui/material/Slide';
+import Slide from "@mui/material/Slide";
 import TextField from "@mui/material/TextField";
-import { TransitionProps } from '@mui/material/transitions';
+import { TransitionProps } from "@mui/material/transitions";
 import Typography from "@mui/material/Typography";
 import { signIn as nextSignIn } from "next-auth/react";
 import { useRouter } from "next/router";
@@ -27,7 +27,7 @@ const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
     children: React.ReactElement<any, any>;
   },
-  ref: React.Ref<unknown>,
+  ref: React.Ref<unknown>
 ) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
@@ -59,14 +59,17 @@ export default function SignIn(props: any) {
   return loading ? (
     <BarLoader />
   ) : (
-    <Dialog open={props.open} onClose={props.handleClose} TransitionComponent={Transition}>
-      
+    <Dialog
+      open={props.open}
+      onClose={props.handleClose}
+      TransitionComponent={Transition}
+    >
       <DialogContent>
-      <IconButton
+        <IconButton
           aria-label="close"
           onClick={props.handleClose}
           sx={{
-            position: 'absolute',
+            position: "absolute",
             right: 8,
             top: 8,
             color: (theme) => theme.palette.grey[500],
@@ -88,7 +91,7 @@ export default function SignIn(props: any) {
             <Typography component="h1" variant="h5">
               Sign in
             </Typography>
-            
+
             <Typography
               component={"h2"}
               variant="body1"
@@ -170,15 +173,29 @@ export default function SignIn(props: any) {
               >
                 Sign In
               </Button>
-              <GoogleButton style={{marginLeft: "auto", marginRight: "auto", fontFamily: "Dosis", fontWeight: "bold"}} onClick={()=>nextSignIn("google")}/>
-              <Grid container sx={{mt: 4}}>
+              <GoogleButton
+                style={{
+                  marginLeft: "auto",
+                  marginRight: "auto",
+                  fontFamily: "Dosis",
+                  fontWeight: "bold",
+                }}
+                onClick={() => nextSignIn("google")}
+              />
+              <Grid container sx={{ mt: 4 }}>
                 <Grid item xs>
                   <Link href="#" variant="body2">
                     Forgot password?
                   </Link>
                 </Grid>
                 <Grid item>
-                  <a href="/users/register">
+                  <a
+                    onClick={() => {
+                      props.handleClose();
+                      props.setRegisterDialog(true);
+                    }}
+                    style={{ cursor: "pointer", textDecoration: "underline", color: "#2b8ad2" }}
+                  >
                     {"Don't have an account? Sign Up"}
                   </a>
                 </Grid>

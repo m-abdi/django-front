@@ -9,19 +9,19 @@ import BarLoader from "./BarLoader";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Checkbox from "@mui/material/Checkbox";
-import CloseIcon from '@mui/icons-material/Close';
+import CloseIcon from "@mui/icons-material/Close";
 import Container from "@mui/material/Container";
 import CssBaseline from "@mui/material/CssBaseline";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import GoogleButton from "react-google-button";
 import Grid from "@mui/material/Grid";
 import Head from "next/head";
-import IconButton from '@mui/material/IconButton';
+import IconButton from "@mui/material/IconButton";
 import Link from "../src/Link";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import Slide from '@mui/material/Slide';
+import Slide from "@mui/material/Slide";
 import TextField from "@mui/material/TextField";
-import { TransitionProps } from '@mui/material/transitions';
+import { TransitionProps } from "@mui/material/transitions";
 import Typography from "@mui/material/Typography";
 import enableSubmitButton from "./recaptcha";
 import { signIn as nextSignIn } from "next-auth/react";
@@ -31,7 +31,7 @@ const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
     children: React.ReactElement<any, any>;
   },
-  ref: React.Ref<unknown>,
+  ref: React.Ref<unknown>
 ) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
@@ -111,7 +111,6 @@ export default function SignUp(props: any) {
           <CloseIcon />
         </IconButton>
         <Container maxWidth="xs">
-          
           <Box
             sx={{
               display: "flex",
@@ -134,7 +133,7 @@ export default function SignUp(props: any) {
               {errorMessage}
             </Typography>
             <Box component="form" action="" method="post" sx={{ mt: 3 }}>
-              <Grid container spacing={2} justifyContent="space-between" >
+              <Grid container spacing={2} justifyContent="space-between">
                 <Grid item xs={12} sm={5.5}>
                   <TextField
                     autoComplete="given-name"
@@ -158,7 +157,7 @@ export default function SignUp(props: any) {
                     autoComplete="family-name"
                   />
                 </Grid>
-                <Grid item xs={12} sx={{mt: 3}}>
+                <Grid item xs={12} sx={{ mt: 3 }}>
                   <TextField
                     error={emailError}
                     helperText={
@@ -179,7 +178,7 @@ export default function SignUp(props: any) {
                     autoComplete="email"
                   />
                 </Grid>
-                <Grid item xs={12} sx={{mt: 3}}>
+                <Grid item xs={12} sx={{ mt: 3 }}>
                   <TextField
                     error={passwordError}
                     helperText={
@@ -204,7 +203,7 @@ export default function SignUp(props: any) {
                   />
                 </Grid>
               </Grid>
-              <Grid
+              {/* <Grid
                 item
                 xs={12}
                 sx={{
@@ -220,12 +219,11 @@ export default function SignUp(props: any) {
                   data-sitekey="6Lf_QNkeAAAAAH_h74j9m8Kx2WiIVwTrt1dBTGX3"
                   data-callback="enableSubmitButton"
                 ></div>
-              </Grid>
+              </Grid> */}
 
               <Button
                 type="submit"
                 fullWidth
-                disabled={submitStatus}
                 variant="contained"
                 onClick={(e) => {
                   e.preventDefault();
@@ -239,7 +237,7 @@ export default function SignUp(props: any) {
                 Sign Up
               </Button>
               <GoogleButton
-              label="Sign up with google"
+                label="Sign up with google"
                 style={{
                   marginLeft: "auto",
                   marginRight: "auto",
@@ -249,11 +247,17 @@ export default function SignUp(props: any) {
                 onClick={() => nextSignIn("google")}
               />
 
-              <Grid container justifyContent="flex-end" sx={{mt: 2}}>
+              <Grid container justifyContent="flex-end" sx={{ mt: 2 }}>
                 <Grid item>
-                  <Link href="/users/login" variant="body2">
+                  <a
+                    onClick={() => {
+                      props.handleClose();
+                      props.setLoginDialog(true);
+                    }}
+                    style={{ cursor: "pointer", textDecoration: "underline", color: "#2b8ad2" }}
+                  >
                     Already have an account? Sign in
-                  </Link>
+                  </a>
                 </Grid>
               </Grid>
             </Box>
@@ -265,8 +269,6 @@ export default function SignUp(props: any) {
           ></script>
         </Container>
       </DialogContent>
-    <script src="https://www.google.com/recaptcha/api.js" async defer/>
-
     </Dialog>
   );
 }
