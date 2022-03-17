@@ -4,20 +4,27 @@ import Footer from "../src/partials/Footer";
 import React from "react";
 import ResponsiveNavBar from "../src/partials/Navbar";
 
-export default function contactUs(props) {
+export default function contactUs(props: any) {
   return (
-    <div>
-      <ResponsiveNavBar logo={props.logo} color="default" />
-      <Box component="section"
+    <ResponsiveNavBar
+      logo={props.logo}
+      about_us={props.about_us}
+      telegram_id={props.telegram_id}
+      instagram_page={props.instagram_page}
+      color="default"
+    >
+      <Box
+        component="section"
         className="u-clearfix u-palette-1-base u-section-9"
         id="carousel_f624"
-        sx={{backgroundColor: "primary.main"}}
-        
+        sx={{ backgroundColor: "primary.main", mt: 0, pt:0 }}
       >
         <div className="u-clearfix u-sheet u-valign-middle-md u-valign-middle-sm u-valign-middle-xs u-sheet-1">
           <div className="u-align-center u-container-style u-expanded-width-xs u-group u-white u-group-1">
             <div className="u-container-layout u-valign-top u-container-layout-1">
-              <Typography component={"h2"} variant="h2" fontWeight={"bold"}>Contact us</Typography>
+              <Typography component={"h2"} variant="h2" fontWeight={"bold"}>
+                Contact us
+              </Typography>
               <div className="u-align-center-sm u-align-center-xs u-align-left-lg u-align-left-md u-align-left-xl u-expanded-width-xs u-form u-form-1">
                 <form
                   action="#"
@@ -249,8 +256,7 @@ export default function contactUs(props) {
           </div>
         </div>
       </Box>
-      <Footer />
-    </div>
+    </ResponsiveNavBar>
   );
 }
 
@@ -258,14 +264,29 @@ export async function getStaticProps({ locale }: { locale: any }) {
   const generalInfo = await fetch(
     process.env.NEXT_PUBLIC_API_URL + `/api/general/?locale=${locale}`
   );
-
+  const articles = await fetch(
+    process.env.NEXT_PUBLIC_API_URL + `/api/articles/?locale=${locale}`
+  );
 
   const generalInfoJSON = await generalInfo.json();
+  const articlesJSON = await articles.json();
   return {
     props: {
+      instagram_page: generalInfoJSON.instagram_page,
+      telegram_id: generalInfoJSON.telegram_id,
+      hero_title: generalInfoJSON.hero_title,
+      hero_text: generalInfoJSON.hero_text,
+      teachers_title: generalInfoJSON.teachers_title,
+      teachers_text: generalInfoJSON.teachers_text,
+      learners_title: generalInfoJSON.learners_title,
+      learners_text: generalInfoJSON.learners_text,
+      about_us: generalInfoJSON.about_us,
       logo: process.env.NEXT_PUBLIC_API_URL + generalInfoJSON.logo,
+      email: generalInfoJSON.email,
       language: generalInfoJSON.language,
       name: generalInfoJSON.name,
+      newArticles: articlesJSON,
     },
   };
 }
+

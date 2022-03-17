@@ -210,7 +210,7 @@ const ResponsiveNavBar = (props: any) => {
   const popoverOpen = Boolean(anchorEl);
   const popoverId = popoverOpen ? "account-popover" : undefined;
   useEffect(() => {
-    if (true) {
+    if (mediumScreenMatch) {
       console.log("kolahbardar");
       
       /* When the user scrolls down, hide the navbar. When the user scrolls up, show the navbar */
@@ -442,7 +442,7 @@ const ResponsiveNavBar = (props: any) => {
     <Footer about_us={props.about_us} telegram_id={props.telegram_id}  instagram_page={props.instagram_page}/>
     </>
   ) : (
-    <div>
+    <>
       <AppBar
         position="fixed"
         color={props.color ? props.color : "default"}
@@ -472,6 +472,10 @@ const ResponsiveNavBar = (props: any) => {
           ))}
         </Toolbar>
       </AppBar>
+      <main>{props.children}</main>
+      <Footer about_us={props.about_us} telegram_id={props.telegram_id}  instagram_page={props.instagram_page}/>
+      <Toolbar />
+
       <a
         href="/"
         title="home"
@@ -493,7 +497,7 @@ const ResponsiveNavBar = (props: any) => {
       >
         <Image src={props.logo} width={110} height={50} />
       </a>
-    </div>
+    </>
   );
 };
 export default ResponsiveNavBar;
