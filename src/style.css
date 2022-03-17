@@ -23,3 +23,7 @@
   inline-size: 100%;
   block-size: 510px !important;
 }
+
+#navbar {
+  transition: top 0.3s; /* Transition effect when sliding down (and up) */
+}

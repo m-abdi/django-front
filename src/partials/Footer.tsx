@@ -8,8 +8,10 @@ import Link from "../Link";
 import React from "react";
 import { Typography } from "@mui/material";
 import { styled } from "@mui/system";
+import { useRouter } from "next/router";
 
 function Footer(props: any) {
+  const router = useRouter()
   return (
     <Box
       component={"footer"}
@@ -38,11 +40,10 @@ function Footer(props: any) {
             <Typography component={"h6"} sx={{ pb: 0 }}>
               Quick Links
             </Typography>
-            <Box sx={{ borderBottom: 4, inlineSize: 90, p: 1, m: 0 }}></Box>
-            <Typography component={"h6"}>Quick Links</Typography>
-            <Typography component={"h6"}>Quick Links</Typography>
-            <Typography component={"h6"}>Quick Links</Typography>
-            <Typography component={"h6"}>Quick Links</Typography>
+            <Box sx={{ borderBottom: 4, inlineSize: 90, p: 1, m: 0, mb:1 }}></Box>
+            <Typography component={"h6"} onClick={()=>router.push("/contactUs")}>Contact us</Typography>
+            <Typography component={"h6"}  onClick={()=>router.push("/donate")}>Donate</Typography>
+            <Typography component={"h6"}  onClick={()=>router.push("/aboutUs")}>About us</Typography>
           </Grid>
         </Grid>
         {/* Social Networks */}

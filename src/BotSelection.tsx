@@ -3,7 +3,7 @@ import { Button, Container, Dialog, DialogTitle, Divider, Typography } from "@mu
 import BarLoader from "./BarLoader";
 import BasicSelect from "./Select";
 import { Box } from "@mui/system";
-import Link from "src/Link";
+import Link from "./Link";
 import React from "react";
 import TextField from "@mui/material/TextField";
 import { useEffect } from "react";

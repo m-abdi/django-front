@@ -1,6 +1,12 @@
 import * as React from "react";
 
-import { Dialog, DialogContent } from "@mui/material";
+import {
+  Dialog,
+  DialogContent,
+  InputLabel,
+  MenuItem,
+  Select,
+} from "@mui/material";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import { useEffect, useState } from "react";
 
@@ -45,6 +51,7 @@ export default function SignUp(props: any) {
   const [errorMessage, setErrorMessage] = useState("");
   const [emailError, setEmailError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
+  const [userType, setUserType] = useState(props.userType);
   const [submitStatus, setSubmitStatus] = useState(true);
   const emailPattern = new RegExp(".+@.+[.].+");
   const passwordPattern = new RegExp("[0-9a-zA-Z!@#$]{6,}");
@@ -134,6 +141,24 @@ export default function SignUp(props: any) {
             </Typography>
             <Box component="form" action="" method="post" sx={{ mt: 3 }}>
               <Grid container spacing={2} justifyContent="space-between">
+                <Grid
+                  item
+                  xs={12}
+                  sx={{ display: "flex", justifyContent: "center", mb: 2 }}
+                >
+                  <Select
+                    id="type"
+                    name="type"
+                    labelId="type-label"
+                    label={"As"}
+                    native={true}
+                    value={userType}
+                    onChange={(e) => setUserType(e.target.value)}
+                  >
+                    <option style={{ fontWeight: "bold" }}>Learner</option>
+                    <option style={{ fontWeight: "bold" }}>Teacher</option>
+                  </Select>
+                </Grid>
                 <Grid item xs={12} sm={5.5}>
                   <TextField
                     autoComplete="given-name"
@@ -254,7 +279,11 @@ export default function SignUp(props: any) {
                       props.handleClose();
                       props.setLoginDialog(true);
                     }}
-                    style={{ cursor: "pointer", textDecoration: "underline", color: "#2b8ad2" }}
+                    style={{
+                      cursor: "pointer",
+                      textDecoration: "underline",
+                      color: "#2b8ad2",
+                    }}
                   >
                     Already have an account? Sign in
                   </a>

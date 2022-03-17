@@ -3994,20 +3994,7 @@ html {
 body {
   margin: 0;
 }
-article,
-aside,
-details,
-figcaption,
-figure,
-footer,
-header,
-main,
-menu,
-nav,
-section,
-summary {
-  display: block;
-}
+
 audio,
 canvas,
 progress,
@@ -5626,20 +5613,8 @@ body {
   height: auto;
   min-height: 100%;
 }
-body,
-aside,
-.u-sidebar-block,
-section,
-header,
-footer {
-  position: relative;
-}
-section > *,
-header > *,
-footer > *,
-.u-sheet > * {
-  position: relative;
-}
+
+
 base {
   display: none;
 }

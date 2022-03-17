@@ -2,6 +2,7 @@ import * as React from "react";
 
 import { Divider, Grid, Popover, Select } from "@mui/material";
 import { alpha, styled, useTheme } from "@mui/material/styles";
+import { useEffect, useState } from "react";
 
 import AccountBalanceWalletRoundedIcon from "@mui/icons-material/AccountBalanceWalletRounded";
 import AccountCircleRoundedIcon from "@mui/icons-material/AccountCircleRounded";
@@ -44,7 +45,6 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 import { useRouter } from "next/router";
 import useScrollTrigger from "@mui/material/useScrollTrigger";
 import { useSession } from "next-auth/react";
-import { useState } from "react";
 
 const localesImages = { en: "/images/usa.png", fr: "/images/france.png" };
 const drawerWidth = 240;
@@ -200,13 +200,33 @@ const ResponsiveNavBar = (props: any) => {
   const [loginDialog, setLoginDialog] = useState(false);
   const [registerDialog, setRegisterDialog] = useState(false);
 
+  const mediumScreenMatch = useMediaQuery((theme: any) =>
+  theme.breakpoints.up("md")
+);
   const router = useRouter();
   const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(
     null
   );
   const popoverOpen = Boolean(anchorEl);
   const popoverId = popoverOpen ? "account-popover" : undefined;
+  useEffect(() => {
+    if (true) {
+      console.log("kolahbardar");
+      
+      /* When the user scrolls down, hide the navbar. When the user scrolls up, show the navbar */
+      var prevScrollpos = window.pageYOffset;
+      window.onscroll = function () {
+        var currentScrollPos = window.pageYOffset;
+        if (prevScrollpos > currentScrollPos) {
+          document.getElementById("navbar").style.top = "0";
 
+        } else {
+          document.getElementById("navbar").style.top = "-100px";
+        }
+        prevScrollpos = currentScrollPos;
+      };
+    }
+  }, [mediumScreenMatch]);
   const routerMatch = [
     "/users/dashboard",
     "/users/myExchanges",
@@ -219,9 +239,7 @@ const ResponsiveNavBar = (props: any) => {
   const signInUpRoutes = ["/users/register", "/users/login"].includes(
     router.pathname
   );
-  const mediumScreenMatch = useMediaQuery((theme: any) =>
-    theme.breakpoints.up("md")
-  );
+  
   const loginDialogHandle = () => {
     setLoginDialog(false);
   };
@@ -235,8 +253,10 @@ const ResponsiveNavBar = (props: any) => {
     setAnchorEl(null);
   };
   return mediumScreenMatch ? (
+    <>
     <AppBar
       position="fixed"
+      id="navbar"
       color={props.color ? props.color : "transparent"}
       sx={{
         top: { xs: "auto", md: 0 },
@@ -256,13 +276,14 @@ const ResponsiveNavBar = (props: any) => {
           role="navigation"
         >
           <Grid item md={5}>
-            <Search>
-              <SearchIconWrapper>
+            <Search >
+              <SearchIconWrapper sx={{px: 0, ml: 0}}>
                 <SearchIcon />
               </SearchIconWrapper>
               <StyledInputBase
                 placeholder="Search…"
                 inputProps={{ "aria-label": "search" }}
+                sx={{px: 3}}
               />
             </Search>
           </Grid>
@@ -296,7 +317,9 @@ const ResponsiveNavBar = (props: any) => {
               color={"inherit"}
               sx={{ mr: 1 }}
             >
-              <Typography fontWeight={"bold"}>Donate</Typography>
+              <Typography fontWeight={"bold"} color="inherit">
+                Donate
+              </Typography>
             </Link>
             <Box
               sx={{
@@ -311,7 +334,9 @@ const ResponsiveNavBar = (props: any) => {
               color={"inherit"}
               sx={{ mr: 1 }}
             >
-              <Typography fontWeight={"bold"}>Contact us</Typography>
+              <Typography fontWeight={"bold"} color="inherit">
+                Contact us
+              </Typography>
             </Link>
             <Box
               sx={{
@@ -328,7 +353,9 @@ const ResponsiveNavBar = (props: any) => {
                 cursor: "pointer",
               }}
             >
-              <Typography fontWeight={"bold"}>Login</Typography>
+              <Typography fontWeight={"bold"} color="inherit">
+                Login
+              </Typography>
             </a>
             <SignIn
               open={loginDialog}
@@ -352,7 +379,9 @@ const ResponsiveNavBar = (props: any) => {
                 cursor: "pointer",
               }}
             >
-              <Typography fontWeight={"bold"}>Sign up</Typography>
+              <Typography fontWeight={"bold"} color="inherit">
+                Sign up
+              </Typography>
             </a>
             <SignUp
               open={registerDialog}
@@ -409,6 +438,9 @@ const ResponsiveNavBar = (props: any) => {
         </Toolbar>
       </Container>
     </AppBar>
+    <main>{props.children}</main>
+    <Footer about_us={props.about_us} telegram_id={props.telegram_id}  instagram_page={props.instagram_page}/>
+    </>
   ) : (
     <div>
       <AppBar

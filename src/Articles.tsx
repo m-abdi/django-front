@@ -1,5 +1,7 @@
-import { Box, Container, Divider, Typography } from "@mui/material";
+import { Divider, Typography } from "@mui/material";
 
+import Box from "@mui/material/Box"
+import Container from "@mui/material/Container"
 import FlexRowStacked from "./FlexRowStacked";
 import MediaCard from "./ArticleCard";
 import React from "react";
