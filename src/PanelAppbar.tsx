@@ -1,43 +1,98 @@
 import * as React from "react";
 
-import { CSSObject, Theme, styled, useTheme } from "@mui/material/styles";
+import { CSSObject, Theme, styled } from "@mui/material/styles";
+import { Grid, Popover, Select } from "@mui/material";
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from "@mui/material/AppBar";
+import { alpha, useTheme } from "@mui/material/styles";
+import { useEffect, useState } from "react";
 
-import AccountBalanceWalletOutlinedIcon from '@mui/icons-material/AccountBalanceWalletOutlined';
+import AccountBalanceWalletOutlinedIcon from "@mui/icons-material/AccountBalanceWalletOutlined";
+import AccountBalanceWalletRoundedIcon from "@mui/icons-material/AccountBalanceWalletRounded";
 import AccountCircleRoundedIcon from "@mui/icons-material/AccountCircleRounded";
 import AlternateEmailIcon from "@mui/icons-material/AlternateEmail";
+import { AnyRecord } from "dns";
+import ArticleRoundedIcon from "@mui/icons-material/ArticleRounded";
+import Avatar from "@mui/material/Avatar";
 import Box from "@mui/material/Box";
 import { Button } from "@mui/material";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
+import Container from "@mui/material/Container";
 import CssBaseline from "@mui/material/CssBaseline";
 import CurrencyExchangeRoundedIcon from "@mui/icons-material/CurrencyExchangeRounded";
-import DashboardOutlinedIcon from '@mui/icons-material/DashboardOutlined';
+import DashboardOutlinedIcon from "@mui/icons-material/DashboardOutlined";
 import DashboardRoundedIcon from "@mui/icons-material/DashboardRounded";
 import Divider from "@mui/material/Divider";
+import Fab from "@mui/material/Fab";
+import Footer from "./partials/Footer";
+import HelpRoundedIcon from "@mui/icons-material/HelpRounded";
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
+import HomeRoundedIcon from "@mui/icons-material/HomeRounded";
 import { Icon } from "@iconify/react";
 import IconButton from "@mui/material/IconButton";
+import Image from "next/image";
 import InboxIcon from "@mui/icons-material/MoveToInbox";
+import InputBase from "@mui/material/InputBase";
 import InstagramIcon from "@mui/icons-material/Instagram";
+import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
+import LanguageIcon from "@mui/icons-material/Language";
 import Link from "../src/Link";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import MailIcon from "@mui/icons-material/Mail";
+import Menu from "@mui/material/Menu";
 import MenuIcon from "@mui/icons-material/Menu";
+import MenuItem from "@mui/material/MenuItem";
 import MuiDrawer from "@mui/material/Drawer";
-import { Popover } from "@mui/material";
-import PowerSettingsNewIcon from '@mui/icons-material/PowerSettingsNew';
+import type { NextPage } from "next";
+import PowerSettingsNewIcon from "@mui/icons-material/PowerSettingsNew";
+import SearchIcon from "@mui/icons-material/Search";
 import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
 import SupportRoundedIcon from "@mui/icons-material/SupportRounded";
 import TelegramIcon from "@mui/icons-material/Telegram";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
+import Zoom from "@mui/material/Zoom";
 import { signOut } from "next-auth/react";
+import useMediaQuery from "@mui/material/useMediaQuery";
 import { useRouter } from "next/router";
+import useScrollTrigger from "@mui/material/useScrollTrigger";
+import { useSession } from "next-auth/react";
 
+const pages = [
+  {
+    title: "Home",
+    href: "/",
+    icon: <HomeRoundedIcon fontSize="large" />,
+  },
+  {
+    title: "Articles",
+    href: "/articles",
+    icon: <ArticleRoundedIcon fontSize="large" />,
+  },
+  // {
+  //   title: "MyExchanges",
+  //   icon: <CurrencyExchangeRoundedIcon />,
+  //   href: "/users/myExchanges",
+  // },
+  // {
+  //   title: "Bots",
+  //   icon: <Icon icon="mdi:robot" />,
+  //   href: "/users/bots",
+  // },
+  {
+    title: "Support",
+    href: "/contactUs",
+    icon: <HelpRoundedIcon fontSize="large" />,
+  },
+  {
+    title: "Account",
+    href: "/users/dashboard",
+    icon: <AccountCircleRoundedIcon fontSize="large" />,
+  },
+];
 const drawerWidth = 170;
 
 const openedMixin = (theme: Theme): CSSObject => ({
@@ -113,13 +168,16 @@ const Drawer = styled(MuiDrawer, {
 
 export default function MiniDrawer(props: any) {
   const theme = useTheme();
-  const router = useRouter()
+  const router = useRouter();
   const [open, setOpen] = React.useState(true);
   const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(
     null
   );
   const popoverOpen = Boolean(anchorEl);
   const popoverId = popoverOpen ? "account-popover" : undefined;
+  const mediumScreenMatch = useMediaQuery((theme: any) =>
+    theme.breakpoints.up("md")
+  );
   const handleDrawerOpen = () => {
     setOpen(true);
   };
@@ -133,10 +191,9 @@ export default function MiniDrawer(props: any) {
     setOpen(false);
   };
 
-  return (
+  return mediumScreenMatch ? (
     <Box sx={{ display: "flex" }}>
-      <AppBar position="fixed" open={open} color="default">
-        
+      <AppBar position="fixed" open={open} color="primary">
         <Toolbar>
           <IconButton
             color="inherit"
@@ -176,9 +233,9 @@ export default function MiniDrawer(props: any) {
               sx={{ color: "black", textTransform: "capitalize" }}
             >
               <Typography sx={{ p: 1, my: "0px !important" }} component={"p"}>
-              <span style={{marginRight: "5px"}}>
-            <DashboardOutlinedIcon />{" "}
-          </span>
+                <span style={{ marginRight: "5px" }}>
+                  <DashboardOutlinedIcon />{" "}
+                </span>
                 dashboard
               </Typography>
             </Link>
@@ -188,22 +245,22 @@ export default function MiniDrawer(props: any) {
               sx={{ color: "black", textTransform: "capitalize" }}
             >
               <Typography sx={{ p: 1, my: "0px !important" }} component={"p"}>
-              <span style={{marginRight: "5px"}}>
-            <SettingsOutlinedIcon />{" "}
-          </span>
+                <span style={{ marginRight: "5px" }}>
+                  <SettingsOutlinedIcon />{" "}
+                </span>
                 settings
               </Typography>
             </Link>
             <Button
-              sx={{ textTransform: "capitalize", color: "black", p:0 }}
+              sx={{ textTransform: "capitalize", color: "black", p: 0 }}
               onClick={() =>
                 signOut({ callbackUrl: process.env.NEXT_PUBLIC_URL + "/" })
               }
             >
               <Typography sx={{ p: 1, my: "0px !important" }} component={"p"}>
-              <span style={{marginRight: "5px"}}>
-            <PowerSettingsNewIcon />{" "}
-          </span>
+                <span style={{ marginRight: "5px" }}>
+                  <PowerSettingsNewIcon />{" "}
+                </span>
                 logout
               </Typography>
             </Button>
@@ -213,9 +270,11 @@ export default function MiniDrawer(props: any) {
       <Drawer
         variant="permanent"
         open={open}
+        color={"primary"}
         PaperProps={{
           sx: {
             boxShadow: 12,
+            backgroundColor: "primary.main"
           },
         }}
       >
@@ -248,7 +307,7 @@ export default function MiniDrawer(props: any) {
             },
             {
               title: "Wallet",
-              icon: <AccountBalanceWalletOutlinedIcon/>,
+              icon: <AccountBalanceWalletOutlinedIcon />,
               href: "/users/wallet",
             },
             {
@@ -298,10 +357,72 @@ export default function MiniDrawer(props: any) {
           ))}
         </List>
       </Drawer>
-      <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
+      <Box component="main" sx={{ p: 3 }}>
         <DrawerHeader />
         {props.children}
       </Box>
     </Box>
+  ) : (
+    <>
+      <AppBar
+        position="fixed"
+        color={props.color ? props.color : "default"}
+        sx={{
+          boxShadow: 10,
+          top: "auto",
+          bottom: 0,
+          left: 0,
+          right: 0,
+        }}
+      >
+        <Toolbar
+          component={"nav"}
+          sx={{ justifyContent: "space-between" }}
+          role="navigation"
+        >
+          {pages.map((page) => (
+            <Link
+              href={page.href}
+              underline="none"
+              color="black !important"
+              key={page.title}
+              sx={{ fontSize: "1.5rem" }}
+            >
+              {page.icon}
+            </Link>
+          ))}
+        </Toolbar>
+      </AppBar>
+      <main>{props.children}</main>
+      <Footer
+        name={props.name}
+        about_us={props.about_us}
+        telegram_id={props.telegram_id}
+        instagram_page={props.instagram_page}
+      />
+      <Toolbar />
+
+      <a
+        href="/"
+        title="home"
+        style={{
+          padding: 0,
+          position: "fixed",
+          top: 0,
+          left: "calc((100vw - 150px) / 2)",
+          zIndex: 100,
+          inlineSize: 150,
+          backgroundColor: "white",
+          boxShadow:
+            "2px 2px 4px rgba(0, 0, 0, 0.5), 4px 4px 8px rgba(0, 0, 0, 0.3)",
+          border: "1px solid white",
+          borderRadius: "0px 0px 40% 40%",
+          display: "flex",
+          justifyContent: "center",
+        }}
+      >
+        <Image src={props.logo} width={110} height={50} />
+      </a>
+    </>
   );
 }

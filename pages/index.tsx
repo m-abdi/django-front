@@ -34,6 +34,7 @@ export default function landingPage(props: any) {
   };
   return (
     <ResponsiveNavBar
+    name={props.name}
       logo={props.logo}
       about_us={props.about_us}
       telegram_id={props.telegram_id}

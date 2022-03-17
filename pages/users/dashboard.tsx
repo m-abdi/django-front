@@ -1,29 +1,12 @@
-import { Container } from "@mui/material";
+import { Box } from "@mui/system";
 import React from "react";
-import ResponsiveNavBar from "../src/partials/Navbar";
+import UsersAppbar from "../../src/PanelAppbar";
 
-export default function donate(props: any) {
+export default function dashboard(props: any) {
   return (
-    <ResponsiveNavBar
-    name={props.name}
-
-      logo={props.logo}
-      about_us={props.about_us}
-      telegram_id={props.telegram_id}
-      instagram_page={props.instagram_page}
-    >
-      <Container
-        maxWidth="lg"
-        sx={{
-          backgroundImage: "url(/images/donate1.jpg)",
-          minBlockSize: "100vh",
-          backgroundSize: "100%",
-          backgroundRepeat: "no-repeat",
-          backgroundPosition: "center",
-          opacity: "0.2"
-        }}
-      ></Container>
-    </ResponsiveNavBar>
+    <UsersAppbar logo={props.logo}>
+      <Box sx={{blockSize: "70vh"}}>sfjosidfo</Box>
+    </UsersAppbar>
   );
 }
 

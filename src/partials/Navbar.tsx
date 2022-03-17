@@ -201,8 +201,8 @@ const ResponsiveNavBar = (props: any) => {
   const [registerDialog, setRegisterDialog] = useState(false);
 
   const mediumScreenMatch = useMediaQuery((theme: any) =>
-  theme.breakpoints.up("md")
-);
+    theme.breakpoints.up("md")
+  );
   const router = useRouter();
   const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(
     null
@@ -211,15 +211,13 @@ const ResponsiveNavBar = (props: any) => {
   const popoverId = popoverOpen ? "account-popover" : undefined;
   useEffect(() => {
     if (mediumScreenMatch) {
-      console.log("kolahbardar");
-      
+
       /* When the user scrolls down, hide the navbar. When the user scrolls up, show the navbar */
       var prevScrollpos = window.pageYOffset;
       window.onscroll = function () {
         var currentScrollPos = window.pageYOffset;
         if (prevScrollpos > currentScrollPos) {
           document.getElementById("navbar").style.top = "0";
-
         } else {
           document.getElementById("navbar").style.top = "-100px";
         }
@@ -239,7 +237,7 @@ const ResponsiveNavBar = (props: any) => {
   const signInUpRoutes = ["/users/register", "/users/login"].includes(
     router.pathname
   );
-  
+
   const loginDialogHandle = () => {
     setLoginDialog(false);
   };
@@ -254,192 +252,197 @@ const ResponsiveNavBar = (props: any) => {
   };
   return mediumScreenMatch ? (
     <>
-    <AppBar
-      position="fixed"
-      id="navbar"
-      color={props.color ? props.color : "transparent"}
-      sx={{
-        top: { xs: "auto", md: 0 },
-        bottom: { xs: 0, md: "auto" },
-        left: 0,
-        right: 0,
-        borderRadius: { md: "5px 5px 75px 75px" },
-        mx: { md: "auto" },
-        minInlineSize: { md: "800px" },
-      }}
-    >
-      <Container maxWidth="xl">
-        <Toolbar
-          component={"nav"}
-          sx={{ justifyContent: "space-between" }}
-          aria-label="page header"
-          role="navigation"
-        >
-          <Grid item md={5}>
-            <Search >
-              <SearchIconWrapper sx={{px: 0, ml: 0}}>
-                <SearchIcon />
-              </SearchIconWrapper>
-              <StyledInputBase
-                placeholder="Search…"
-                inputProps={{ "aria-label": "search" }}
-                sx={{px: 3}}
+      <AppBar
+        position="fixed"
+        id="navbar"
+        color={props.color ? props.color : "transparent"}
+        sx={{
+          top: { xs: "auto", md: 0 },
+          bottom: { xs: 0, md: "auto" },
+          left: 0,
+          right: 0,
+          borderRadius: { md: "5px 5px 75px 75px" },
+          mx: { md: "auto" },
+          minInlineSize: { md: "800px" },
+        }}
+      >
+        <Container maxWidth="xl">
+          <Toolbar
+            component={"nav"}
+            sx={{ justifyContent: "space-between" }}
+            aria-label="page header"
+            role="navigation"
+          >
+            <Grid item md={5}>
+              <Search>
+                <SearchIconWrapper sx={{ px: 0, ml: 0 }}>
+                  <SearchIcon />
+                </SearchIconWrapper>
+                <StyledInputBase
+                  placeholder="Search…"
+                  inputProps={{ "aria-label": "search" }}
+                  sx={{ px: 3 }}
+                />
+              </Search>
+            </Grid>
+            <Grid
+              item
+              md={2}
+              sx={{
+                display: "flex",
+                flexFlow: "row nowrap",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <a title="home" href={"/"}>
+                <Image src={`${props.logo}`} width={110} height={50} />
+              </a>
+            </Grid>
+            <Grid
+              item
+              md={5}
+              sx={{
+                display: "flex",
+                flexFlow: "row nowrap",
+                alignItems: "center",
+                justifyContent: "flex-end",
+              }}
+            >
+              <Link
+                href={"/donate"}
+                underline="none"
+                color={"inherit"}
+                sx={{ mr: 1 }}
+              >
+                <Typography fontWeight={"bold"} color="inherit">
+                  Donate
+                </Typography>
+              </Link>
+              <Box
+                sx={{
+                  ":after": { content: '"|"' },
+                  fontWeight: "bold",
+                  mr: 1,
+                }}
+              ></Box>
+              <Link
+                href={"/contactUs"}
+                underline="none"
+                color={"inherit"}
+                sx={{ mr: 1 }}
+              >
+                <Typography fontWeight={"bold"} color="inherit">
+                  Contact us
+                </Typography>
+              </Link>
+              <Box
+                sx={{
+                  ":after": { content: '"|"' },
+                  fontWeight: "bold",
+                  mr: 1,
+                }}
+              ></Box>
+              <a
+                onClick={() => setLoginDialog(true)}
+                style={{
+                  marginRight: 6,
+                  textTransform: "none",
+                  cursor: "pointer",
+                }}
+              >
+                <Typography fontWeight={"bold"} color="inherit">
+                  Login
+                </Typography>
+              </a>
+              <SignIn
+                open={loginDialog}
+                selectedValue={"selectedValue"}
+                handleClose={loginDialogHandle}
+                setRegisterDialog={setRegisterDialog}
               />
-            </Search>
-          </Grid>
-          <Grid
-            item
-            md={2}
-            sx={{
-              display: "flex",
-              flexFlow: "row nowrap",
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          >
-            <a title="home" href={"/"}>
-              <Image src={`${props.logo}`} width={110} height={50} />
-            </a>
-          </Grid>
-          <Grid
-            item
-            md={5}
-            sx={{
-              display: "flex",
-              flexFlow: "row nowrap",
-              alignItems: "center",
-              justifyContent: "flex-end",
-            }}
-          >
-            <Link
-              href={"/donate"}
-              underline="none"
-              color={"inherit"}
-              sx={{ mr: 1 }}
-            >
-              <Typography fontWeight={"bold"} color="inherit">
-                Donate
-              </Typography>
-            </Link>
-            <Box
-              sx={{
-                ":after": { content: '"|"' },
-                fontWeight: "bold",
-                mr: 1,
-              }}
-            ></Box>
-            <Link
-              href={"/contactUs"}
-              underline="none"
-              color={"inherit"}
-              sx={{ mr: 1 }}
-            >
-              <Typography fontWeight={"bold"} color="inherit">
-                Contact us
-              </Typography>
-            </Link>
-            <Box
-              sx={{
-                ":after": { content: '"|"' },
-                fontWeight: "bold",
-                mr: 1,
-              }}
-            ></Box>
-            <a
-              onClick={() => setLoginDialog(true)}
-              style={{
-                marginRight: 6,
-                textTransform: "none",
-                cursor: "pointer",
-              }}
-            >
-              <Typography fontWeight={"bold"} color="inherit">
-                Login
-              </Typography>
-            </a>
-            <SignIn
-              open={loginDialog}
-              selectedValue={"selectedValue"}
-              handleClose={loginDialogHandle}
-              setRegisterDialog={setRegisterDialog}
-            />
-            <Box
-              sx={{
-                ":after": { content: '"|"' },
-                fontWeight: "bold",
-                mr: 1,
-              }}
-            ></Box>
+              <Box
+                sx={{
+                  ":after": { content: '"|"' },
+                  fontWeight: "bold",
+                  mr: 1,
+                }}
+              ></Box>
 
-            <a
-              onClick={() => setRegisterDialog(true)}
-              style={{
-                marginRight: 6,
-                textTransform: "none",
-                cursor: "pointer",
-              }}
-            >
-              <Typography fontWeight={"bold"} color="inherit">
-                Sign up
-              </Typography>
-            </a>
-            <SignUp
-              open={registerDialog}
-              selectedValue={"selectedValue"}
-              handleClose={registerDialogHandle}
-              setLoginDialog={setLoginDialog}
-            />
-            <Select
-              sx={{ blockSize: 40, p: 0 }}
-              displayEmpty
-              value={router.locale}
-              renderValue={() => {
-                return (
+              <a
+                onClick={() => setRegisterDialog(true)}
+                style={{
+                  marginRight: 6,
+                  textTransform: "none",
+                  cursor: "pointer",
+                }}
+              >
+                <Typography fontWeight={"bold"} color="inherit">
+                  Sign up
+                </Typography>
+              </a>
+              <SignUp
+                open={registerDialog}
+                selectedValue={"selectedValue"}
+                handleClose={registerDialogHandle}
+                setLoginDialog={setLoginDialog}
+              />
+              <Select
+                sx={{ blockSize: 40, p: 0 }}
+                displayEmpty
+                value={router.locale}
+                renderValue={() => {
+                  return (
+                    <img
+                      title={router.locale}
+                      loading="lazy"
+                      src={localesImages[router.locale]}
+                      width="30px"
+                      style={{ marginTop: "4px" }}
+                    />
+                  );
+                }}
+              >
+                <MenuItem
+                  value={"en"}
+                  onClick={() => router.push("/", "/", { locale: "en" })}
+                >
                   <img
                     title={router.locale}
                     loading="lazy"
-                    src={localesImages[router.locale]}
+                    src={localesImages["en"]}
                     width="30px"
-                    style={{ marginTop: "4px" }}
+                    alt={`Flag of USA`}
+                    style={{ marginRight: "15px" }}
                   />
-                );
-              }}
-            >
-              <MenuItem
-                value={"en"}
-                onClick={() => router.push("/", "/", { locale: "en" })}
-              >
-                <img
-                  title={router.locale}
-                  loading="lazy"
-                  src={localesImages["en"]}
-                  width="30px"
-                  alt={`Flag of USA`}
-                  style={{ marginRight: "15px" }}
-                />
-                <b>English</b>
-              </MenuItem>
-              <MenuItem
-                value={"fr"}
-                onClick={() => router.push("/", "/", { locale: "fr" })}
-              >
-                <img
-                  title={router.locale}
-                  loading="lazy"
-                  src={localesImages["fr"]}
-                  width="30px"
-                  alt={`Flag of France`}
-                  style={{ marginRight: "15px" }}
-                />
-                <b>French</b>
-              </MenuItem>
-            </Select>
-          </Grid>
-        </Toolbar>
-      </Container>
-    </AppBar>
-    <main>{props.children}</main>
-    <Footer about_us={props.about_us} telegram_id={props.telegram_id}  instagram_page={props.instagram_page}/>
+                  <b>English</b>
+                </MenuItem>
+                <MenuItem
+                  value={"fr"}
+                  onClick={() => router.push("/", "/", { locale: "fr" })}
+                >
+                  <img
+                    title={router.locale}
+                    loading="lazy"
+                    src={localesImages["fr"]}
+                    width="30px"
+                    alt={`Flag of France`}
+                    style={{ marginRight: "15px" }}
+                  />
+                  <b>French</b>
+                </MenuItem>
+              </Select>
+            </Grid>
+          </Toolbar>
+        </Container>
+      </AppBar>
+      <main>{props.children}</main>
+      <Footer
+        name={props.name}
+        about_us={props.about_us}
+        telegram_id={props.telegram_id}
+        instagram_page={props.instagram_page}
+      />
     </>
   ) : (
     <>
@@ -473,7 +476,12 @@ const ResponsiveNavBar = (props: any) => {
         </Toolbar>
       </AppBar>
       <main>{props.children}</main>
-      <Footer about_us={props.about_us} telegram_id={props.telegram_id}  instagram_page={props.instagram_page}/>
+      <Footer
+        name={props.name}
+        about_us={props.about_us}
+        telegram_id={props.telegram_id}
+        instagram_page={props.instagram_page}
+      />
       <Toolbar />
 
       <a

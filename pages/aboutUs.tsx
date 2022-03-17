@@ -7,6 +7,8 @@ import ResponsiveNavBar from "../src/partials/Navbar";
 export default function aboutUs(props: any) {
   return (
     <ResponsiveNavBar
+    name={props.name}
+
       logo={props.logo}
       about_us={props.about_us}
       telegram_id={props.telegram_id}

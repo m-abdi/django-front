@@ -51,7 +51,7 @@ export default function SignUp(props: any) {
   const [errorMessage, setErrorMessage] = useState("");
   const [emailError, setEmailError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
-  const [userType, setUserType] = useState(props.userType);
+  const [userType, setUserType] = useState(props.userType? props.userType : "Learner");
   const [submitStatus, setSubmitStatus] = useState(true);
   const emailPattern = new RegExp(".+@.+[.].+");
   const passwordPattern = new RegExp("[0-9a-zA-Z!@#$]{6,}");
@@ -61,24 +61,21 @@ export default function SignUp(props: any) {
       method: "post",
       body: JSON.stringify({
         email: email,
+        username: email,
         password: password,
         firstName: firstName,
         lastName: lastName,
+        type: userType
       }),
     });
-    const status = resp.status;
-    if (status == 200) {
+    if (resp.ok) {
       router.push("/users/login");
-    } else if (status == 400) {
-      setErrorMessage(await resp.text());
+    } else {
+      setErrorMessage((await resp.json()).error);
       setLoading(false);
     }
   };
-  useEffect(() => {
-    window.enableSubmitButton = (token: string) => {
-      setSubmitStatus(false);
-    };
-  }, []);
+ 
 
   const handleValidation = () => {
     let valid = true;

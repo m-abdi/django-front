@@ -20,6 +20,7 @@ import TextField from "@mui/material/TextField";
 import { TransitionProps } from "@mui/material/transitions";
 import Typography from "@mui/material/Typography";
 import { signIn as nextSignIn } from "next-auth/react";
+import { useEffect } from "react";
 import { useRouter } from "next/router";
 import { useState } from "react";
 
@@ -41,12 +42,14 @@ export default function SignIn(props: any) {
   const [passwordError, setPasswordError] = useState(false);
   const emailPattern = new RegExp(".+@.+[.].+");
   const passwordPattern = new RegExp("[0-9a-zA-Z!@#$]{6,}");
+ 
+
   const handleValidation = () => {
     let valid = true;
-    if (!emailPattern.test(email)) {
-      setEmailError(true);
-      valid = false;
-    }
+    // if (!emailPattern.test(email)) {
+    //   setEmailError(true);
+    //   valid = false;
+    // }
     if (!passwordPattern.test(password)) {
       setPasswordError(true);
       valid = false;
@@ -106,7 +109,7 @@ export default function SignIn(props: any) {
                 required
                 fullWidth
                 id="email"
-                label="Email Address"
+                label="Email Address Or Username"
                 name="email"
                 error={emailError}
                 helperText={emailError ? "Enter a valid email address !" : null}
@@ -157,6 +160,7 @@ export default function SignIn(props: any) {
                     nextSignIn("credentials", {
                       email: email,
                       password: password,
+
                       redirect: false,
                     }).then((resp) => {
                       if (resp && resp.error) {
@@ -194,7 +198,11 @@ export default function SignIn(props: any) {
                       props.handleClose();
                       props.setRegisterDialog(true);
                     }}
-                    style={{ cursor: "pointer", textDecoration: "underline", color: "#2b8ad2" }}
+                    style={{
+                      cursor: "pointer",
+                      textDecoration: "underline",
+                      color: "#2b8ad2",
+                    }}
                   >
                     {"Don't have an account? Sign Up"}
                   </a>

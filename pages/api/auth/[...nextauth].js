@@ -11,25 +11,26 @@ export default NextAuth({
     CredentialsProvider({
       name: "Credentials",
       async authorize(credentials, req) {
-        const { db } = await connectToDatabase();
-        const users = db.collection("users");
-        const query = {
-          email: credentials.email,
-          password: credentials.password,
-        };
-        const user = await users.findOne(query);
-        if (user.status === "inactive") {
-          return Promise.reject(
-            new Error("Please verify your email first")
-          );
-        } else {
-          return user;
+        const resp = await fetch(
+          process.env.NEXT_PUBLIC_API_URL + "/users/login/",
+          {
+            method: "post",
+            body: JSON.stringify({
+              username: credentials.email,
+              password: credentials.password,
+            }),
+          }
+        );
+        const jresp = await resp.json();
+        if (!(resp.ok)) {
+          return null
         }
+        return jresp;
       },
     }),
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-    })
+    }),
   ],
 });
