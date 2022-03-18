@@ -45,6 +45,13 @@ function Footer(props: any) {
             ></Box>
             <Typography
               component={"h6"}
+              onClick={() => router.push("/articles")}
+              sx={{ cursor: "pointer" }}
+            >
+              Articles
+            </Typography>
+            <Typography
+              component={"h6"}
               onClick={() => router.push("/contactUs")}
               sx={{ cursor: "pointer" }}
             >

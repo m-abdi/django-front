@@ -274,7 +274,7 @@ export default function MiniDrawer(props: any) {
         PaperProps={{
           sx: {
             boxShadow: 12,
-            backgroundColor: "primary.main"
+            backgroundColor: "primary.main",
           },
         }}
       >
@@ -421,7 +421,11 @@ export default function MiniDrawer(props: any) {
           justifyContent: "center",
         }}
       >
-        <Image src={props.logo} width={110} height={50} />
+        <Image
+          src={process.env.NEXT_PUBLIC_API_URL + props.logo}
+          width={110}
+          height={50}
+        />
       </a>
     </>
   );

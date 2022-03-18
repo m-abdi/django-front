@@ -33,8 +33,8 @@ import type { NextPage } from "next";
 import PowerSettingsNewIcon from "@mui/icons-material/PowerSettingsNew";
 import SearchIcon from "@mui/icons-material/Search";
 import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
-import SignIn from "../signIn";
-import SignUp from "../signUp";
+import SignIn from "../SignInDialog";
+import SignUp from "../SignUpDialog";
 import Toolbar from "@mui/material/Toolbar";
 import Tooltip from "@mui/material/Tooltip";
 import Typography from "@mui/material/Typography";
@@ -211,7 +211,6 @@ const ResponsiveNavBar = (props: any) => {
   const popoverId = popoverOpen ? "account-popover" : undefined;
   useEffect(() => {
     if (mediumScreenMatch) {
-
       /* When the user scrolls down, hide the navbar. When the user scrolls up, show the navbar */
       var prevScrollpos = window.pageYOffset;
       window.onscroll = function () {
@@ -281,7 +280,7 @@ const ResponsiveNavBar = (props: any) => {
                 <StyledInputBase
                   placeholder="Search…"
                   inputProps={{ "aria-label": "search" }}
-                  sx={{ px: 3 }}
+                  sx={{ px: 3, inlineSize: "100%" }}
                 />
               </Search>
             </Grid>
@@ -296,7 +295,11 @@ const ResponsiveNavBar = (props: any) => {
               }}
             >
               <a title="home" href={"/"}>
-                <Image src={`${props.logo}`} width={110} height={50} />
+                <Image
+                  src={process.env.NEXT_PUBLIC_API_URL + props.logo}
+                  width={110}
+                  height={50}
+                />
               </a>
             </Grid>
             <Grid
@@ -503,7 +506,7 @@ const ResponsiveNavBar = (props: any) => {
           justifyContent: "center",
         }}
       >
-        <Image src={props.logo} width={110} height={50} />
+        <Image src={process.env.NEXT_PUBLIC_API_URL + props.logo} width={110} height={50} />
       </a>
     </>
   );

@@ -13,7 +13,7 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import GoogleButton from "react-google-button";
 import Grid from "@mui/material/Grid";
 import IconButton from "@mui/material/IconButton";
-import Link from "../src/Link";
+import Link from "./Link";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Slide from "@mui/material/Slide";
 import TextField from "@mui/material/TextField";
@@ -46,10 +46,10 @@ export default function SignIn(props: any) {
 
   const handleValidation = () => {
     let valid = true;
-    // if (!emailPattern.test(email)) {
-    //   setEmailError(true);
-    //   valid = false;
-    // }
+    if (!emailPattern.test(email)) {
+      setEmailError(true);
+      valid = false;
+    }
     if (!passwordPattern.test(password)) {
       setPasswordError(true);
       valid = false;
@@ -109,7 +109,7 @@ export default function SignIn(props: any) {
                 required
                 fullWidth
                 id="email"
-                label="Email Address Or Username"
+                label="Email Address"
                 name="email"
                 error={emailError}
                 helperText={emailError ? "Enter a valid email address !" : null}

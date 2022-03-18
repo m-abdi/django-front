@@ -1,15 +1,15 @@
-import * as React from 'react';
+import * as React from "react";
 
-import Button from '@mui/material/Button';
-import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
-import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
-import Typography from '@mui/material/Typography';
+import Button from "@mui/material/Button";
+import Card from "@mui/material/Card";
+import CardActions from "@mui/material/CardActions";
+import CardContent from "@mui/material/CardContent";
+import CardMedia from "@mui/material/CardMedia";
+import Typography from "@mui/material/Typography";
 
 export default function MediaCard(props: any) {
   return (
-    <Card sx={{ inlineSize: 345, blockSize: 300, margin: "10px" }}>
+    <Card sx={{ minInlineSize: 300, maxInlineSize: 450, blockSize: 300, mb: 5 }}>
       <CardMedia
         component="img"
         height="160"

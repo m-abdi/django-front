@@ -12,9 +12,12 @@ import Flickity from "react-flickity-component";
 import Footer from "../src/partials/Footer";
 import Head from "next/head";
 import Image from "next/image";
+import Link from "../src/Link";
 import ResponsiveNavBar from "../src/partials/Navbar";
-import SignIn from "../src/signIn";
-import SignUp from "../src/signUp";
+import SignIn from "../src/SignInDialog";
+import SignUp from "../src/SignUpDialog";
+import getAppInfo from "../src/logic/getAppInfo";
+import getTopArticles from "../src/logic/getTopArticles";
 
 export default function landingPage(props: any) {
   const [learnerRegisterDialog, setLearnerRegisterDialog] = useState(false);
@@ -33,15 +36,9 @@ export default function landingPage(props: any) {
     setLearnerRegisterDialog(false);
   };
   return (
-    <ResponsiveNavBar
-    name={props.name}
-      logo={props.logo}
-      about_us={props.about_us}
-      telegram_id={props.telegram_id}
-      instagram_page={props.instagram_page}
-    >
+    <ResponsiveNavBar {...props}>
       <Head>
-        <title>Kakoota</title>
+        <title>{props.name}</title>
       </Head>
 
       <style
@@ -630,7 +627,7 @@ export default function landingPage(props: any) {
             alignItems: "center",
             justifyContent: "space-around",
           }}
-        >
+        ><Link underline="none" href={"/articles"} color="inherit">
           <Typography
             component={"h2"}
             variant="h2"
@@ -643,6 +640,7 @@ export default function landingPage(props: any) {
           >
             Articles
           </Typography>
+          </Link>
           {/* articles flexbox */}
           <Box sx={{ inlineSize: "100%", blockSize: "100%", mt: 2 }}>
             <Flickity options={{ autoPlay: true, contain: true }}>
@@ -696,31 +694,10 @@ export default function landingPage(props: any) {
 }
 
 export async function getStaticProps({ locale }: { locale: any }) {
-  const generalInfo = await fetch(
-    process.env.NEXT_PUBLIC_API_URL + `/api/general/?locale=${locale}`
-  );
-  const articles = await fetch(
-    process.env.NEXT_PUBLIC_API_URL + `/api/articles/?locale=${locale}`
-  );
-
-  const generalInfoJSON = await generalInfo.json();
-  const articlesJSON = await articles.json();
+  const appInfo = await getAppInfo(locale);
+  const topArticles = await getTopArticles(locale);
+  
   return {
-    props: {
-      instagram_page: generalInfoJSON.instagram_page,
-      telegram_id: generalInfoJSON.telegram_id,
-      hero_title: generalInfoJSON.hero_title,
-      hero_text: generalInfoJSON.hero_text,
-      teachers_title: generalInfoJSON.teachers_title,
-      teachers_text: generalInfoJSON.teachers_text,
-      learners_title: generalInfoJSON.learners_title,
-      learners_text: generalInfoJSON.learners_text,
-      about_us: generalInfoJSON.about_us,
-      logo: process.env.NEXT_PUBLIC_API_URL + generalInfoJSON.logo,
-      email: generalInfoJSON.email,
-      language: generalInfoJSON.language,
-      name: generalInfoJSON.name,
-      newArticles: articlesJSON,
-    },
+    props: { ...appInfo, newArticles: topArticles },
   };
 }

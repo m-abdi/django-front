@@ -6,6 +6,7 @@ import {
   InputLabel,
   MenuItem,
   Select,
+  useMediaQuery,
 } from "@mui/material";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import { useEffect, useState } from "react";
@@ -23,7 +24,7 @@ import GoogleButton from "react-google-button";
 import Grid from "@mui/material/Grid";
 import Head from "next/head";
 import IconButton from "@mui/material/IconButton";
-import Link from "../src/Link";
+import Link from "./Link";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Slide from "@mui/material/Slide";
 import TextField from "@mui/material/TextField";
@@ -51,11 +52,15 @@ export default function SignUp(props: any) {
   const [errorMessage, setErrorMessage] = useState("");
   const [emailError, setEmailError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
-  const [userType, setUserType] = useState(props.userType? props.userType : "Learner");
+  const [userType, setUserType] = useState(
+    props.userType ? props.userType : "Learner"
+  );
   const [submitStatus, setSubmitStatus] = useState(true);
   const emailPattern = new RegExp(".+@.+[.].+");
   const passwordPattern = new RegExp("[0-9a-zA-Z!@#$]{6,}");
-
+  const mediumScreenMatch = useMediaQuery((theme: any) =>
+    theme.breakpoints.up("md")
+  );
   const handleSubmit = async () => {
     const resp = await fetch(process.env.NEXT_PUBLIC_URL + "/api/signUp", {
       method: "post",
@@ -65,17 +70,21 @@ export default function SignUp(props: any) {
         password: password,
         firstName: firstName,
         lastName: lastName,
-        type: userType
+        type: userType,
       }),
     });
     if (resp.ok) {
-      router.push("/users/login");
+      if (mediumScreenMatch) {
+        props.handleClose();
+        props.setLoginDialog(true);
+      } else {
+        router.push("/users/login");
+      }
     } else {
       setErrorMessage((await resp.json()).error);
       setLoading(false);
     }
   };
- 
 
   const handleValidation = () => {
     let valid = true;
