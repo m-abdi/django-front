@@ -68,13 +68,14 @@ export default function articles(props: any) {
   const smallScreenMatch = useMediaQuery((theme: any) =>
     theme.breakpoints.up("sm")
   );
-  let controller = new AbortController();
   const searchEndpoint = (query) =>
     process.env.NEXT_PUBLIC_API_URL + `/api/articles/?q=${query}`;
 
   const onChange = useCallback((event) => {
-    controller.abort();
-    controller = new AbortController();
+    if (!(typeof controller === "undefined")) {
+      controller.abort();
+    }
+    let controller = new AbortController();
     const query = event.target.value;
     setQuery(query);
     if (query.length) {

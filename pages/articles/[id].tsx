@@ -1,7 +1,8 @@
-import { Container, Typography } from "@mui/material";
+import { Container, Typography, useMediaQuery } from "@mui/material";
 
 import { Box } from "@mui/system";
 import Divider from "@mui/material/Divider";
+import { GetStaticPaths } from "next";
 import Head from "next/head";
 import Image from "next/image";
 import React from "react";
@@ -10,6 +11,9 @@ import getAllArticles from "../../src/logic/getAllArticles";
 import getAppInfo from "../../src/logic/getAppInfo";
 
 export default function Article(props: any) {
+  const smallScreenMatch = useMediaQuery((theme: any) =>
+    theme.breakpoints.up("sm")
+  );
   return (
     <ResponsiveNavBar {...props}>
       <Head>
@@ -20,7 +24,12 @@ export default function Article(props: any) {
           src={process.env.NEXT_PUBLIC_API_URL + props.article.picture}
           width={500}
           height={300}
-          style={{ display: "block", marginLeft: "auto", marginRight: "auto" }}
+          style={{
+            display: "block",
+            maxInlineSize: "100vw",
+            marginLeft: smallScreenMatch ? "auto" : 0,
+            marginRight: "auto",
+          }}
           alt="ap"
           title={props.article.title}
         />
@@ -47,12 +56,12 @@ export async function getStaticProps(context: any) {
   };
 }
 
-export async function getStaticPaths() {
+export const getStaticPaths: GetStaticPaths = async () => {
   const articles = await getAllArticles();
   return {
     paths: articles.map((a) => {
       return { params: a };
     }),
-    fallback: true,
+    fallback: "blocking",
   };
 }
