@@ -12,7 +12,7 @@ export default function MediaCard(props: any) {
   return (
     <Link href={`/articles/${props.id}`} underline="none" prefetch={false}>
       <Card
-        sx={{ minInlineSize: 300, maxInlineSize: 450, blockSize: 300, mb: 5 }}
+        sx={{ minInlineSize: 300, maxInlineSize: 450, blockSize: 350, mb: 5 }}
       >
         <CardMedia
           component="img"
@@ -20,16 +20,16 @@ export default function MediaCard(props: any) {
           image={props.image}
           alt={props.alt}
         />
-        <CardContent>
+        <CardContent sx={{blockSize: "40%"}}>
           <Typography gutterBottom variant="h5" component="div">
             {props.title}
           </Typography>
           <Typography variant="body2" color="text.secondary">
-            {props.text}
+            {props.text.slice(0, 140) + "..."}
           </Typography>
         </CardContent>
         <CardActions>
-          <Button size="small">Read more...</Button>
+          <Button variant="contained" href={`/articles/${props.id}`} size="small"  sx={{ml: "auto"}}>Read more...</Button>
         </CardActions>
       </Card>
     </Link>

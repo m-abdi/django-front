@@ -662,7 +662,7 @@ export default function landingPage(props: any) {
                       height={250}
                     />
                     {/* title and short text box */}
-                    <Box sx={{ px: 2, pb: 1, flexGrow: 1 }}>
+                    <Box sx={{ px: 2, pb: 1, flexGrow: 1, blockSize: "40% !important"}}>
                       <Typography
                         component={"h3"}
                         variant="h3"
@@ -671,11 +671,12 @@ export default function landingPage(props: any) {
                         {a.title}
                       </Typography>
                       <Typography component={"p"} variant="body1">
-                        {a.text}
+                        {a.text.slice(0, 200) + "..."} 
                       </Typography>
                     </Box>
                     <Button
                       size="large"
+                      href={`/articles/${a.id}`}
                       variant="contained"
                       color="info"
                       sx={{ display: "block", mx: "auto", mb: 1 }}

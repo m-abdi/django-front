@@ -294,7 +294,7 @@ const ResponsiveNavBar = (props: any) => {
                 justifyContent: "center",
               }}
             >
-              <a title="home" href={"/"}>
+              <a title="home" href={`/${props.language}`}>
                 <Image
                   src={process.env.NEXT_PUBLIC_API_URL + props.logo}
                   width={110}

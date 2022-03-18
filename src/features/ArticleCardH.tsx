@@ -34,7 +34,7 @@ export default function MediaCard(props: any) {
             {props.title}
           </Typography>
           <Typography component={"p"} variant="h6">
-            {props.text}
+            {props.text.slice(0, 200) + "..."}
           </Typography>
         </CardContent>
       </Card>
