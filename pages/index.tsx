@@ -86,8 +86,8 @@ export default function landingPage(props: any) {
               component="h3"
               variant="h6"
               sx={{ maxInlineSize: { xs: "90vw", sm: 450 } }}
+              dangerouslySetInnerHTML={{__html: props.hero_text}}
             >
-              {props.hero_text}
             </Typography>
           </Box>
 
