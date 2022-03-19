@@ -21,6 +21,7 @@ import SignUp from "../src/SignUpDialog";
 import TeachersPath from "../src/features/TeachersPath";
 import getAppInfo from "../src/logic/getAppInfo";
 import getTopArticles from "../src/logic/getTopArticles";
+import { useRouter } from "next/router";
 
 export default function landingPage(props: any) {
   const [learnerRegisterDialog, setLearnerRegisterDialog] = useState(false);
@@ -31,6 +32,7 @@ export default function landingPage(props: any) {
   const mediumScreenMatch = useMediaQuery((theme: any) =>
     theme.breakpoints.up("md")
   );
+  const router = useRouter()
   const theme = useTheme();
   const loginDialogHandle = () => {
     setLoginDialog(false);
@@ -260,6 +262,15 @@ export default function landingPage(props: any) {
               className="blink"
               color="secondary"
               variant="contained"
+              onClick={() => {
+                if (mediumScreenMatch) {
+                  setUserType("Teacher");
+                  setTeacherRegisterDialog(true);
+                }
+                 else {
+                   router.push("/register?isTeacher=1")
+                 }
+              }}
               sx={{
                 fontSize: 16,
                 inlineSize: 200,
@@ -315,6 +326,15 @@ export default function landingPage(props: any) {
               className="blink"
               color="primary"
               variant="contained"
+              onClick={() => {
+                if (mediumScreenMatch) {
+                  setUserType("Learner");
+                  setLearnerRegisterDialog(true);
+                }
+                 else {
+                   router.push("/register")
+                 }
+              }}
               sx={{
                 fontSize: 16,
                 inlineSize: 200,

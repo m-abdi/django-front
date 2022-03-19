@@ -11,6 +11,7 @@ import Link from "../../src/Link";
 import React from "react";
 import ResponsiveNavBar from "../../src/partials/Navbar";
 import SearchIcon from "@mui/icons-material/Search";
+import getAllArticles from "../../src/logic/getAllArticles";
 import getAppInfo from "../../src/logic/getAppInfo";
 import { styled } from "@mui/material";
 
@@ -63,7 +64,7 @@ export default function articles(props: any) {
   const searchRef = useRef(null);
   const [query, setQuery] = useState("");
   const [active, setActive] = useState(true);
-  const [results, setResults] = useState([]);
+  const [results, setResults] = useState(props.articles);
   const [loading, setLoading] = useState(false);
   const smallScreenMatch = useMediaQuery((theme: any) =>
     theme.breakpoints.up("sm")
@@ -176,8 +177,8 @@ export default function articles(props: any) {
 
 export async function getStaticProps({ locale }: { locale: any }) {
   const appInfo = await getAppInfo(locale);
-
+  const allArticles = await getAllArticles()
   return {
-    props: { ...appInfo },
+    props: { ...appInfo, articles: allArticles },
   };
 }
