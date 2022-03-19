@@ -32,7 +32,7 @@ export default function landingPage(props: any) {
   const mediumScreenMatch = useMediaQuery((theme: any) =>
     theme.breakpoints.up("md")
   );
-  const router = useRouter()
+  const router = useRouter();
   const theme = useTheme();
   const loginDialogHandle = () => {
     setLoginDialog(false);
@@ -227,7 +227,6 @@ export default function landingPage(props: any) {
             alignItems: "center",
             justifyContent: "center",
             py: 10,
-
           }}
         >
           <Box
@@ -266,10 +265,9 @@ export default function landingPage(props: any) {
                 if (mediumScreenMatch) {
                   setUserType("Teacher");
                   setTeacherRegisterDialog(true);
+                } else {
+                  router.push("/register?isTeacher=1");
                 }
-                 else {
-                   router.push("/register?isTeacher=1")
-                 }
               }}
               sx={{
                 fontSize: 16,
@@ -330,10 +328,9 @@ export default function landingPage(props: any) {
                 if (mediumScreenMatch) {
                   setUserType("Learner");
                   setLearnerRegisterDialog(true);
+                } else {
+                  router.push("/register");
                 }
-                 else {
-                   router.push("/register")
-                 }
               }}
               sx={{
                 fontSize: 16,
@@ -448,9 +445,13 @@ export default function landingPage(props: any) {
                       >
                         {a.title}
                       </Typography>
-                      <Typography component={"p"} variant="body1">
-                        {a.text.slice(0, 200) + "..."}
-                      </Typography>
+                      <Typography
+                        component={"p"}
+                        variant="body1"
+                        dangerouslySetInnerHTML={{
+                          __html: a.text.slice(0, 200) + "...",
+                        }}
+                      ></Typography>
                     </Box>
                     <Button
                       size="large"

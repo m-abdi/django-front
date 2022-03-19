@@ -144,7 +144,6 @@ export default function articles(props: any) {
                     <li
                       key={id}
                       style={{
-                        marginBottom: "60px !important",
                         inlineSize: "100%",
                       }}
                     >

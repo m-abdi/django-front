@@ -16,7 +16,7 @@ export default function MediaCard(props: any) {
           inlineSize: "100%",
           blockSize: 160,
           margin: "10px",
-          mb: 5,
+          mb: 2,
           display: "flex",
           flexDirection: "row",
           boxShadow: 8,
@@ -33,8 +33,7 @@ export default function MediaCard(props: any) {
           <Typography gutterBottom variant="h4" component="h3">
             {props.title}
           </Typography>
-          <Typography component={"p"} variant="h6">
-            {props.text.slice(0, 200) + "..."}
+          <Typography component={"p"} variant="h6" sx={{mt: "0 !important"}} dangerouslySetInnerHTML={{__html: props.text.slice(0, 200) + "..."}}>
           </Typography>
         </CardContent>
       </Card>

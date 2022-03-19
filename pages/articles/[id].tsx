@@ -37,9 +37,11 @@ export default function Article(props: any) {
           {props.article.title}
         </Typography>
         <Divider />
-        <Typography component={"p"} variant="h6">
-          {props.article.text}
-        </Typography>
+        <Typography
+          component={"p"}
+          variant="h6"
+          dangerouslySetInnerHTML={{ __html: props.article.text }}
+        ></Typography>
       </Container>
     </ResponsiveNavBar>
   );
@@ -64,4 +66,4 @@ export const getStaticPaths: GetStaticPaths = async () => {
     }),
     fallback: "blocking",
   };
-}
+};
