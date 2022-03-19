@@ -203,9 +203,9 @@ export default function landingPage(props: any) {
           </svg>
         </button>
       </div>
-      <secion>
-        <TeachersPath />
-      </secion>
+      <section>
+        <TeachersPath {...props} />
+      </section>
       <Box
         component={"section"}
         sx={{
@@ -272,7 +272,7 @@ export default function landingPage(props: any) {
         </Container>
       </Box>
       <section>
-        <LearnerPath />
+        <LearnerPath {...props} />
       </section>
       <Box
         component={"section"}

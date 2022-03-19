@@ -55,8 +55,9 @@ export default function SignUp(props: any) {
   const [emailError, setEmailError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
   const [userType, setUserType] = useState(
-    props.userType ? props.userType : "Learner"
+    "isTeacher" in router.query ? "Teacher" : "Learner"
   );
+  
   const [submitStatus, setSubmitStatus] = useState(true);
   const emailPattern = new RegExp(".+@.+[.].+");
   const passwordPattern = new RegExp("[0-9a-zA-Z!@#$]{6,}");
@@ -102,6 +103,13 @@ export default function SignUp(props: any) {
     }
     return true;
   };
+
+  useEffect(() => {
+    if ("isTeacher" in router.query) {
+      setUserType("Teacher")
+    }
+  }, [router])
+  
 
   return loading ? (
     <BarLoader />

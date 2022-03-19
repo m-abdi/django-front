@@ -21,8 +21,8 @@ export default function LearnerPath(props: any) {
         borderRadius: "5% 5% 15% 15%",
         maxWidth: "100% !important",
         display: "flex",
-        flexDirection: mediumScreenMatch ? "row" : "column",
-        justifyContent: "space-around",
+        flexFlow: mediumScreenMatch ? "row nowrap" : "column nowrap",
+        justifyContent: "center",
         
       }}
     >
@@ -51,7 +51,7 @@ export default function LearnerPath(props: any) {
         sx={{
           display: "flex",
           flexFlow: smallScreenMatch ? "row wrap" : "column wrap",
-          justifyContent: "space-around",
+          justifyContent: "center",
           alignItems: "center",
           backgroundColor: "inherit",
         }}
@@ -67,10 +67,10 @@ export default function LearnerPath(props: any) {
           <Paper sx={{ boxShadow: 0, backgroundColor: "inherit" }}>
             <Image src="/images/signUp.png" width={200} height={200} />
             <Typography component={"h3"} variant="h5">
-              1. Sign up
+              1. {props.teacher_instruction_title_1}
             </Typography>
             <Typography component={"p"} variant="body1">
-              Create a teacher account.
+            {props.teacher_instruction_text_1}
             </Typography>
           </Paper>
         </Box>
@@ -83,13 +83,13 @@ export default function LearnerPath(props: any) {
             mr: 2,
           }}
         >
-          <Paper sx={{ boxShadow: 0, backgroundColor: "inherit", mr: 2 }}>
-            <Image src="/images/lists.png" width={200} height={120} />
+          <Paper sx={{ boxShadow: 0, backgroundColor: "inherit" }}>
+            <Image src="/images/lists.png" width={200} height={200} />
             <Typography component={"h3"} variant="h5">
-              2. Create your lists
+              2. {props.teacher_instruction_title_2}
             </Typography>
             <Typography component={"p"} variant="body1">
-              Search the target vocabularies to add to your lists.
+            {props.teacher_instruction_text_2}
             </Typography>
           </Paper>
         </Box>
@@ -98,10 +98,10 @@ export default function LearnerPath(props: any) {
           <Paper sx={{ boxShadow: 0, backgroundColor: "inherit" }}>
             <Image src="/images/share.png" width={200} height={200} />
             <Typography component={"h3"} variant="h5">
-              3. Share your lists
+              3. {props.teacher_instruction_title_3}
             </Typography>
             <Typography component={"p"} variant="body1">
-              Share your lists with a group of learners.
+            {props.teacher_instruction_text_3}
             </Typography>
           </Paper>
         </Box>
@@ -110,10 +110,10 @@ export default function LearnerPath(props: any) {
           <Paper sx={{ boxShadow: 0, backgroundColor: "inherit" }}>
             <Image src="/images/report.png" width={200} height={200} />
             <Typography component={"h3"} variant="h5">
-              4. Get the results
+              4. {props.teacher_instruction_title_4}
             </Typography>
             <Typography component={"p"} variant="body1">
-              Receive the participants’ reports in your profile.
+            {props.teacher_instruction_text_4}
             </Typography>
           </Paper>
         </Box>
@@ -128,10 +128,10 @@ export default function LearnerPath(props: any) {
           <Paper sx={{ boxShadow: 0, backgroundColor: "inherit" }}>
             <Image src="/images/review1.png" width={200} height={140} />
             <Typography component={"h3"} variant="h5">
-              5. Give feedbacks
+              5. {props.teacher_instruction_title_5}
             </Typography>
             <Typography component={"p"} variant="body1">
-              Share your feedback with the attendees.
+            {props.teacher_instruction_text_5}
             </Typography>
           </Paper>
         </Box>

@@ -21,8 +21,8 @@ export default function LearnerPath(props: any) {
         borderRadius: "5% 5% 15% 15%",
         maxWidth: "100% !important",
         display: "flex",
-        flexDirection: mediumScreenMatch ? "row" : "column",
-        justifyContent: "space-around",
+        flexFlow: mediumScreenMatch ? "row nowrap" : "column nowrap",
+        justifyContent: "center",
       }}
     >
       {" "}
@@ -50,7 +50,7 @@ export default function LearnerPath(props: any) {
         sx={{
           display: "flex",
           flexFlow: smallScreenMatch ? "row wrap" : "column wrap",
-          justifyContent: "space-around",
+          justifyContent: "center",
           alignItems: "center",
           backgroundColor: "inherit",
         }}
@@ -66,11 +66,10 @@ export default function LearnerPath(props: any) {
           <Paper sx={{ boxShadow: 0, backgroundColor: "inherit" }}>
             <Image src="/images/signUp.png" width={200} height={200} />
             <Typography component={"h3"} variant="h5">
-              1. Sign up
+              1. {props.learner_instruction_title_1}
             </Typography>
             <Typography component={"p"} variant="body1">
-              Choose a language and your proficiency level or take a proficiency
-              test.
+            {props.learner_instruction_text_1}
             </Typography>
           </Paper>
         </Box>
@@ -86,11 +85,10 @@ export default function LearnerPath(props: any) {
           <Paper sx={{ boxShadow: 0, backgroundColor: "inherit" }}>
             <Image src="/images/learning.png" width={200} height={120} />
             <Typography component={"h3"} variant="h5">
-              2. Start learning
+              2. {props.learner_instruction_title_2}
             </Typography>
             <Typography component={"p"} variant="body1">
-              Learning definition, spelling, and pronunciation of the target
-              vocabularies.
+            {props.learner_instruction_text_2}
             </Typography>
           </Paper>
         </Box>
@@ -99,10 +97,10 @@ export default function LearnerPath(props: any) {
           <Paper sx={{ boxShadow: 0, backgroundColor: "inherit" }}>
             <Image src="/images/lists.png" width={200} height={200} />
             <Typography component={"h3"} variant="h5">
-              3. Create your lists
+              3. {props.learner_instruction_title_3}
             </Typography>
             <Typography component={"p"} variant="body1">
-              Make personal lists based on your needs.
+            {props.learner_instruction_text_1}
             </Typography>
           </Paper>
         </Box>
@@ -111,10 +109,10 @@ export default function LearnerPath(props: any) {
           <Paper sx={{ boxShadow: 0, backgroundColor: "inherit" }}>
             <Image src="/images/report.png" width={200} height={200} />
             <Typography component={"h3"} variant="h5">
-              4. Get your report
+              4. {props.learner_instruction_title_4}
             </Typography>
             <Typography component={"p"} variant="body1">
-              Receive your activation reports in your profile.
+            {props.learner_instruction_text_4}
             </Typography>
           </Paper>
         </Box>
@@ -123,10 +121,10 @@ export default function LearnerPath(props: any) {
           <Paper sx={{ boxShadow: 0, backgroundColor: "inherit" }}>
             <Image src="/images/review.png" width={200} height={140} />
             <Typography component={"h3"} variant="h5">
-              5. Review
+              5. {props.learner_instruction_title_5}
             </Typography>
             <Typography component={"p"} variant="body1">
-              Revise the vocabulary or switch to the next word.
+            {props.learner_instruction_text_5}
             </Typography>
           </Paper>
         </Box>
