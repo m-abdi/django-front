@@ -224,6 +224,8 @@ export default function landingPage(props: any) {
             flexFlow: { xs: "column wrap", md: "row wrap" },
             alignItems: "center",
             justifyContent: "center",
+            py: 10,
+
           }}
         >
           <Box
@@ -282,62 +284,66 @@ export default function landingPage(props: any) {
           borderRadius: "0px 0px 20% 20%",
         }}
       >
-      <Container
-        maxWidth="lg"
-        sx={{
-          pb: 30,
-          display: "flex",
-          flexFlow: { xs: "column-reverse wrap", md: "row wrap" },
-          alignItems: "center",
-          justifyContent: "space-around",
-        }}
-      >
-        <Box
+        <Container
+          maxWidth="lg"
           sx={{
-            inlineSize: { xs: "94vw", sm: 500 },
-            mt: { xs: 12, md: "auto" },
+            pb: 30,
+            display: "flex",
+            flexFlow: { xs: "column-reverse wrap", md: "row wrap" },
+            alignItems: "center",
+            justifyContent: "space-around",
+            py: 10,
           }}
         >
-          <Typography component={"h6"} variant="h6">
-            LEARNERS AND STUDENTS
-          </Typography>
-          <Typography component={"h2"} variant="h2">
-            {props.learners_title}
-          </Typography>
-          <Typography component={"p"} variant="h6">
-            {props.learners_text}
-          </Typography>
-
-          <Button
-            className="blink"
-            color="primary"
-            variant="contained"
+          <Box
             sx={{
-              fontSize: 16,
-              inlineSize: 200,
-              ":hover": { animation: "none" },
+              inlineSize: { xs: "94vw", sm: 500 },
+              mt: { xs: 12, md: "auto" },
             }}
           >
-            Learners, start here
-          </Button>
-        </Box>
-        <Box
-          sx={{
-            inlineSize: { xs: 350, sm: 500 },
-            blockSize: { xs: 250, sm: 400 },
-          }}
-        >
-          <Image
-            src="/images/students.jpg"
-            width={700}
-            height={600}
-            layout="responsive"
-          />
-        </Box>
-      </Container>
+            <Typography component={"h6"} variant="h6">
+              LEARNERS AND STUDENTS
+            </Typography>
+            <Typography component={"h2"} variant="h2">
+              {props.learners_title}
+            </Typography>
+            <Typography component={"p"} variant="h6">
+              {props.learners_text}
+            </Typography>
+
+            <Button
+              className="blink"
+              color="primary"
+              variant="contained"
+              sx={{
+                fontSize: 16,
+                inlineSize: 200,
+                ":hover": { animation: "none" },
+              }}
+            >
+              Learners, start here
+            </Button>
+          </Box>
+          <Box
+            sx={{
+              inlineSize: { xs: 350, sm: 500 },
+              blockSize: { xs: 250, sm: 400 },
+            }}
+          >
+            <Image
+              src="/images/students.jpg"
+              width={700}
+              height={600}
+              layout="responsive"
+            />
+          </Box>
+        </Container>
       </Box>
       {/* Articles section */}
-      <section className="_vhudmz2" style={{ blockSize: 750, marginTop: "50px !important" }}>
+      <section
+        className="_vhudmz2"
+        style={{ blockSize: 750, marginTop: "50px !important" }}
+      >
         <svg
           viewBox="0 0 1366 631"
           height={631}
