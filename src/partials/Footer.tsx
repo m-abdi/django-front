@@ -15,6 +15,7 @@ function Footer(props: any) {
   return (
     <Box
       component={"footer"}
+      id="footer"
       sx={{
         backgroundColor: "#363636",
         color: "white",
