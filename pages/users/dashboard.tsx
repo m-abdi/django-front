@@ -1,7 +1,7 @@
 import { Box } from "@mui/system";
 import { Button } from "@mui/material";
 import React from "react";
-import UsersAppbar from "../../src/PanelAppbar";
+import UsersAppbar from "../../src/partials/Navbar";
 import UsersSessionRequired from "../../src/UsersSessionRequired";
 import getAppInfo from "../../src/logic/getAppInfo";
 import { signOut } from "next-auth/react";
