@@ -205,81 +205,7 @@ export default function landingPage(props: any) {
           </svg>
         </button>
       </div>
-      <section>
-        <TeachersPath {...props} />
-      </section>
-      <Box
-        component={"section"}
-        sx={{
-          maxWidth: "100vw",
-          border: `5px solid ${theme.palette.secondary.main}`,
-          borderTop: "0",
-          mb: 2,
-          borderRadius: "0px 0px 20% 20%",
-        }}
-      >
-        <Container
-          maxWidth="lg"
-          sx={{
-            pb: 30,
-            display: "flex",
-            flexFlow: { xs: "column wrap", md: "row wrap" },
-            alignItems: "center",
-            justifyContent: "center",
-            py: 10,
-          }}
-        >
-          <Box
-            sx={{
-              inlineSize: { xs: 350, sm: 500 },
-              blockSize: { xs: 250, sm: 400 },
-            }}
-          >
-            <Image
-              src="/images/teachers.png"
-              width={400}
-              height={400}
-              layout="responsive"
-            />
-          </Box>
-
-          <Box
-            sx={{
-              inlineSize: { xs: "94vw", sm: 500 },
-              mt: { xs: 12, md: "auto" },
-            }}
-          >
-            <Typography component={"h6"}>TEACHERS</Typography>
-            <Typography component={"h2"} variant="h2">
-              {props.teachers_title}
-            </Typography>
-            <Typography component={"p"} variant="h6">
-              {props.teachers_text}
-            </Typography>
-
-            <Button
-              className="blink"
-              color="secondary"
-              variant="contained"
-              onClick={() => {
-                if (mediumScreenMatch) {
-                  setUserType("Teacher");
-                  setTeacherRegisterDialog(true);
-                } else {
-                  router.push("/register?isTeacher=1");
-                }
-              }}
-              sx={{
-                fontSize: 16,
-                inlineSize: 200,
-                ":hover": { animation: "none" },
-              }}
-            >
-              Teachers, start here
-            </Button>
-          </Box>
-        </Container>
-      </Box>
+      {/* Learners */}
       <section>
         <LearnerPath {...props} />
       </section>
@@ -356,6 +282,83 @@ export default function landingPage(props: any) {
           </Box>
         </Container>
       </Box>
+      {/* Teachers */}
+      <section>
+        <TeachersPath {...props} />
+      </section>
+      <Box
+        component={"section"}
+        sx={{
+          maxWidth: "100vw",
+          border: `5px solid ${theme.palette.secondary.main}`,
+          borderTop: "0",
+          mb: 2,
+          borderRadius: "0px 0px 20% 20%",
+        }}
+      >
+        <Container
+          maxWidth="lg"
+          sx={{
+            pb: 30,
+            display: "flex",
+            flexFlow: { xs: "column wrap", md: "row wrap" },
+            alignItems: "center",
+            justifyContent: "center",
+            py: 10,
+          }}
+        >
+          <Box
+            sx={{
+              inlineSize: { xs: 350, sm: 500 },
+              blockSize: { xs: 250, sm: 400 },
+            }}
+          >
+            <Image
+              src="/images/teachers.png"
+              width={400}
+              height={400}
+              layout="responsive"
+            />
+          </Box>
+
+          <Box
+            sx={{
+              inlineSize: { xs: "94vw", sm: 500 },
+              mt: { xs: 12, md: "auto" },
+            }}
+          >
+            <Typography component={"h6"}>TEACHERS</Typography>
+            <Typography component={"h2"} variant="h2">
+              {props.teachers_title}
+            </Typography>
+            <Typography component={"p"} variant="h6">
+              {props.teachers_text}
+            </Typography>
+
+            <Button
+              className="blink"
+              color="secondary"
+              variant="contained"
+              onClick={() => {
+                if (mediumScreenMatch) {
+                  setUserType("Teacher");
+                  setTeacherRegisterDialog(true);
+                } else {
+                  router.push("/register?isTeacher=1");
+                }
+              }}
+              sx={{
+                fontSize: 16,
+                inlineSize: 200,
+                ":hover": { animation: "none" },
+              }}
+            >
+              Teachers, start here
+            </Button>
+          </Box>
+        </Container>
+      </Box>
+      
       {/* Articles section */}
       <section
         className="_vhudmz2"

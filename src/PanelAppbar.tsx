@@ -61,6 +61,8 @@ import { useRouter } from "next/router";
 import useScrollTrigger from "@mui/material/useScrollTrigger";
 import { useSession } from "next-auth/react";
 
+const localesImages = { en: "/images/usa.png", fr: "/images/france.png" };
+
 const pages = [
   {
     title: "Home",
@@ -393,7 +395,9 @@ export default function MiniDrawer(props: any) {
           ))}
         </Toolbar>
       </AppBar>
+      
       <main>{props.children}</main>
+
       <Footer
         name={props.name}
         about_us={props.about_us}

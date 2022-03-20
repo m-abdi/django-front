@@ -1,9 +1,12 @@
-import { Container } from "@mui/material";
+import { Container, MenuItem, Select } from "@mui/material";
+
 import React from "react";
 import ResponsiveNavBar from "../src/partials/Navbar";
 import getAppInfo from "../src/logic/getAppInfo";
+import { useRouter } from "next/router";
 
 export default function donate(props: any) {
+  const router = useRouter()
   return (
     <ResponsiveNavBar
     {...props}

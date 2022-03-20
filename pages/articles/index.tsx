@@ -14,6 +14,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import getAllArticles from "../../src/logic/getAllArticles";
 import getAppInfo from "../../src/logic/getAppInfo";
 import { styled } from "@mui/material";
+import { useRouter } from "next/router";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -61,6 +62,7 @@ const SearchIconWrapper = styled("div")(({ theme }) => ({
   justifyContent: "center",
 }));
 export default function articles(props: any) {
+  const router = useRouter()
   const searchRef = useRef(null);
   const [query, setQuery] = useState("");
   const [active, setActive] = useState(true);
@@ -70,7 +72,7 @@ export default function articles(props: any) {
     theme.breakpoints.up("sm")
   );
   const searchEndpoint = (query) =>
-    process.env.NEXT_PUBLIC_API_URL + `/api/articles/?q=${query}`;
+    process.env.NEXT_PUBLIC_API_URL + `/api/articles/?q=${query}&locale=${router.locale}`;
 
   const onChange = useCallback((event) => {
     if (!(typeof controller === "undefined")) {
@@ -176,7 +178,7 @@ export default function articles(props: any) {
 
 export async function getStaticProps({ locale }: { locale: any }) {
   const appInfo = await getAppInfo(locale);
-  const allArticles = await getAllArticles()
+  const allArticles = await getAllArticles(locale)
   return {
     props: { ...appInfo, articles: allArticles },
   };

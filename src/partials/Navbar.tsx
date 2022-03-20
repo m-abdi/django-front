@@ -31,7 +31,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import type { NextPage } from "next";
 import PowerSettingsNewIcon from "@mui/icons-material/PowerSettingsNew";
-import SearchIcon from "@mui/icons-material/Search";
+import SearchRoundedIcon from '@mui/icons-material/SearchRounded';
 import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
 import SignIn from "../SignInDialog";
 import SignUp from "../SignUpDialog";
@@ -167,21 +167,16 @@ const pages = [
     href: "/",
     icon: <HomeRoundedIcon fontSize="large" />,
   },
+    {
+    title: "Search",
+    icon: <SearchRoundedIcon fontSize="large" />,
+    href: "/search",
+  },
   {
     title: "Articles",
     href: "/articles",
     icon: <ArticleRoundedIcon fontSize="large" />,
   },
-  // {
-  //   title: "MyExchanges",
-  //   icon: <CurrencyExchangeRoundedIcon />,
-  //   href: "/users/myExchanges",
-  // },
-  // {
-  //   title: "Bots",
-  //   icon: <Icon icon="mdi:robot" />,
-  //   href: "/users/bots",
-  // },
   {
     title: "Support",
     href: "/contactUs",
@@ -254,7 +249,7 @@ const ResponsiveNavBar = (props: any) => {
       <AppBar
         position="fixed"
         id="navbar"
-        color={props.color ? props.color : "transparent"}
+        color={props.color ? props.color : "default"}
         sx={{
           top: { xs: "auto", md: 0 },
           bottom: { xs: 0, md: "auto" },
@@ -408,7 +403,7 @@ const ResponsiveNavBar = (props: any) => {
               >
                 <MenuItem
                   value={"en"}
-                  onClick={() => router.push("/", "/", { locale: "en" })}
+                  onClick={() => router.push(router.pathname, router.pathname, { locale: "en", shallow: false })}
                 >
                   <img
                     title={router.locale}
@@ -422,7 +417,7 @@ const ResponsiveNavBar = (props: any) => {
                 </MenuItem>
                 <MenuItem
                   value={"fr"}
-                  onClick={() => router.push("/", "/", { locale: "fr" })}
+                  onClick={() => router.push(router.pathname, router.pathname, { locale: "fr", shallow: false })}
                 >
                   <img
                     title={router.locale}
@@ -478,7 +473,70 @@ const ResponsiveNavBar = (props: any) => {
           ))}
         </Toolbar>
       </AppBar>
-      <main>{props.children}</main>
+      
+      <main><Select
+        sx={{
+          blockSize: 40,
+          p: 0,
+          position: "absolute",
+          right: 3,
+          zIndex: 200,
+          top: 2,
+        }}
+        id="localeSelect"
+        displayEmpty
+        value={router.locale}
+        renderValue={() => {
+          return (
+            <img
+              title={router.locale}
+              loading="lazy"
+              src={localesImages[router.locale]}
+              width="30px"
+              style={{ marginTop: "4px" }}
+            />
+          );
+        }}
+      >
+        <MenuItem
+          value={"en"}
+          onClick={() =>
+            router.push(router.pathname, router.pathname, {
+              locale: "en",
+              shallow: false,
+            })
+          }
+        >
+          <img
+            title={router.locale}
+            loading="lazy"
+            src={localesImages["en"]}
+            width="30px"
+            alt={`Flag of USA`}
+            style={{ marginRight: "15px" }}
+          />
+          <b>English</b>
+        </MenuItem>
+        <MenuItem
+          value={"fr"}
+          onClick={() =>
+            router.push(router.pathname, router.pathname, {
+              locale: "fr",
+              shallow: false,
+            })
+          }
+        >
+          <img
+            title={router.locale}
+            loading="lazy"
+            src={localesImages["fr"]}
+            width="30px"
+            alt={`Flag of France`}
+            style={{ marginRight: "15px" }}
+          />
+          <b>French</b>
+        </MenuItem>
+      </Select>{props.children}</main>
       <Footer
         name={props.name}
         about_us={props.about_us}
