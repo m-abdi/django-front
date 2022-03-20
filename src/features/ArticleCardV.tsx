@@ -25,7 +25,7 @@ export default function MediaCard(props: any) {
             {props.title}
           </Typography>
           <Typography variant="body2" color="text.secondary">
-            {props.text.slice(0, 140) + "..."}
+            <div dangerouslySetInnerHTML={{__html: props.text.slice(0, 140) + "..."}}></div>
           </Typography>
         </CardContent>
         <CardActions>

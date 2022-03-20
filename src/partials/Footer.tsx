@@ -24,9 +24,13 @@ function Footer(props: any) {
       <Container maxWidth="xl">
         {/* About us */}
         <Grid container sx={{ p: 5 }}>
-          <Grid item xs={12} md={8}>
-            {props.about_us}
-          </Grid>
+          <Grid
+            component={"div"}
+            item
+            xs={12}
+            md={8}
+            dangerouslySetInnerHTML={{ __html: props.about_us }}
+          ></Grid>
           <Grid
             item
             xs={12}

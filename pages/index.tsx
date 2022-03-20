@@ -86,9 +86,8 @@ export default function landingPage(props: any) {
               component="h3"
               variant="h6"
               sx={{ maxInlineSize: { xs: "90vw", sm: 450 } }}
-              dangerouslySetInnerHTML={{__html: props.hero_text}}
-            >
-            </Typography>
+              dangerouslySetInnerHTML={{ __html: props.hero_text }}
+            ></Typography>
           </Box>
 
           {/* first_touch options */}
@@ -242,9 +241,11 @@ export default function landingPage(props: any) {
             <Typography component={"h2"} variant="h2">
               {props.learners_title}
             </Typography>
-            <Typography component={"p"} variant="h6">
-              {props.learners_text}
-            </Typography>
+            <Typography
+              component={"p"}
+              variant="h6"
+              dangerouslySetInnerHTML={{ __html: props.learners_text }}
+            ></Typography>
 
             <Button
               className="blink"
@@ -331,9 +332,11 @@ export default function landingPage(props: any) {
             <Typography component={"h2"} variant="h2">
               {props.teachers_title}
             </Typography>
-            <Typography component={"p"} variant="h6">
-              {props.teachers_text}
-            </Typography>
+            <Typography
+              component={"p"}
+              variant="h6"
+              dangerouslySetInnerHTML={{ __html: props.teachers_text }}
+            ></Typography>
 
             <Button
               className="blink"
@@ -358,7 +361,7 @@ export default function landingPage(props: any) {
           </Box>
         </Container>
       </Box>
-      
+
       {/* Articles section */}
       <section
         className="_vhudmz2"
