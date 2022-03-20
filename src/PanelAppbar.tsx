@@ -391,7 +391,69 @@ export default function MiniDrawer(props: any) {
           ))}
         </Toolbar>
       </AppBar>
-      
+      <Select
+          sx={{
+            blockSize: 40,
+            p: 0,
+            position: "absolute",
+            right: 3,
+            zIndex: 200,
+            top: 2,
+          }}
+          id="localeSelect"
+          displayEmpty
+          value={router.locale}
+          renderValue={() => {
+            return (
+              <img
+                title={router.locale}
+                loading="lazy"
+                src={localesImages[router.locale]}
+                width="30px"
+                style={{ marginTop: "4px" }}
+              />
+            );
+          }}
+        >
+          <MenuItem
+            value={"en"}
+            onClick={() =>
+              router.push(router.pathname, router.pathname, {
+                locale: "en",
+                shallow: false,
+              })
+            }
+          >
+            <img
+              title={router.locale}
+              loading="lazy"
+              src={localesImages["en"]}
+              width="30px"
+              alt={`Flag of USA`}
+              style={{ marginRight: "15px" }}
+            />
+            <b>English</b>
+          </MenuItem>
+          <MenuItem
+            value={"fr"}
+            onClick={() =>
+              router.push(router.pathname, router.pathname, {
+                locale: "fr",
+                shallow: false,
+              })
+            }
+          >
+            <img
+              title={router.locale}
+              loading="lazy"
+              src={localesImages["fr"]}
+              width="30px"
+              alt={`Flag of France`}
+              style={{ marginRight: "15px" }}
+            />
+            <b>French</b>
+          </MenuItem>
+        </Select>
       <main>{props.children}</main>
 
       <Footer
