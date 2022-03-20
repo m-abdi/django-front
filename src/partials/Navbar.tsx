@@ -31,6 +31,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import type { NextPage } from "next";
 import PowerSettingsNewIcon from "@mui/icons-material/PowerSettingsNew";
+import SearchIcon from "@mui/icons-material/Search";
 import SearchRoundedIcon from '@mui/icons-material/SearchRounded';
 import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
 import SignIn from "../SignInDialog";
