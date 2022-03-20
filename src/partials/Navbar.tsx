@@ -32,7 +32,7 @@ import MenuItem from "@mui/material/MenuItem";
 import type { NextPage } from "next";
 import PowerSettingsNewIcon from "@mui/icons-material/PowerSettingsNew";
 import SearchIcon from "@mui/icons-material/Search";
-import SearchRoundedIcon from '@mui/icons-material/SearchRounded';
+import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
 import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
 import SignIn from "../SignInDialog";
 import SignUp from "../SignUpDialog";
@@ -168,7 +168,7 @@ const pages = [
     href: "/",
     icon: <HomeRoundedIcon fontSize="large" />,
   },
-    {
+  {
     title: "Search",
     icon: <SearchRoundedIcon fontSize="large" />,
     href: "/search",
@@ -404,7 +404,12 @@ const ResponsiveNavBar = (props: any) => {
               >
                 <MenuItem
                   value={"en"}
-                  onClick={() => router.push(router.pathname, router.pathname, { locale: "en", shallow: false })}
+                  onClick={() =>
+                    router.push(router.pathname, router.pathname, {
+                      locale: "en",
+                      shallow: false,
+                    })
+                  }
                 >
                   <img
                     title={router.locale}
@@ -418,7 +423,12 @@ const ResponsiveNavBar = (props: any) => {
                 </MenuItem>
                 <MenuItem
                   value={"fr"}
-                  onClick={() => router.push(router.pathname, router.pathname, { locale: "fr", shallow: false })}
+                  onClick={() =>
+                    router.push(router.pathname, router.pathname, {
+                      locale: "fr",
+                      shallow: false,
+                    })
+                  }
                 >
                   <img
                     title={router.locale}
@@ -474,70 +484,73 @@ const ResponsiveNavBar = (props: any) => {
           ))}
         </Toolbar>
       </AppBar>
-      
-      <main><Select
-        sx={{
-          blockSize: 40,
-          p: 0,
-          position: "absolute",
-          right: 3,
-          zIndex: 200,
-          top: 2,
-        }}
-        id="localeSelect"
-        displayEmpty
-        value={router.locale}
-        renderValue={() => {
-          return (
+
+      <main>
+        <Select
+          sx={{
+            blockSize: 40,
+            p: 0,
+            position: "absolute",
+            right: 3,
+            zIndex: 200,
+            top: 2,
+          }}
+          id="localeSelect"
+          displayEmpty
+          value={router.locale}
+          renderValue={() => {
+            return (
+              <img
+                title={router.locale}
+                loading="lazy"
+                src={localesImages[router.locale]}
+                width="30px"
+                style={{ marginTop: "4px" }}
+              />
+            );
+          }}
+        >
+          <MenuItem
+            value={"en"}
+            onClick={() =>
+              router.push(router.pathname, router.pathname, {
+                locale: "en",
+                shallow: false,
+              })
+            }
+          >
             <img
               title={router.locale}
               loading="lazy"
-              src={localesImages[router.locale]}
+              src={localesImages["en"]}
               width="30px"
-              style={{ marginTop: "4px" }}
+              alt={`Flag of USA`}
+              style={{ marginRight: "15px" }}
             />
-          );
-        }}
-      >
-        <MenuItem
-          value={"en"}
-          onClick={() =>
-            router.push(router.pathname, router.pathname, {
-              locale: "en",
-              shallow: false,
-            })
-          }
-        >
-          <img
-            title={router.locale}
-            loading="lazy"
-            src={localesImages["en"]}
-            width="30px"
-            alt={`Flag of USA`}
-            style={{ marginRight: "15px" }}
-          />
-          <b>English</b>
-        </MenuItem>
-        <MenuItem
-          value={"fr"}
-          onClick={() =>
-            router.push(router.pathname, router.pathname, {
-              locale: "fr",
-              shallow: false,
-            })
-          }
-        >
-          <img
-            title={router.locale}
-            loading="lazy"
-            src={localesImages["fr"]}
-            width="30px"
-            alt={`Flag of France`}
-            style={{ marginRight: "15px" }}
-          />
-          <b>French</b>
-        </MenuItem>
-      </Select>{props.children}</main>
+            <b>English</b>
+          </MenuItem>
+          <MenuItem
+            value={"fr"}
+            onClick={() =>
+              router.push(router.pathname, router.pathname, {
+                locale: "fr",
+                shallow: false,
+              })
+            }
+          >
+            <img
+              title={router.locale}
+              loading="lazy"
+              src={localesImages["fr"]}
+              width="30px"
+              alt={`Flag of France`}
+              style={{ marginRight: "15px" }}
+            />
+            <b>French</b>
+          </MenuItem>
+        </Select>
+        {props.children}
+      </main>
       <Footer
         name={props.name}
         about_us={props.about_us}
@@ -565,7 +578,11 @@ const ResponsiveNavBar = (props: any) => {
           justifyContent: "center",
         }}
       >
-        <Image src={process.env.NEXT_PUBLIC_API_URL + props.logo} width={110} height={50} />
+        <Image
+          src={process.env.NEXT_PUBLIC_API_URL + props.logo}
+          width={110}
+          height={50}
+        />
       </a>
     </>
   );

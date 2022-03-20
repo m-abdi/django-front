@@ -49,6 +49,7 @@ import MuiDrawer from "@mui/material/Drawer";
 import type { NextPage } from "next";
 import PowerSettingsNewIcon from "@mui/icons-material/PowerSettingsNew";
 import SearchIcon from "@mui/icons-material/Search";
+import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
 import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
 import SupportRoundedIcon from "@mui/icons-material/SupportRounded";
 import TelegramIcon from "@mui/icons-material/Telegram";
@@ -70,20 +71,15 @@ const pages = [
     icon: <HomeRoundedIcon fontSize="large" />,
   },
   {
+    title: "Search",
+    icon: <SearchRoundedIcon fontSize="large" />,
+    href: "/search",
+  },
+  {
     title: "Articles",
     href: "/articles",
     icon: <ArticleRoundedIcon fontSize="large" />,
   },
-  // {
-  //   title: "MyExchanges",
-  //   icon: <CurrencyExchangeRoundedIcon />,
-  //   href: "/users/myExchanges",
-  // },
-  // {
-  //   title: "Bots",
-  //   icon: <Icon icon="mdi:robot" />,
-  //   href: "/users/bots",
-  // },
   {
     title: "Support",
     href: "/contactUs",
