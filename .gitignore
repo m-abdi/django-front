@@ -30,3 +30,7 @@ yarn-error.log*
 
 
 *.docx
+
+# service workers
+sw.js
+workbox-*.js
