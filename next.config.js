@@ -1,8 +1,10 @@
 /** @type {import('next').NextConfig} */
-module.exports = {
+const withPWA = require("next-pwa");
+const runtimeCaching = require("next-pwa/cache");
+module.exports = withPWA({
   reactStrictMode: true,
   images: {
-    domains: ['kakoota.herokuapp.com', "127.0.0.1"],
+    domains: ["kakoota.herokuapp.com", "127.0.0.1"],
   },
   i18n: {
     locales: ["en", "fr"],
@@ -11,8 +13,13 @@ module.exports = {
   webpack(config) {
     config.module.rules.push({
       test: /\.svg$/,
-      use: ["@svgr/webpack"]
+      use: ["@svgr/webpack"],
     });
     return config;
-  }
-};
+  },
+  pwa: {
+    dest: "public",
+    runtimeCaching,
+    disable: process.env.NODE_ENV === "development",
+  },
+});
