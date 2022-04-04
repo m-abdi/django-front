@@ -41,7 +41,6 @@ import Tooltip from "@mui/material/Tooltip";
 import Typography from "@mui/material/Typography";
 import UserPanel from "../PanelAppbar";
 import Zoom from "@mui/material/Zoom";
-import { signOut } from "next-auth/react";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { useRouter } from "next/router";
 import useScrollTrigger from "@mui/material/useScrollTrigger";
@@ -191,7 +190,6 @@ const pages = [
 ];
 
 const ResponsiveNavBar = (props: any) => {
-  const { data: session } = useSession();
   const [locale, setLocale] = useState("");
   const [loginDialog, setLoginDialog] = useState(false);
   const [registerDialog, setRegisterDialog] = useState(false);

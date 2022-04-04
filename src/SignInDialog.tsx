@@ -19,11 +19,10 @@ import Slide from "@mui/material/Slide";
 import TextField from "@mui/material/TextField";
 import { TransitionProps } from "@mui/material/transitions";
 import Typography from "@mui/material/Typography";
-import { signIn as nextSignIn } from "next-auth/react";
 import { useEffect } from "react";
 import { useRouter } from "next/router";
 import { useState } from "react";
-
+import Cookies from "js-cookie";
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
     children: React.ReactElement<any, any>;
@@ -42,7 +41,13 @@ export default function SignIn(props: any) {
   const [passwordError, setPasswordError] = useState(false);
   const emailPattern = new RegExp(".+@.+[.].+");
   const passwordPattern = new RegExp("[0-9a-zA-Z!@#$]{6,}");
- 
+
+  useEffect(() => {
+    const tokenResp = fetch(
+      process.env.NEXT_PUBLIC_API_URL + "/users/login/"
+    ).then((resp) => resp);
+    console.log(Cookies.get("csrftoken"));
+  });
 
   const handleValidation = () => {
     let valid = true;
@@ -58,6 +63,36 @@ export default function SignIn(props: any) {
       return false;
     }
     return true;
+  };
+
+  const handleSubmition = async () => {
+    setLoading(true);
+    console.log(process.env.NEXT_PUBLIC_API_URL + "/users/login/");
+
+    try {
+      const resp = await fetch(
+        process.env.NEXT_PUBLIC_API_URL + "/users/login/",
+        {
+          method: "post",
+          body: JSON.stringify({
+            username: email,
+            password: password,
+          }),
+          headers: { "X-CSRFToken": 'Cookies.get("csrftoken")' },
+
+        }
+      );
+      if (await resp.ok) {
+        router.push("/users/dashboard");
+      } else {
+        setErrorMessage(await resp.text());
+      }
+    } catch (e) {
+      console.log(e.message);
+
+      setErrorMessage("Network error");
+    }
+    setLoading(false);
   };
   return loading ? (
     <BarLoader />
@@ -156,22 +191,9 @@ export default function SignIn(props: any) {
                 sx={{ mt: 3, mb: 2 }}
                 onClick={() => {
                   if (handleValidation()) {
-                    setLoading(true);
-                    nextSignIn("credentials", {
-                      email: email,
-                      password: password,
-
-                      redirect: false,
-                    }).then((resp) => {
-                      if (resp && resp.error) {
-                        setErrorMessage(resp.error);
-                        setLoading(false);
-                      } else {
-                        router.push(
-                          process.env.NEXT_PUBLIC_URL + "/users/dashboard"
-                        );
-                      }
-                    });
+                    (async () => {
+                      await handleSubmition();
+                    })();
                   }
                 }}
               >
@@ -184,7 +206,7 @@ export default function SignIn(props: any) {
                   fontFamily: "Dosis",
                   fontWeight: "bold",
                 }}
-                onClick={() => nextSignIn("google")}
+                onClick={() => console.log("not implemented")}
               />
               <Grid container sx={{ mt: 4 }}>
                 <Grid item xs>

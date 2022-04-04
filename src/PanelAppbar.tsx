@@ -1,69 +1,47 @@
 import * as React from "react";
-
-import { CSSObject, Theme, styled } from "@mui/material/styles";
-import { Grid, Popover, Select } from "@mui/material";
+import ArticleOutlinedIcon from "@mui/icons-material/ArticleOutlined";
+import { Button, useMediaQuery } from "@mui/material";
+import { CSSObject, Theme, styled, useTheme } from "@mui/material/styles";
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from "@mui/material/AppBar";
-import { alpha, useTheme } from "@mui/material/styles";
-import { useEffect, useState } from "react";
-
+import HistoryIcon from "@mui/icons-material/History";
 import AccountBalanceWalletOutlinedIcon from "@mui/icons-material/AccountBalanceWalletOutlined";
-import AccountBalanceWalletRoundedIcon from "@mui/icons-material/AccountBalanceWalletRounded";
 import AccountCircleRoundedIcon from "@mui/icons-material/AccountCircleRounded";
 import AlternateEmailIcon from "@mui/icons-material/AlternateEmail";
-import { AnyRecord } from "dns";
 import ArticleRoundedIcon from "@mui/icons-material/ArticleRounded";
-import Avatar from "@mui/material/Avatar";
 import Box from "@mui/material/Box";
-import { Button } from "@mui/material";
+import Breakpoint from "./context/breakpointContext";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
-import Container from "@mui/material/Container";
 import CssBaseline from "@mui/material/CssBaseline";
 import CurrencyExchangeRoundedIcon from "@mui/icons-material/CurrencyExchangeRounded";
 import DashboardOutlinedIcon from "@mui/icons-material/DashboardOutlined";
 import DashboardRoundedIcon from "@mui/icons-material/DashboardRounded";
 import Divider from "@mui/material/Divider";
-import Fab from "@mui/material/Fab";
-import Footer from "./partials/Footer";
 import HelpRoundedIcon from "@mui/icons-material/HelpRounded";
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import HomeRoundedIcon from "@mui/icons-material/HomeRounded";
 import { Icon } from "@iconify/react";
 import IconButton from "@mui/material/IconButton";
-import Image from "next/image";
-import InboxIcon from "@mui/icons-material/MoveToInbox";
-import InputBase from "@mui/material/InputBase";
 import InstagramIcon from "@mui/icons-material/Instagram";
-import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
-import LanguageIcon from "@mui/icons-material/Language";
 import Link from "../src/Link";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import MailIcon from "@mui/icons-material/Mail";
-import Menu from "@mui/material/Menu";
 import MenuIcon from "@mui/icons-material/Menu";
-import MenuItem from "@mui/material/MenuItem";
 import MuiDrawer from "@mui/material/Drawer";
-import type { NextPage } from "next";
+import { Popover } from "@mui/material";
 import PowerSettingsNewIcon from "@mui/icons-material/PowerSettingsNew";
-import SearchIcon from "@mui/icons-material/Search";
-import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
 import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
 import SupportRoundedIcon from "@mui/icons-material/SupportRounded";
 import TelegramIcon from "@mui/icons-material/Telegram";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
-import Zoom from "@mui/material/Zoom";
 import { signOut } from "next-auth/react";
-import useMediaQuery from "@mui/material/useMediaQuery";
 import { useRouter } from "next/router";
-import useScrollTrigger from "@mui/material/useScrollTrigger";
-import { useSession } from "next-auth/react";
 
-const localesImages = { en: "/images/usa.png", fr: "/images/france.png" };
-
+const drawerWidth = 170;
 const pages = [
   {
     title: "Home",
@@ -71,15 +49,11 @@ const pages = [
     icon: <HomeRoundedIcon fontSize="large" />,
   },
   {
-    title: "Search",
-    icon: <SearchRoundedIcon fontSize="large" />,
-    href: "/search",
-  },
-  {
     title: "Articles",
     href: "/articles",
     icon: <ArticleRoundedIcon fontSize="large" />,
   },
+
   {
     title: "Support",
     href: "/contactUs",
@@ -91,7 +65,6 @@ const pages = [
     icon: <AccountCircleRoundedIcon fontSize="large" />,
   },
 ];
-const drawerWidth = 170;
 
 const openedMixin = (theme: Theme): CSSObject => ({
   width: drawerWidth,
@@ -164,20 +137,50 @@ const Drawer = styled(MuiDrawer, {
   }),
 }));
 
+function setCookie(cname, cvalue, exdays) {
+  document.cookie = cname + "=" + cvalue + ";";
+}
+function getCookie(cname) {
+  let name = cname + "=";
+  let decodedCookie = decodeURIComponent(document.cookie);
+  let ca = decodedCookie.split(";");
+  for (let i = 0; i < ca.length; i++) {
+    let c = ca[i];
+    while (c.charAt(0) == " ") {
+      c = c.substring(1);
+    }
+    if (c.indexOf(name) == 0) {
+      return c.substring(name.length, c.length);
+    }
+  }
+  return "";
+}
+
 export default function MiniDrawer(props: any) {
-  const theme = useTheme();
-  const router = useRouter();
+  // states
   const [open, setOpen] = React.useState(true);
   const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(
     null
   );
+  // other hooks
+  const breakpoint = React.useContext(Breakpoint);
+  const theme = useTheme();
+  const router = useRouter();
+  const mediumScreenMatch = useMediaQuery((theme: any) =>
+    theme.breakpoints.up(breakpoint)
+  );
   const popoverOpen = Boolean(anchorEl);
   const popoverId = popoverOpen ? "account-popover" : undefined;
-  const mediumScreenMatch = useMediaQuery((theme: any) =>
-    theme.breakpoints.up("md")
-  );
+
+  React.useEffect(() => {
+    if (getCookie("drawerStatus")) {
+      setOpen(JSON.parse(getCookie("drawerStatus")));
+    }
+  }, []);
+
   const handleDrawerOpen = () => {
     setOpen(true);
+    setCookie("drawerStatus", "true", "");
   };
   const handlePopoverClose = () => {
     setAnchorEl(null);
@@ -187,11 +190,12 @@ export default function MiniDrawer(props: any) {
   };
   const handleDrawerClose = () => {
     setOpen(false);
+    setCookie("drawerStatus", "false", "");
   };
 
   return mediumScreenMatch ? (
     <Box sx={{ display: "flex" }}>
-      <AppBar position="fixed" open={open} color="primary">
+      <AppBar position="fixed" open={open} color="default">
         <Toolbar>
           <IconButton
             color="inherit"
@@ -268,20 +272,18 @@ export default function MiniDrawer(props: any) {
       <Drawer
         variant="permanent"
         open={open}
-        color={"primary"}
         PaperProps={{
           sx: {
             boxShadow: 12,
-            backgroundColor: "primary.main",
           },
         }}
       >
         <DrawerHeader>
           <IconButton onClick={handleDrawerClose}>
-            {theme.direction === "rtl" ? (
-              <ChevronRightIcon />
-            ) : (
+            {theme.direction === "ltr" ? (
               <ChevronLeftIcon />
+            ) : (
+              <ChevronRightIcon />
             )}
           </IconButton>
         </DrawerHeader>
@@ -294,20 +296,11 @@ export default function MiniDrawer(props: any) {
               href: "/users/dashboard",
             },
             {
-              title: "MyExchanges",
-              icon: <CurrencyExchangeRoundedIcon />,
-              href: "/users/myExchanges",
+              title: "Lists",
+              icon: <ArticleOutlinedIcon />,
+              href: "/users/lists",
             },
-            {
-              title: "Bots",
-              icon: <Icon icon="mdi:robot" />,
-              href: "/users/bots",
-            },
-            {
-              title: "Wallet",
-              icon: <AccountBalanceWalletOutlinedIcon />,
-              href: "/users/wallet",
-            },
+
             {
               title: "Settings",
               icon: <SettingsOutlinedIcon />,
@@ -325,10 +318,10 @@ export default function MiniDrawer(props: any) {
               button
               key={page.title}
             >
-              <ListItemIcon sx={{ fontSize: "1.5rem" }}>
+              <ListItemIcon sx={{ fontSize: "1.5rem", color: "whitesmoke" }}>
                 {page.icon}
               </ListItemIcon>
-              <ListItemText primary={page.title} />
+              <ListItemText primary={page.title} sx={{ color: "whitesmoke" }} />
             </ListItem>
           ))}
         </List>
@@ -347,15 +340,15 @@ export default function MiniDrawer(props: any) {
               button
               key={page.title}
             >
-              <ListItemIcon sx={{ fontSize: "1.5rem" }}>
+              <ListItemIcon sx={{ fontSize: "1.5rem", color: "whitesmoke" }}>
                 {page.icon}
               </ListItemIcon>
-              <ListItemText primary={page.title} />
+              <ListItemText primary={page.title} sx={{ color: "whitesmoke" }} />
             </ListItem>
           ))}
         </List>
       </Drawer>
-      <Box component="main" sx={{ p: 3 }}>
+      <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
         <DrawerHeader />
         {props.children}
       </Box>
@@ -364,7 +357,7 @@ export default function MiniDrawer(props: any) {
     <>
       <AppBar
         position="fixed"
-        color={props.color ? props.color : "default"}
+        color={"default"}
         sx={{
           boxShadow: 10,
           top: "auto",
@@ -391,104 +384,17 @@ export default function MiniDrawer(props: any) {
           ))}
         </Toolbar>
       </AppBar>
-      <Select
-          sx={{
-            blockSize: 40,
-            p: 0,
-            position: "absolute",
-            right: 3,
-            zIndex: 200,
-            top: 2,
-          }}
-          id="localeSelect"
-          displayEmpty
-          value={router.locale}
-          renderValue={() => {
-            return (
-              <img
-                title={router.locale}
-                loading="lazy"
-                src={localesImages[router.locale]}
-                width="30px"
-                style={{ marginTop: "4px" }}
-              />
-            );
-          }}
-        >
-          <MenuItem
-            value={"en"}
-            onClick={() =>
-              router.push(router.pathname, router.pathname, {
-                locale: "en",
-                shallow: false,
-              })
-            }
-          >
-            <img
-              title={router.locale}
-              loading="lazy"
-              src={localesImages["en"]}
-              width="30px"
-              alt={`Flag of USA`}
-              style={{ marginRight: "15px" }}
-            />
-            <b>English</b>
-          </MenuItem>
-          <MenuItem
-            value={"fr"}
-            onClick={() =>
-              router.push(router.pathname, router.pathname, {
-                locale: "fr",
-                shallow: false,
-              })
-            }
-          >
-            <img
-              title={router.locale}
-              loading="lazy"
-              src={localesImages["fr"]}
-              width="30px"
-              alt={`Flag of France`}
-              style={{ marginRight: "15px" }}
-            />
-            <b>French</b>
-          </MenuItem>
-        </Select>
-      <main>{props.children}</main>
-
-      <Footer
-        name={props.name}
-        about_us={props.about_us}
-        telegram_id={props.telegram_id}
-        instagram_page={props.instagram_page}
-      />
-      <Toolbar />
-
-      <a
-        href="/"
-        title="home"
+      <main
         style={{
-          padding: 0,
-          position: "fixed",
-          top: 0,
-          left: "calc((100vw - 150px) / 2)",
-          zIndex: 100,
-          inlineSize: 150,
-          backgroundColor: "white",
-          boxShadow:
-            "2px 2px 4px rgba(0, 0, 0, 0.5), 4px 4px 8px rgba(0, 0, 0, 0.3)",
-          border: "1px solid white",
-          borderRadius: "0px 0px 40% 40%",
           display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
           justifyContent: "center",
         }}
       >
-        <Image
-          src={process.env.NEXT_PUBLIC_API_URL + props.logo}
-          width={110}
-          height={50}
-        />
-      </a>
+        {props.children}
+      </main>
+      <Toolbar />
     </>
   );
 }

@@ -27,3 +27,12 @@
 #navbar {
   transition: top 0.3s; /* Transition effect when sliding down (and up) */
 }
+
+td, tr {
+  font-size: 14pt !important;
+}
+
+th {
+  font-weight: bold !important;
+  font-size: 15pt !important;
+}

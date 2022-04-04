@@ -10,7 +10,7 @@ import {
 } from "@mui/material";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import { useEffect, useState } from "react";
-
+import ReCAPTCHA from "react-google-recaptcha";
 import Avatar from "@mui/material/Avatar";
 import BarLoader from "./BarLoader";
 import Box from "@mui/material/Box";
@@ -31,7 +31,6 @@ import TextField from "@mui/material/TextField";
 import { TransitionProps } from "@mui/material/transitions";
 import Typography from "@mui/material/Typography";
 import enableSubmitButton from "./recaptcha";
-import { signIn as nextSignIn } from "next-auth/react";
 import { useRouter } from "next/router";
 
 const Transition = React.forwardRef(function Transition(
@@ -43,7 +42,7 @@ const Transition = React.forwardRef(function Transition(
   return <Slide direction="up" ref={ref} {...props} />;
 });
 export default function SignUp(props: any) {
-  const router = useRouter();
+  // states
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
@@ -52,15 +51,21 @@ export default function SignUp(props: any) {
   const [errorMessage, setErrorMessage] = useState("");
   const [emailError, setEmailError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
+  const [recaptchaResponse, setRecaptchaResponse] = useState("");
   const [userType, setUserType] = useState(
     props.userType ? props.userType : "Learner"
   );
   const [submitStatus, setSubmitStatus] = useState(true);
+  //
+  const router = useRouter();
   const emailPattern = new RegExp(".+@.+[.].+");
   const passwordPattern = new RegExp("[0-9a-zA-Z!@#$]{6,}");
   const mediumScreenMatch = useMediaQuery((theme: any) =>
     theme.breakpoints.up("md")
   );
+  const recaptchaOnChange = (value) => {
+    setRecaptchaResponse(value);
+  };
   const handleSubmit = async () => {
     const resp = await fetch(process.env.NEXT_PUBLIC_URL + "/api/signUp", {
       method: "post",
@@ -71,6 +76,7 @@ export default function SignUp(props: any) {
         firstName: firstName,
         lastName: lastName,
         type: userType,
+        recaptchaResponse: recaptchaResponse,
       }),
     });
     if (resp.ok) {
@@ -81,7 +87,7 @@ export default function SignUp(props: any) {
         router.push("/users/login");
       }
     } else {
-      setErrorMessage((await resp.json()).error);
+      setErrorMessage(await resp.text());
       setLoading(false);
     }
   };
@@ -233,6 +239,22 @@ export default function SignUp(props: any) {
                     autoComplete="new-password"
                   />
                 </Grid>
+                <Grid
+                  item
+                  xs={12}
+                  sx={{
+                    mt: 2,
+                    display: "flex",
+                    flexDirection: "row",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
+                  <ReCAPTCHA
+                    sitekey="6LetmDUfAAAAAO5tFuwAqeIQp1LS1aFLcS0s3Hjq"
+                    onChange={recaptchaOnChange}
+                  />
+                </Grid>
               </Grid>
               {/* <Grid
                 item
@@ -275,7 +297,8 @@ export default function SignUp(props: any) {
                   fontFamily: "Dosis",
                   fontWeight: "bold",
                 }}
-                onClick={() => nextSignIn("google")}
+                onClick={() => console.log('not implemented')
+                }
               />
 
               <Grid container justifyContent="flex-end" sx={{ mt: 2 }}>

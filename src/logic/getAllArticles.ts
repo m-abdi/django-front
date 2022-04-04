@@ -1,8 +1,7 @@
-export default async function getAllArticles(locale: string) {
-  const resp = await fetch(
-    process.env.NEXT_PUBLIC_API_URL + `/api/articles/?all=1&locale=${locale}`,
-    { method: "get" }
-  );
+export default async function getAllArticles() {
+  const resp = await fetch(`http://127.0.0.1:8000/public/articles/?all`, {
+    method: "get",
+  });
 
   const jresp = await resp.json();
   return jresp;

@@ -21,7 +21,7 @@ export default function Article(props: any) {
       </Head>
       <Container maxWidth="lg" sx={{ mt: 15, minBlockSize: "90vh" }}>
         <img
-          src={process.env.NEXT_PUBLIC_API_URL + props.article.picture}
+          src={"http://127.0.0.1:8000" + props.article.picture}
           width={500}
           height={300}
           style={{
@@ -50,7 +50,7 @@ export default function Article(props: any) {
 export async function getStaticProps(context: any) {
   const appInfo = await getAppInfo(context.locale);
   const resp = await fetch(
-    process.env.NEXT_PUBLIC_API_URL + `/api/articles/?id=${context.params.id}`
+    `http://127.0.0.1:8000/public/articles/?id=${context.params.id}`
   );
   const article = await resp.json();
   return {
@@ -58,7 +58,7 @@ export async function getStaticProps(context: any) {
   };
 }
 
-export const getStaticPaths: GetStaticPaths = async () => {
+export const getStaticPaths: GetStaticPaths = async ({locales}) => {
   const articles = await getAllArticles();
   return {
     paths: articles.map((a) => {

@@ -431,7 +431,7 @@ export default function landingPage(props: any) {
                     }}
                   >
                     <Image
-                      src={process.env.NEXT_PUBLIC_API_URL + a.picture}
+                      src={"http://127.0.0.1:8000" + a.picture}
                       width={350}
                       height={250}
                     />
@@ -446,7 +446,7 @@ export default function landingPage(props: any) {
                     >
                       <Typography
                         component={"h3"}
-                        variant="h3"
+                        variant="h4"
                         fontWeight={"bold"}
                       >
                         {a.title}
