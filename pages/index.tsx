@@ -41,6 +41,7 @@ export default function landingPage(props: any) {
     setTeacherRegisterDialog(false);
     setLearnerRegisterDialog(false);
   };
+  
   return (
     <ResponsiveNavBar {...props}>
       <Head>
@@ -293,7 +294,7 @@ export default function landingPage(props: any) {
           maxWidth: "100vw",
           border: `5px solid ${theme.palette.secondary.main}`,
           borderTop: "0",
-          mb: 2,
+          mb: 18,
           borderRadius: "0px 0px 20% 20%",
         }}
       >

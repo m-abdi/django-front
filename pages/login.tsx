@@ -21,7 +21,6 @@ import TextField from "@mui/material/TextField";
 import { TransitionProps } from "@mui/material/transitions";
 import Typography from "@mui/material/Typography";
 import getAppInfo from "../src/logic/getAppInfo";
-import { signIn as nextSignIn } from "next-auth/react";
 import { useEffect } from "react";
 import { useRouter } from "next/router";
 import { useState } from "react";
@@ -138,26 +137,7 @@ export default function SignIn(props: any) {
             fullWidth
             variant="contained"
             sx={{ mt: 3, mb: 2 }}
-            onClick={() => {
-              if (handleValidation()) {
-                setLoading(true);
-                nextSignIn("credentials", {
-                  email: email,
-                  password: password,
 
-                  redirect: false,
-                }).then((resp) => {
-                  if (resp && resp.error) {
-                    setErrorMessage(resp.error);
-                    setLoading(false);
-                  } else {
-                    router.push(
-                      process.env.NEXT_PUBLIC_URL + "/users/dashboard"
-                    );
-                  }
-                });
-              }
-            }}
           >
             Sign In
           </Button>
@@ -168,7 +148,6 @@ export default function SignIn(props: any) {
               fontFamily: "Dosis",
               fontWeight: "bold",
             }}
-            onClick={() => nextSignIn("google")}
           />
           <Grid container sx={{ mt: 4 }}>
             <Grid item xs>

@@ -38,7 +38,6 @@ import SupportRoundedIcon from "@mui/icons-material/SupportRounded";
 import TelegramIcon from "@mui/icons-material/Telegram";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
-import { signOut } from "next-auth/react";
 import { useRouter } from "next/router";
 
 const drawerWidth = 170;
@@ -255,9 +254,7 @@ export default function MiniDrawer(props: any) {
             </Link>
             <Button
               sx={{ textTransform: "capitalize", color: "black", p: 0 }}
-              onClick={() =>
-                signOut({ callbackUrl: process.env.NEXT_PUBLIC_URL + "/" })
-              }
+
             >
               <Typography sx={{ p: 1, my: "0px !important" }} component={"p"}>
                 <span style={{ marginRight: "5px" }}>

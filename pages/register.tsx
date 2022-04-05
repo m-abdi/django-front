@@ -33,7 +33,6 @@ import { TransitionProps } from "@mui/material/transitions";
 import Typography from "@mui/material/Typography";
 import enableSubmitButton from "../src/recaptcha";
 import getAppInfo from "../src/logic/getAppInfo";
-import { signIn as nextSignIn } from "next-auth/react";
 import { useRouter } from "next/router";
 
 const Transition = React.forwardRef(function Transition(
@@ -267,7 +266,6 @@ export default function SignUp(props: any) {
                 fontFamily: "Dosis",
                 fontWeight: "bold",
               }}
-              onClick={() => nextSignIn("google")}
             />
 
             <Grid container justifyContent="flex-end" sx={{ mt: 2 }}>
