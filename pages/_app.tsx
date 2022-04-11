@@ -1,16 +1,11 @@
-import "../src/style.css";
-import "../src/BarLoader.css";
-import "../public/css/Home.css";
-import "../public/css/nicepage.css";
-import "../public/css/contactUs.css";
 import "../public/css/flickity.min.css";
 
 import * as React from "react";
 
 import { CacheProvider, EmotionCache } from "@emotion/react";
-import Breakpoint from "../src/context/breakpointContext";
 
 import { AppProps } from "next/app";
+import Breakpoint from "../src/context/breakpointContext";
 import CssBaseline from "@mui/material/CssBaseline";
 import Head from "next/head";
 import ResponsiveNavBar from "../src/partials/Navbar";
@@ -43,7 +38,6 @@ export default function MyApp(props: MyAppProps) {
       <ThemeProvider theme={theme}>
         {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
         <CssBaseline />
-
         <Breakpoint.Provider value="md">
           <Component {...pageProps} />
         </Breakpoint.Provider>
